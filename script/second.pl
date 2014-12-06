@@ -62,6 +62,17 @@ sub main {
             }
         }
     }
+    foreach my $station (keys $data->%*) {
+        my $line_stations = $data->{ $station };
+
+        foreach my $line_station ($line_stations->@*) {
+            my $other_line_stations = [ grep { $_ ne $line_station } $line_stations->@* ];
+
+            foreach my $other_line_station ($other_line_stations->@*) {
+                $data->{ $station }{ $line_station }{ $other_line_station } = 3;
+            }
+        }
+    }
     say Dumper $data;
 }
 
