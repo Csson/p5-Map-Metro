@@ -9,9 +9,9 @@ package Map::Metro::Grammar  {
 
     qr{
         <grammar: Map::Metro>
-
-        <token: LineBreak>          \r?\n
-        <token: AnyCharacter>       [^\r\n]
+<nocontext:>
+        <token: LineBreak>          \n
+        <token: AnyCharacter>       [^\n]
         <token: AnyCharacterString> <.AnyCharacter>+
         <token: SpaceChar>          [ \t]
         <token: OptSpace>           <.SpaceChar>*
@@ -21,10 +21,10 @@ package Map::Metro::Grammar  {
         <token: Slash>              /
         <token: Int>                \d+
         <token: AlphaNumeric>       [\da-zA-Z]
-        <token: ANString>           <.AlphaNumeric>+
+        <token: ANString>           [\da-zA-Z]+
         <token: Pipe>               \|
-        <token: NonPipe>            [^|]
-        <token: NPString>           <.NonPipe>+
+        <token: NonPipe>            [^\|]
+        <token: NPString>           [^\|]+
         
 
         <token: StartStationList>   <LeftBracket>stations<RightBracket><.LineBreak>
@@ -33,25 +33,26 @@ package Map::Metro::Grammar  {
 
         <token: StartLineList>      <LeftBracket>lines<RightBracket><.LineBreak>
         <token: EndLineList>        <LeftBracket><Slash>lines<RightBracket>
-        <rule: Line>                    <LineId=ANString><.Pipe>
-                                        <LineNumber=NPString><.Pipe>
-                                        <StartStation=NPString><.Pipe>
-                                        <EndStation=AnyCharacterString><.LineBreak>
+   #     <rule: Line>                    <LineId=ANString><.Pipe>
+   #                                     <LineNumber=NPString><.Pipe>
+   #                                     <StartStation=NPString><.Pipe>
+   #                                     <EndStation=AnyCharacterString><.LineBreak>
+        <rule: Line>             <StationName=AnyCharacterString><.LineBreak>
 
         
         
         <token: StartSegmentList>   <LeftBracket>segments<RightBracket><.LineBreak>
         <token: EndSegmentList>     <LeftBracket><Slash>segments<RightBracket><.LineBreak>
-        <rule: Segment>                 <SegmentLines=NPString><.Pipe>
-                                        <StartStation=NPString><.Pipe>
-                                        <EndStation=AnyCharacterString><.LineBreak>
-
+  #      <rule: Segment>                 <SegmentLines=NPString><.Pipe>
+  #                                      <StartStation=NPString><.Pipe>
+  #                                      <EndStation=AnyCharacterString><.LineBreak>
+        <rule: Segment>                 <SegmentLines=AnyCharacterString><.LineBreak>
 
         <objrule: Map::Metro::Grammar::StationList>         <.StartStationList><[Station]>+<.EndStationList>
         <objrule: Map::Metro::Grammar::LineList>            <.StartLineList><[Line]>+<.EndLineList>
         <objrule: Map::Metro::Grammar::SegmentList>         <.StartSegmentList><[Segment]>+<.EndSegmentList>
 
-        <objrule: Map::Metro::Grammar::Spec>                <StationList><LineList><SegmentList>
+        <objrule: Map::Metro::Grammar::Spec>                <SegmentList><LineList><StationList>
     }x;
 
 }

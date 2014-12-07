@@ -1,8 +1,11 @@
-package Map::Metro;
-
-use strict;
+use 5.20.0;
 use warnings;
-use 5.10.1;
+
+package Map::Metro {
+	use Graph;
+}
+
+
 
 
 1;
