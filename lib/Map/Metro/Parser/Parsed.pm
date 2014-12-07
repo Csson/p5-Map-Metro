@@ -90,7 +90,7 @@ class Map::Metro::Parser::Parsed using Moose {
         builder => 1,
         predicate => 1,
     );
-    
+
     method _build_asps {
         $self->calculate_paths;
 
@@ -183,8 +183,13 @@ class Map::Metro::Parser::Parsed using Moose {
             IncompleteParse->throw;
         }
 
+        #* Walk through all segments, and all lines for
+        #* that segment. Add pairwise connections between
+        #* the to stations on the same line
+        SEGMENT:
         foreach my $segment ($self->all_segments) {
 
+            LINE:
             foreach my $line_id ($segment->all_line_ids) {
                 my $line = $self->get_line_by_id($line_id);
 
@@ -213,17 +218,22 @@ class Map::Metro::Parser::Parsed using Moose {
                                                                    weight => $weight);
 
                 
-                
                 $self->add_connection($conn);
                 $self->add_connection($inv_conn);
             }
         }
+
+        #* Walk through all stations, and fetch all line_stations per station
+        #* Then add a connection between all line_stations of every station
+        STATION:
         foreach my $station ($self->all_stations) {
             my @line_stations_at_station = $self->get_line_stations_by_station($station);
 
+            LINE_STATION:
             foreach my $line_station (@line_stations_at_station) {
                 my @other_line_stations = grep { $_->line_station_id != $line_station->line_station_id } @line_stations_at_station;
 
+                OTHER_LINE_STATION:
                 foreach my $other_line_station (@other_line_stations) {
 
                     my $weight = 3;
@@ -237,7 +247,7 @@ class Map::Metro::Parser::Parsed using Moose {
     }
 
     method routes_for(Str $origin_name, Str $destination_name) {
-        my $asps = $self->asps;
+        
         my($origin_station, $destination_station);
         try {
             $origin_station = $self->get_station_by_name($origin_name);
@@ -267,27 +277,49 @@ class Map::Metro::Parser::Parsed using Moose {
             },
             routes => [],
         };
-        
+
+        #my $routing
+
+        use Data::Dump::Streamer 'Dumper';
         #* Find all lines going from origin station
         #* Find all lines going to destination station
         #* Get all routes between them
         #* and then, in the third and fourth for, loop over the
         #* found routes and add info about all stations on all lines
+        ORIGIN_LINE_STATION:
         foreach my $origin_id (@origin_line_station_ids) {
             my $origin = $self->get_line_station_by_id($origin_id);
 
-
+            DESTINATION_LINE_STATION:
             foreach my $dest_id (@destination_line_station_ids) {
                 my $dest = $self->get_line_station_by_id($dest_id);
-                push $data->{'routes'}->@* => [ $asps->path_vertices($origin_id, $dest_id) ];
 
-                foreach my $route ($data->{'routes'}->@*) {
+                my $routes = [[ $asps->path_vertices($origin_id, $dest_id) ]];
+say Dumper $routes;                
+                ROUTE:
+                foreach my $route ($routes->@*) {
+                    my $routedata = {
+                        stations => $route,
+                        changes => [],
+                    };
 
+                    my $previous_station_id = undef;
+                    my $changed_on_latest = 0;
+
+                    LINE_STATION:
                     foreach my $ls_id ($route->@*) {
+                        my $ls = $self->get_line_station_by_id($ls_id);
+
+                        if(defined $previous_station_id && $ls->station->id == $previous_station_id) {
+                            push $routedata->{'changes'}->@* => $ls_id;
+                            $changed_on_latest = 1;
+                        }
+                        else {
+                            $changed_on_latest = 0;
+                        }
 
                         if(!exists $data->{'line_stations'}{ $ls_id }) {
-                            my $ls = $self->get_line_station_by_id($ls_id);
-
+                            
                             $data->{'line_stations'}{ $ls->line_station_id } = {
                                 line_station_id => $ls->line_station_id,
                                 station_name => $ls->station->name,
@@ -295,8 +327,12 @@ class Map::Metro::Parser::Parsed using Moose {
                                 line_name => $ls->line->name,
                             };
                         }
+                        $previous_station_id = $ls->station->id;
                     }
+                    next ROUTE if $changed_on_latest;
+                    push $data->{'routes'}->@* => $routedata;
                 }
+                
             }
         }
         

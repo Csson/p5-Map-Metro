@@ -40,7 +40,7 @@ class Map::Metro::Parser using Moose {
             ;
 
         }
-
+        my $asps = $self->asps;
         return $parsed;
     }
 
