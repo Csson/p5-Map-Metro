@@ -78,7 +78,5 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
         my $graph = Map::Metro::Graph->new($self->filepath);
         return $graph->parse;
     }
-    
-
 
 }

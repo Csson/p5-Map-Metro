@@ -5,6 +5,7 @@ use Moops;
 class Map::Metro::Graph::LineStation using Moose {
 
     use Types::Standard -types;
+    use Map::Metro::Types -types;
 
     has line_station_id => (
         is => 'ro',
@@ -13,12 +14,12 @@ class Map::Metro::Graph::LineStation using Moose {
     );
     has station => (
         is => 'ro',
-        isa => InstanceOf['Map::Metro::Graph::Station'],
+        isa => Station,
         required => 1,
     );
     has line => (
         is => 'ro',
-        isa => InstanceOf['Map::Metro::Graph::Line'],
+        isa => Line,
         required => 1,
     );
 

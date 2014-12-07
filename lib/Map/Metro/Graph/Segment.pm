@@ -5,6 +5,7 @@ use Moops;
 class Map::Metro::Graph::Segment using Moose {
 
     use Types::Standard -types;
+    use Map::Metro::Types -types;
     use experimental 'postderef';
 
     has line_ids => (
@@ -19,12 +20,12 @@ class Map::Metro::Graph::Segment using Moose {
     );
     has origin_station => (
         is => 'ro',
-        isa => InstanceOf['Map::Metro::Graph::Station'],
+        isa => Station,
         required => 1,
     );
     has destination_station => (
         is => 'ro',
-        isa => InstanceOf['Map::Metro::Graph::Station'],
+        isa => Station,
         required => 1,
     );
     

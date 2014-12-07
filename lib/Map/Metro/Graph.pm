@@ -15,15 +15,19 @@ class Map::Metro::Graph using Moose {
 
     use aliased 'Map::Metro::Exception::LineIdDoesNotExistInLineList';
     use aliased 'Map::Metro::Exception::StationNameDoesNotExistInStationList';
+    use Map::Metro::Types -types;
     use Map::Metro::Graph::Station;
     use Map::Metro::Graph::Line;
     use Map::Metro::Graph::Segment;
     use Map::Metro::Graph::LineStation;
     use Map::Metro::Graph::Connection;
+    use Map::Metro::Graph::Routing;
+    use Map::Metro::Graph::Route;
+    use Map::Metro::Graph::RouteStation;
 
     with('MooseX::OneArgNew' => {
-    	type => AbsFile,
-    	init_arg => 'filepath',
+        type => AbsFile,
+        init_arg => 'filepath',
     });
 
     has filepath => (
@@ -35,7 +39,7 @@ class Map::Metro::Graph using Moose {
     has stations => (
         is => 'ro',
         traits => ['Array'],
-        isa => ArrayRef[ InstanceOf['Map::Metro::Graph::Station'] ],
+        isa => ArrayRef[ Station ],
         predicate => 1,
         default => sub { [] },
         init_arg => undef,
@@ -49,7 +53,7 @@ class Map::Metro::Graph using Moose {
     has lines => (
         is => 'ro',
         traits => ['Array'],
-        isa => ArrayRef[ InstanceOf['Map::Metro::Graph::Line'] ],
+        isa => ArrayRef[ Line ],
         predicate => 1,
         default => sub { [] },
         init_arg => undef,
@@ -62,7 +66,7 @@ class Map::Metro::Graph using Moose {
     has segments => (
         is => 'ro',
         traits => ['Array'],
-        isa => ArrayRef[ InstanceOf['Map::Metro::Graph::Segment'] ],
+        isa => ArrayRef[ Segment ],
         predicate => 1,
         default => sub { [] },
         init_arg => undef,
@@ -74,7 +78,7 @@ class Map::Metro::Graph using Moose {
     has line_stations => (
         is => 'ro',
         traits => ['Array'],
-        isa => ArrayRef[ InstanceOf['Map::Metro::Graph::LineStation'] ],
+        isa => ArrayRef[ LineStation ],
         predicate => 1,
         default => sub { [] },
         init_arg => undef,
@@ -89,7 +93,7 @@ class Map::Metro::Graph using Moose {
     has connection => (
         is => 'ro',
         traits => ['Array'],
-        isa => ArrayRef[ InstanceOf['Map::Metro::Graph::Connection'] ],
+        isa => ArrayRef[ Connection ],
         predicate => 1,
         default => sub { [] },
         init_arg => undef,
@@ -115,7 +119,7 @@ class Map::Metro::Graph using Moose {
     );
 
     method _build_full_graph {
-    	$self->calculate_paths;
+        $self->calculate_paths;
 
         my $graph = Graph->new;
 
@@ -152,8 +156,7 @@ class Map::Metro::Graph using Moose {
 
         }
         my $asps = $self->asps;
-        my $data = $self->routes_for('Farsta strand', 'T-Centralen');
-        
+
         return $self;
     }
     
@@ -217,7 +220,7 @@ class Map::Metro::Graph using Moose {
         return $self->find_station(sub { $_->name eq $station_name })
             || StationNameDoesNotExistInStationList->throw(station_name => $station_name);
     }
-    method get_line_stations_by_station(InstanceOf['Map::Metro::Graph::Station'] $station) {
+    method get_line_stations_by_station(Station $station) {
         return $self->find_line_stations(sub { $_->station->id == $station->id });
     }
     method get_line_station_by_line_and_station_id($line_id, $station_id) {
@@ -307,13 +310,7 @@ class Map::Metro::Graph using Moose {
         }
         catch {
             my $error = $_;
-
-            if($error->does('Map::Metro::Exception')) {
-                $error->out->fatal;
-            }
-            else {
-                die $error;
-            }
+            $error->does('Map::Metro::Exception') ? return $error : die $error;
         };
 
         my @origin_line_station_ids = map { $_->line_station_id } $self->get_line_stations_by_station($origin_station);
@@ -330,7 +327,7 @@ class Map::Metro::Graph using Moose {
             routes => [],
         };
 
-        #my $routing = Map
+        my $routing = Map::Metro::Graph::Routing->new(origin_station => $origin_station, destination_station => $destination_station);
 
         use Data::Dump::Streamer 'Dumper';
         #* Find all lines going from origin station
@@ -346,137 +343,63 @@ class Map::Metro::Graph using Moose {
             foreach my $dest_id (@destination_line_station_ids) {
                 my $dest = $self->get_line_station_by_id($dest_id);
 
-                my $routes = [[ $self->asps->path_vertices($origin_id, $dest_id) ]];
-say Dumper $routes;                
-                ROUTE:
-                foreach my $route ($routes->@*) {
-                    my $routedata = {
-                        stations => $route,
-                        changes => [],
-                    };
+                my $graphroutes = [[ $self->asps->path_vertices($origin_id, $dest_id) ]];
 
-                    my $previous_station_id = undef;
-                    my $changed_on_latest = 0;
+                ROUTE:
+                foreach my $graphroute ($graphroutes->@*) {
+
+                    my $route = Map::Metro::Graph::Route->new;
 
                     LINE_STATION:
-                    foreach my $ls_id ($route->@*) {
+                    foreach my $ls_id ($graphroute->@*) {
                         my $ls = $self->get_line_station_by_id($ls_id);
+                        my $rs = Map::Metro::Graph::RouteStation->new(line_station => $ls);
 
-                        if(defined $previous_station_id && $ls->station->id == $previous_station_id) {
-                            push $routedata->{'changes'}->@* => $ls_id;
-                            $changed_on_latest = 1;
-                        }
-                        else {
-                            $changed_on_latest = 0;
-                        }
-
-                        if(!exists $data->{'line_stations'}{ $ls_id }) {
-                            
-                            $data->{'line_stations'}{ $ls->line_station_id } = {
-                                line_station_id => $ls->line_station_id,
-                                station_name => $ls->station->name,
-                                line_description => $ls->line->description,
-                                line_name => $ls->line->name,
-                            };
-                        }
-                        $previous_station_id = $ls->station->id;
+                        $routing->add_line_station($ls);
+                        $route->add_route_station($rs);
                     }
-                    next ROUTE if $changed_on_latest;
-                    push $data->{'routes'}->@* => $routedata;
+
+                    next ROUTE if $route->transfer_on_final_station;
+
+                    $routing->add_route($route);
                 }
                 
             }
         }
-        
- 
-        return $data;
+
+        return $routing;
     }
     
-    method routes_for2222(Str $origin_name, Str $destination_name) {
-        
-        my $origin_station = $self->get_station_by_name($origin_name);
-        my $destination_station = $self->get_station_by_name($destination_name);
-        my @origin_line_station_ids = map { $_->line_station_id } $self->get_line_stations_by_station($origin_station);
-        my @destination_line_station_ids = map { $_->line_station_id } $self->get_line_stations_by_station($destination_station);
-        
+    method all_pairs {
+#        my $asps = $self->asps;
+
+#        my $data = {
+#            line_stations => {},
+#        };
+#        foreach my $ls ($self->all_line_stations) {
+#
+#            $data->{'line_stations'}{ $ls->line_station_id } = {
+#                line_station_id => $ls->line_station_id,
+#                station_name => $ls->station->name,
+#                line_description => $ls->line->description,
+#                line_name => $ls->line->name,
+#            };
+#        }
+#
         my $routes = [];
-        my $asps = $self->asps;
 
-        foreach my $origin (@origin_line_station_ids) {
+        foreach my $station ($self->all_stations) {
+            my @other_stations = grep { $_->id != $station->id } $self->all_stations;
 
-            foreach my $dest (@destination_line_station_ids) {
-                push $routes->@* => [ $asps->path_vertices($origin, $dest) ];
+            foreach my $os (@other_stations) {
+                
+                push $routes->@* => $self->routes_for($station->name, $os->name);
             }
         }
 
- 
         return $routes;
     }
 
-    method get_all_routes {
-        my $asps = $self->asps;
-
-        my $data = {
-            line_stations => {},
-        };
-        foreach my $ls ($self->all_line_stations) {
-
-            $data->{'line_stations'}{ $ls->line_station_id } = {
-                line_station_id => $ls->line_station_id,
-                station_name => $ls->station->name,
-                line_description => $ls->line->description,
-                line_name => $ls->line->name,
-            };
-        }
-
-        my $routes = [];
-
-
-        foreach my $station ($self->all_stations) {
-            my @other_stations = grep { $_->id != $station->id } $self->all_stations;
-
-            foreach my $os (@other_stations) {
-                
-                push $routes->@* => { origin => $station->name,
-                                      destination => $os->name,
-                                      paths => $self->routes_for($station->name, $os->name)
-                                    };
-            }
-        }
-        $data->{'routes'} = $routes;
-        return $data;
-    }
-
-    method get_sereal {
-        return encode_sereal($self->get_all_routes);
-    }
-
-    method get_json {
-        my $data = {
-            line_stations => {},
-        };
-        foreach my $ls ($self->all_line_stations) {
-            $data->{'line_stations'}{ $ls->line_station_id } = $ls->freeze;
-        }
-
-        my $routes = [];
-
-
-        foreach my $station ($self->all_stations) {
-            my @other_stations = grep { $_->id != $station->id } $self->all_stations;
-
-            foreach my $os (@other_stations) {
-                
-                push $routes->@* => { origin => $station->name,
-                                      destination => $os->name,
-                                      paths => $self->routes_for($station->name, $os->name)
-                                    };
-            }
-        }
-        $data->{'routes'} = $routes;
-        my $jsonificator = JSON::MaybeXS->new(utf8 => 1, pretty => 1);
-        return $jsonificator->encode($data);
-    }
 }
 
 
