@@ -6,6 +6,7 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
     use Type::Tiny;
     use Types::Path::Tiny qw/AbsFile/;
     use List::AllUtils qw/any/;
+    use MooseX::AttributeShortcuts;
     use aliased 'Map::Metro::Exception::IllegalConstructorArguments';
     use experimental 'postderef';
 
@@ -15,6 +16,7 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
         is => 'ro',
         traits => ['Array'],
         isa => ArrayRef,
+        predicate => 1,
         handles => {
             get_for => 'get',
         },
@@ -34,18 +36,19 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
     );
 
     around BUILDARGS($orig: $class, @args) {
-        if(   (scalar @args == 0) 
-           || (scalar @args == 2 && ArrayRef->check($args[1]) && scalar $args[1]->@* != 1)
+        if(   (scalar @args == 2 && ArrayRef->check($args[1]) && scalar $args[1]->@* != 1)
            || (scalar @args > 2)) {
 
             IllegalConstructorArguments->throw;
         }
 
-        my %args = ();
+        my %args = scalar @args == 2 ? @args : ();
+
         if(scalar @args == 1) {
             $args{'for'} = shift @args;
         }
-        if(!scalar @args % 2) {
+
+        if(scalar keys %args == 1) {
             if(ArrayRef->check($args{'for'})) {
                 return $class->$orig(%args);
             }
@@ -54,16 +57,18 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
                 return $class->$orig(%args);
             }
         }
+        return $class->$orig;
     }
 
     method BUILD {
-
-        my $metromap = $self->get_for(0);
-        $self->load_plugin($metromap);
-
-        my $filemethod = $self->decamelize($metromap);
-
-        $self->filepath($self->$filemethod);
+        if($self->has_for) {
+            my $metromap = $self->get_for(0);
+            $self->load_plugin($metromap);
+    
+            my $filemethod = $self->decamelize($metromap);
+    
+            $self->filepath($self->$filemethod);
+        }
     }
 
     # Borrowed from Mojo::Util
@@ -75,8 +80,7 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
     }
 
     method parse {
-        my $graph = Map::Metro::Graph->new($self->filepath);
-        return $graph->parse;
+        return Map::Metro::Graph->new(filepath => $self->filepath)->parse;
     }
 
 }

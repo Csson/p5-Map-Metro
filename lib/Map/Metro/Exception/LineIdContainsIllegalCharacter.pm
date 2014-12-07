@@ -1,11 +1,9 @@
-use 5.20.0;
-use warnings;
+use Map::Metro::Standard;
+use Moops;
 
-package Map::Metro::Exception::LineIdContainsIllegalCharacter {
+class Map::Metro::Exception::LineIdContainsIllegalCharacter with Map::Metro::Exception using Moose {
 
-    use Moose;
     use Types::Standard -types;
-    with qw/Map::Metro::Exception/;
     use Map::Metro::Exception -all;
     use namespace::autoclean;
 

@@ -1,12 +1,10 @@
 use Map::Metro::Standard;
+use Moops;
 
-package Map::Metro::Exception::IncompleteParse {
+class Map::Metro::Exception::IncompleteParse with Map::Metro::Exception using Moose {
 
-    use Moose;
     use Types::Standard -types;
-    with qw/Map::Metro::Exception/;
     use Map::Metro::Exception -all;
-    
     use namespace::autoclean;
 
     has info => (

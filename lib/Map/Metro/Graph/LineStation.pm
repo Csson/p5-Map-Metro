@@ -4,6 +4,7 @@ use Moops;
 
 class Map::Metro::Graph::LineStation using Moose {
 
+    use List::AllUtils 'any';
     use Types::Standard -types;
     use Map::Metro::Types -types;
 
@@ -23,4 +24,10 @@ class Map::Metro::Graph::LineStation using Moose {
         required => 1,
     );
 
+    method possible_on_same_line(LineStation $other) {
+        return (any { $self->line->id eq $_->id } $other->station->all_lines);
+    }
+    method on_same_line(LineStation $other) {
+        return $self->line->id eq $other->line->id;
+    }
 }

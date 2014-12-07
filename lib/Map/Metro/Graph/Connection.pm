@@ -22,8 +22,7 @@ class Map::Metro::Graph::Connection using Moose {
         is => 'ro',
         isa => Num,
         required => 1,
-        default => 3,
+        default => 1,
     );
-
 
 }

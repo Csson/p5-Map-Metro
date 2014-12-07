@@ -11,7 +11,9 @@ class Map::Metro::Graph using Moose {
     use Graph;
     use MooseX::AttributeShortcuts;
     use List::AllUtils 'any';
+    use Unicode::Normalize;
     use experimental 'postderef';
+    use feature 'fc';
 
     use aliased 'Map::Metro::Exception::LineIdDoesNotExistInLineList';
     use aliased 'Map::Metro::Exception::StationNameDoesNotExistInStationList';
@@ -127,7 +129,6 @@ class Map::Metro::Graph using Moose {
             $graph->add_weighted_edge($conn->origin_line_station->line_station_id,
                                       $conn->destination_line_station->line_station_id,
                                       $conn->weight);
-
         }
         return $graph;
     }
@@ -155,7 +156,7 @@ class Map::Metro::Graph using Moose {
             ;
 
         }
-        my $asps = $self->asps;
+        $self->asps;
 
         return $self;
     }
@@ -217,8 +218,12 @@ class Map::Metro::Graph using Moose {
             || LineIdDoesNotExistInLineList->throw(line_id => $line_id);
     }
     method get_station_by_name(Str $station_name) {
-        return $self->find_station(sub { $_->name eq $station_name })
+        return $self->find_station(sub { fc($_->name) eq fc($station_name) })
             || StationNameDoesNotExistInStationList->throw(station_name => $station_name);
+    }
+    method get_station_by_id(Int $id) {
+        return $self->find_station(sub { $_->id == $id })
+            || StationIdDoesNotExist->throw(station_id => $id);
     }
     method get_line_stations_by_station(Station $station) {
         return $self->find_line_stations(sub { $_->station->id == $station->id });
@@ -254,6 +259,7 @@ class Map::Metro::Graph using Moose {
                     line => $line,
                 );
                 $origin_line_station = $self->add_line_station($origin_line_station);
+                $segment->origin_station->add_line($line);
 
                 my $destination_line_station = Map::Metro::Graph::LineStation->new(
                     line_station_id => $self->next_line_station_id,
@@ -261,6 +267,7 @@ class Map::Metro::Graph using Moose {
                     line => $line,
                 );
                 $destination_line_station = $self->add_line_station($destination_line_station);
+                $segment->destination_station->add_line($line);
 
                 my $weight = 1;
 
@@ -300,8 +307,14 @@ class Map::Metro::Graph using Moose {
             }
         }
     }
+    multi method routes_for(Int $origin_id, Int $destination_id) {
+        my $origin = $self->get_station_by_id($origin_id);
+        my $dest = $self->get_station_by_id($destination_id);
 
-    method routes_for(Str $origin_name, Str $destination_name) {
+        return $self->routes_for($origin->name, $dest->name);
+    }
+
+    multi method routes_for(Str $origin_name, Str $destination_name) {
         
         my($origin_station, $destination_station);
         try {
@@ -313,23 +326,15 @@ class Map::Metro::Graph using Moose {
             $error->does('Map::Metro::Exception') ? return $error : die $error;
         };
 
+        return $self->routes_for($origin_station, $destination_station);
+    }
+
+    multi method routes_for(Station $origin_station, Station $destination_station) {
         my @origin_line_station_ids = map { $_->line_station_id } $self->get_line_stations_by_station($origin_station);
         my @destination_line_station_ids = map { $_->line_station_id } $self->get_line_stations_by_station($destination_station);
 
-        my $data = {
-            line_stations => {},
-            origin_station => {
-                name => $origin_station->name,
-            },
-            destination_station => {
-                name => $destination_station->name,
-            },
-            routes => [],
-        };
-
         my $routing = Map::Metro::Graph::Routing->new(origin_station => $origin_station, destination_station => $destination_station);
 
-        use Data::Dump::Streamer 'Dumper';
         #* Find all lines going from origin station
         #* Find all lines going to destination station
         #* Get all routes between them
@@ -345,6 +350,10 @@ class Map::Metro::Graph using Moose {
 
                 my $graphroutes = [[ $self->asps->path_vertices($origin_id, $dest_id) ]];
 
+                if($origin->possible_on_same_line($dest) && !$origin->on_same_line($dest)) {
+                    next DESTINATION_LINE_STATION;
+                }
+                say scalar $graphroutes->@*;
                 ROUTE:
                 foreach my $graphroute ($graphroutes->@*) {
 
@@ -358,12 +367,9 @@ class Map::Metro::Graph using Moose {
                         $routing->add_line_station($ls);
                         $route->add_route_station($rs);
                     }
-
                     next ROUTE if $route->transfer_on_final_station;
-
                     $routing->add_route($route);
                 }
-                
             }
         }
 
@@ -371,80 +377,19 @@ class Map::Metro::Graph using Moose {
     }
     
     method all_pairs {
-#        my $asps = $self->asps;
 
-#        my $data = {
-#            line_stations => {},
-#        };
-#        foreach my $ls ($self->all_line_stations) {
-#
-#            $data->{'line_stations'}{ $ls->line_station_id } = {
-#                line_station_id => $ls->line_station_id,
-#                station_name => $ls->station->name,
-#                line_description => $ls->line->description,
-#                line_name => $ls->line->name,
-#            };
-#        }
-#
         my $routes = [];
 
         foreach my $station ($self->all_stations) {
             my @other_stations = grep { $_->id != $station->id } $self->all_stations;
 
             foreach my $os (@other_stations) {
-                
                 push $routes->@* => $self->routes_for($station->name, $os->name);
             }
         }
-
         return $routes;
     }
 
 }
 
-
-
-
-
-
-
-
-
-
-
 __END__
-
-
-    my $data = {};
-
-    foreach my $segment ($stuff->{'segments'}->@*) {
-        my $lines = [ $segment->{'lines'}->@* ];
-
-        foreach my $line ($lines->@*) {
-            my $line_segment_start = line_station($segment->{'start'}, $line);
-            my $line_segment_end = line_station($segment->{'end'}, $line);
-
-            $data->{ $segment->{'start'} }{ $line_segment_start }{ $line_segment_end } = 1;
-
-            my $other_lines = [ grep { $_ ne $line } $lines->@* ];
-
-            foreach my $other_line ($other_lines->@*) {
-                my $change_to = line_station($segment->{'start'}, $other_line);
-                $data->{ $segment->{'start'} }{ $line_segment_start }{ $change_to } = 3;
-
-            }
-        }
-    }
-    my $flatter = {};
-    foreach my $station (keys $data->%*) {
-        my $line_stations = $data->{ $station };
-
-        foreach my $line_station (keys $line_stations->%*) {
-            my $other_line_stations = [ grep { $_ ne $line_station } keys $line_stations->%* ];
-            $flatter->{ $line_station } = $data->{ $station }{ $line_station };
-
-            foreach my $other_line_station ($other_line_stations->@*) {
-                $flatter->{ $line_station }{ $other_line_station } = 3;
-            }
-        }
-    }
