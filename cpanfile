@@ -9,3 +9,4 @@ requires 'Eponymous::Hash';
 requires 'MooseX::App';
 requires 'MooseX::AttributeShortcuts';
 requires 'String::Trim';
+requires 'Throwable::X';
