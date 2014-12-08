@@ -106,6 +106,7 @@ This is a list of all L<Segments|Map::Metro::Graph::Segment> in the network. (A 
 
 =item The following station
 
+=back
 
 =head1 WHAT NOW?
 

@@ -151,6 +151,7 @@ If the starting station and finishing station...
 
 =item ...has no shared stations, the shortest route/routes will be returned.
 
+=back
 
 
 =head1 MORE INFORMATION
