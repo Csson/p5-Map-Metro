@@ -40,7 +40,6 @@
          "requires" : {
             "Eponymous::Hash" : "0",
             "List::AllUtils" : "0",
-            "Map::Metro::Types" : "0",
             "Moops" : "0",
             "Moose" : "0",
             "MooseX::App" : "0",

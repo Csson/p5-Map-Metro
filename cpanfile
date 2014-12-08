@@ -5,7 +5,6 @@ requires 'Moops';
 requires 'Types::Path::Tiny';
 requires 'List::AllUtils';
 requires 'experimental';
-requires 'Map::Metro::Types';
 requires 'Eponymous::Hash';
 requires 'MooseX::App';
 requires 'MooseX::AttributeShortcuts';
