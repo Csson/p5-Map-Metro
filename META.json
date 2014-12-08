@@ -41,6 +41,7 @@
             "Eponymous::Hash" : "0",
             "Graph" : "0",
             "List::AllUtils" : "0",
+            "List::Compare" : "0",
             "Moops" : "0",
             "Moose" : "0",
             "MooseX::App" : "0",

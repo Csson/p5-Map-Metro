@@ -4,6 +4,7 @@ requires 'Eponymous::Hash';
 requires 'experimental';
 requires 'Graph';
 requires 'List::AllUtils';
+requires 'List::Compare';
 requires 'Moose';
 requires 'MooseX::App';
 requires 'MooseX::AttributeShortcuts';
