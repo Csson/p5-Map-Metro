@@ -1,19 +1,19 @@
-use Map::Metro::Standard;
+use Map::Metro::Standard::Moops;
 
-package Map::Metro::Types {
+library  Map::Metro::Types 
 
-    use Type::Library
-        -base,
-        -declare => qw/
-            Connection
-            Line
-            LineStation
-            Route
-            RouteStation
-            Routing
-            Segment
-            Station
-        /;
+extends  Types::Standard,
+         Types::Path::Tiny
+
+declares Connection,
+         Line,
+         LineStation,
+         Route,
+         RouteStation,
+         Routing,
+         Segment,
+         Station
+    {
 
     use Type::Utils -all;
 

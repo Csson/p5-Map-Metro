@@ -1,12 +1,6 @@
-use 5.20.0;
-use warnings;
-use Moops;
+use Map::Metro::Standard::Moops;
 
 class Map::Metro::Graph::Segment using Moose {
-
-    use Types::Standard -types;
-    use Map::Metro::Types -types;
-    use experimental 'postderef';
 
     has line_ids => (
         is => 'ro',
@@ -29,7 +23,32 @@ class Map::Metro::Graph::Segment using Moose {
         required => 1,
     );
     
-    method to_string {
-        return sprintf '%s: %s - %s', (join ',' => $self->line_ids->@*), $self->origin_station->name, $self->destination_station->name;
-    }
 }
+
+__END__
+
+=encoding utf-8
+
+=head1 NAME
+
+Map::Metro::Graph::Segment - What is a segment?
+
+=head1 DESCRIPTION
+
+Segments are used during the graph building phase. Its main purpose is to describe the combination of two L<Stations|Map::Metro::Graph::Station>
+and all lines that goes between them.
+
+=head1 AUTHOR
+
+Erik Carlsson E<lt>info@code301.comE<gt>
+
+=head1 COPYRIGHT
+
+Copyright 2014 - Erik Carlsson
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut

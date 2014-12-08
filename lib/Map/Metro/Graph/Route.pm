@@ -1,9 +1,6 @@
-use Map::Metro::Standard;
-use Moops;
+use Map::Metro::Standard::Moops;
 
 class Map::Metro::Graph::Route using Moose {
-
-    use Map::Metro::Types -types;
 
     has route_stations => (
         is => 'ro',
@@ -45,7 +42,11 @@ class Map::Metro::Graph::Route using Moose {
 
     method transfer_on_final_station {
         return 0 if $self->route_station_count < 2;
-        return $self->get_route_station(-1)->line_station->station->id == $self->get_route_station(-2)->line_station->station->id
+        return $self->get_route_station(-1)->line_station->station->id == $self->get_route_station(-2)->line_station->station->id;
+    }
+    method transfer_on_first_station {
+        return 0 if $self->route_station_count < 2;
+        return $self->get_route_station(0)->line_station->station->id == $self->get_route_station(1)->line_station->station->id;
     }
 
     method to_text {
@@ -53,3 +54,42 @@ class Map::Metro::Graph::Route using Moose {
         return join "\n" => map { $_->to_text } ($self->all_route_stations);
     }
 }
+
+__END__
+
+=encoding utf-8
+
+=head1 NAME
+
+Map::Metro::Graph::Route - What is a route?
+
+=head1 DESCRIPTION
+
+A route is a specific sequence of L<LineStations|Map::Metro::Graph::LineStation> (contained in L<RouteStations|Map::Metro::Graph::RouteStation>).
+
+=head1 METHODS
+
+=head2 all_route_stations()
+
+Returns an array of the L<RouteStations|Map::Metro::Graph::RouteStation> in the route, in the order they are travelled.
+
+
+=head2 weight()
+
+Returns an integer representing the total 'cost' of this route.
+
+
+=head1 AUTHOR
+
+Erik Carlsson E<lt>info@code301.comE<gt>
+
+=head1 COPYRIGHT
+
+Copyright 2014 - Erik Carlsson
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut

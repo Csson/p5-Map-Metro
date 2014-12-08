@@ -1,11 +1,8 @@
-use Map::Metro::Standard;
-use Moops;
+use Map::Metro::Standard::Moops;
 
 class Map::Metro::Exception::LineIdDoesNotExistInLineList with Map::Metro::Exception using Moose {
 
-    use Types::Standard -types;
     use Map::Metro::Exception -all;
-    use namespace::autoclean;
 
     has line_id => (
         is => 'ro',
@@ -20,5 +17,3 @@ class Map::Metro::Exception::LineIdDoesNotExistInLineList with Map::Metro::Excep
     );
 
 }
-
-1;

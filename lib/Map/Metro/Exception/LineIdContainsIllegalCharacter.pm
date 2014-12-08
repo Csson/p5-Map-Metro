@@ -1,11 +1,8 @@
-use Map::Metro::Standard;
-use Moops;
+use Map::Metro::Standard::Moops;
 
 class Map::Metro::Exception::LineIdContainsIllegalCharacter with Map::Metro::Exception using Moose {
 
-    use Types::Standard -types;
     use Map::Metro::Exception -all;
-    use namespace::autoclean;
 
     has line_id => (
         is => 'ro',
@@ -24,5 +21,3 @@ class Map::Metro::Exception::LineIdContainsIllegalCharacter with Map::Metro::Exc
         default => q{Line id [%{line_id}s] contains illegal character [%{illegal_character}s]},
     );
 }
-
-1;

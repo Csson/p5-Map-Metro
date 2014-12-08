@@ -1,9 +1,6 @@
-use Map::Metro::Standard;
-use Moops;
+use Map::Metro::Standard::Moops;
 
 class Map::Metro::Graph::Routing using Moose {
-
-    use Map::Metro::Types -types;
 
     has origin_station => (
         is => 'ro',
@@ -63,3 +60,50 @@ class Map::Metro::Graph::Routing using Moose {
         return join "\n" => @rows;
     }
 }
+
+
+__END__
+
+=encoding utf-8
+
+=head1 NAME
+
+Map::Metro::Graph::RouteStation - What is a routing?
+
+=head1 DESCRIPTION
+
+A routing is the collection of L<Routes|Map::Metro::Graph::Route> possible between two L<Stations|Map::Metro::Graph::Station>.
+
+=head1 METHODS
+
+=head2 origin_station()
+
+Returns the L<Station|Map::Metro::Graph::Station> object representing the starting station of the route.
+
+=head2 destination_station()
+
+Returns the L<Station|Map::Metro::Graph::Station> object representing the final station of the route.
+
+=head2 line_stations()
+
+Returns an array of all L<LineStation|Map::Metro::Graph::LineStations> possible in the routing.
+
+=head2 routes()
+
+Returns an array of all L<Route|Map::Metro::Graph::Routes> in the routing.
+
+
+=head1 AUTHOR
+
+Erik Carlsson E<lt>info@code301.comE<gt>
+
+=head1 COPYRIGHT
+
+Copyright 2014 - Erik Carlsson
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut

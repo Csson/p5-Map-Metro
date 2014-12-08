@@ -1,11 +1,8 @@
-use Map::Metro::Standard;
-use Moops;
+use Map::Metro::Standard::Moops;
 
 class Map::Metro::Exception::IllegalConstructorArguments with Map::Metro::Exception using Moose {
 
-    use Types::Standard -types;
     use Map::Metro::Exception -all;
-    use namespace::autoclean;
 
     has info => (
         is => 'ro',

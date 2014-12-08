@@ -1,5 +1,4 @@
-use Map::Metro::Standard;
-use Moops;
+use Map::Metro::Standard::Moops;
 
 class Map::Metro::Cmd::Available extends Map::Metro::Cmd using Moose {
 
@@ -9,10 +8,9 @@ class Map::Metro::Cmd::Available extends Map::Metro::Cmd using Moose {
     
     method run {
         my $map = Map::Metro->new;
-        my $locator = $map->_plugin_locator;
-
+ 
         say "The following maps are available:\n";
-        say join "\n" => map { s{^Map::Metro::For::}{ }; $_ } sort $locator->plugins;
+        say join "\n" => map { s{^Map::Metro::For::}{ }; $_ } $map->available_maps;
     }
 }
 

@@ -1,23 +1,12 @@
-use Map::Metro::Standard;
-use Moops;
+use Map::Metro::Standard::Moops;
 
 class Map::Metro::Graph using Moose {
 
-    use Types::Standard -types;
-    use Types::Path::Tiny 'AbsFile';
-    use String::Trim 'trim';
-    use Eponymous::Hash 'eh';
-    use Try::Tiny;
     use Graph;
-    use MooseX::AttributeShortcuts;
-    use List::AllUtils 'any';
-    use Unicode::Normalize;
-    use experimental 'postderef';
-    use feature 'fc';
 
     use aliased 'Map::Metro::Exception::LineIdDoesNotExistInLineList';
     use aliased 'Map::Metro::Exception::StationNameDoesNotExistInStationList';
-    use Map::Metro::Types -types;
+
     use Map::Metro::Graph::Station;
     use Map::Metro::Graph::Line;
     use Map::Metro::Graph::Segment;
@@ -115,13 +104,12 @@ class Map::Metro::Graph using Moose {
     has asps => (
         is => 'rw',
         lazy => 1,
-        builder => 1,
+        builder => 'calculate_shortest_paths',
         predicate => 1,
         init_arg => undef,
     );
 
     method _build_full_graph {
-        $self->calculate_paths;
 
         my $graph = Graph->new;
 
@@ -132,12 +120,20 @@ class Map::Metro::Graph using Moose {
         }
         return $graph;
     }
-    method _build_asps {
+    method calculate_shortest_paths {
         return $self->full_graph->APSP_Floyd_Warshall;
     }
 
     method parse {
-        my @rows = split /\r?\n/ => $self->filepath->slurp;
+        $self->build_network;
+        $self->construct_connections;
+        $self->calculate_shortest_paths;
+
+        return $self;
+    }
+
+    method build_network {
+        my @rows = split /\r?\n/ => $self->filepath->slurp_utf8;
         my $context = undef;
 
         ROW:
@@ -156,9 +152,6 @@ class Map::Metro::Graph using Moose {
             ;
 
         }
-        $self->asps;
-
-        return $self;
     }
     
     around add_station(Str $text) {
@@ -238,14 +231,14 @@ class Map::Metro::Graph using Moose {
         return $self->line_station_count + 1;
     }
 
-    method calculate_paths {
+    method construct_connections {
         if(!($self->has_stations && $self->has_lines && $self->has_segments)) {
             IncompleteParse->throw;
         }
 
         #* Walk through all segments, and all lines for
         #* that segment. Add pairwise connections between
-        #* the to stations on the same line
+        #* all pair of stations on the same line
         SEGMENT:
         foreach my $segment ($self->all_segments) {
 
@@ -279,6 +272,8 @@ class Map::Metro::Graph using Moose {
                                                                    destination_line_station => $origin_line_station,
                                                                    weight => $weight);
 
+                $origin_line_station->station->add_connecting_station($destination_line_station->station);
+                $destination_line_station->station->add_connecting_station($origin_line_station->station);
                 
                 $self->add_connection($conn);
                 $self->add_connection($inv_conn);
@@ -348,48 +343,132 @@ class Map::Metro::Graph using Moose {
             foreach my $dest_id (@destination_line_station_ids) {
                 my $dest = $self->get_line_station_by_id($dest_id);
 
-                my $graphroutes = [[ $self->asps->path_vertices($origin_id, $dest_id) ]];
+                my $graphroute = [ $self->asps->path_vertices($origin_id, $dest_id) ];
 
                 if($origin->possible_on_same_line($dest) && !$origin->on_same_line($dest)) {
                     next DESTINATION_LINE_STATION;
                 }
-                say scalar $graphroutes->@*;
-                ROUTE:
-                foreach my $graphroute ($graphroutes->@*) {
 
-                    my $route = Map::Metro::Graph::Route->new;
+                my $route = Map::Metro::Graph::Route->new;
 
-                    LINE_STATION:
-                    foreach my $ls_id ($graphroute->@*) {
-                        my $ls = $self->get_line_station_by_id($ls_id);
-                        my $rs = Map::Metro::Graph::RouteStation->new(line_station => $ls);
+                LINE_STATION:
+                foreach my $ls_id ($graphroute->@*) {
+                    my $ls = $self->get_line_station_by_id($ls_id);
+                    my $rs = Map::Metro::Graph::RouteStation->new(line_station => $ls);
 
-                        $routing->add_line_station($ls);
-                        $route->add_route_station($rs);
-                    }
-                    next ROUTE if $route->transfer_on_final_station;
-                    $routing->add_route($route);
+                    $routing->add_line_station($ls);
+                    $route->add_route_station($rs);
                 }
+
+                next DESTINATION_LINE_STATION if $route->transfer_on_first_station;
+                next DESTINATION_LINE_STATION if $route->transfer_on_final_station;
+
+                $routing->add_route($route);
             }
         }
-
         return $routing;
     }
     
     method all_pairs {
 
-        my $routes = [];
+        my $routings = [];
 
+        STATION:
         foreach my $station ($self->all_stations) {
             my @other_stations = grep { $_->id != $station->id } $self->all_stations;
 
-            foreach my $os (@other_stations) {
-                push $routes->@* => $self->routes_for($station->name, $os->name);
+            OTHER_STATION:
+            foreach my $other_station (@other_stations) {
+                push $routings->@* => $self->routes_for($station, $other_station);
             }
         }
-        return $routes;
+        return $routings;
     }
 
 }
 
 __END__
+
+=encoding utf-8
+
+=head1 NAME
+
+Map::Metro::Graph - An entire graph
+
+=head1 SYNOPSIS
+
+    my $graph = Map::Metro->new('Stockholm')->parse;
+
+    my $routing = $graph->routes_for('Universitetet',  'Kista');
+
+    #* prints a text representation of routes between the two stations
+    say $routing->to_text;
+
+    #* It is also possible to traverse the constructed objects
+    say $routing->origin_station->name;
+    say $routing->destination_station->name;
+
+    foreach my $route ($routing->all_routes) {
+        foreach my $route_station ($route->all_route_stations) {
+            say 'Transfer!' if $route_station->is_transfer;
+            say $route_station->line_station->line->id;
+            say $route_station->line_station->station->name;
+        }
+        say '----';
+    }
+
+    #* The constructed Graph object is also available
+    my $full_graph = $graph->full_graph;
+
+=head1 DESCRIPTION
+
+This class is at the core of L<Map::Metro>. After a map has been parsed the returned instance of this class contains
+the entire network (graph) in a hierarchy of objects.
+
+=head2 Methods
+
+=head3 get_routes($from, $to)
+
+B<C<$from>>
+
+Mandatory. The starting station, can be either a station id (integer), or a station name (string). Must be of the same type as B<C<$to>>.
+
+B<C<$to>>
+
+Mandatory. The finishing station, can be either a station id (integer), or a station name (string). Must be of the same type as B<C<$from>>.
+
+Returns a L<Map::Metro::Graph::Routing> object.
+
+
+=head3 all_routes()
+
+Returns an array reference of L<Map::Metro::Graph::Routing> objects containing every unique route in the network.
+
+
+=head3 asps()
+
+This class uses L<Graph> under the hood. This method exposes the L<Graph/"All-Pairs Shortest Paths (APSP)"> object returned
+by the APSP_Floyd_Warshall() method. If you prefer to traverse the graph via this object, observe that the vertices is identified
+by their C<line_station_id> in L<Map::Metro::Graph::LineStation>.
+
+=head3 full_graph()
+
+This is the other L<Graph> related method. This returns the complete Graph object created from parsing the map.
+
+
+=head1 AUTHOR
+
+Erik Carlsson E<lt>info@code301.comE<gt>
+
+=head1 COPYRIGHT
+
+Copyright 2014 - Erik Carlsson
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
+
+

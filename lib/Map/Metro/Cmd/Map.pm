@@ -1,12 +1,9 @@
-use Map::Metro::Standard;
-use Moops;
+use Map::Metro::Standard::Moops;
 
 class Map::Metro::Cmd::Map extends Map::Metro::Cmd using Moose {
 
-    use Unicode::Normalize;
     use MooseX::App::Command;
-    use Types::Standard -types;
-    use Try::Tiny;
+    use experimental 'postderef';
     
     parameter cityname => (
         is => 'rw',
@@ -35,19 +32,11 @@ class Map::Metro::Cmd::Map extends Map::Metro::Cmd using Moose {
         
         try {
             my $routing = $graph->routes_for($self->origin,  $self->destination);
-           # my $routing = $graph->routes_for(19, 73);
             say $routing->to_text;
         }
         catch {
             say sprintf q{Try search by station id. Run '%s stations %s' to see station ids.}, $0, $self->cityname;
-        }
-
-        my $all = $graph->all_pairs;
-        
-        #foreach my $route ($all->@*) {
-        #
-        #    say $route->to_text;
-        #}
+        };
     }
 }
 

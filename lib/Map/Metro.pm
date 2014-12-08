@@ -1,14 +1,8 @@
-use Map::Metro::Standard;
-use Moops;
+use Map::Metro::Standard::Moops;
 
 class Map::Metro with MooseX::Object::Pluggable using Moose  {
 
-    use Type::Tiny;
-    use Types::Path::Tiny qw/AbsFile/;
-    use List::AllUtils qw/any/;
-    use MooseX::AttributeShortcuts;
     use aliased 'Map::Metro::Exception::IllegalConstructorArguments';
-    use experimental 'postderef';
 
     use Map::Metro::Graph;
 
@@ -83,4 +77,141 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
         return Map::Metro::Graph->new(filepath => $self->filepath)->parse;
     }
 
+    method available_maps {
+        return sort $self->_plugin_locator->plugins;
+    }
 }
+
+
+=encoding utf-8
+
+=head1 NAME
+
+Map::Metro - Public transport graphing
+
+=for html <p><a style="float: left;" href="https://travis-ci.org/Csson/p5-Map-Metro"><img src="https://travis-ci.org/Csson/p5-Map-Metro.svg?branch=master">&nbsp;</a>
+
+=head1 SYNOPSIS
+
+    # Install a map
+    $ cpanm Map::Metro::For::Stockholm
+
+    # And then
+    my $graph = Map::Metro->new('Stockholm')->parse;
+
+    my $routing = $graph->routes_for('Universitetet', 'Kista');
+    print $routing->to_text;
+
+=head1 NOTE
+
+Currently only Perl 5.20+ is supported.
+
+L<Map::Tube> works with 5.6.
+
+Included in this distribution is a script to convert C<Map::Metro> maps into C<Map::Tube> maps, if L<Map::Tube> misses one you need.
+
+=head1 DESCRIPTION
+
+The purpose of this distribution is to find the shortest L<unique|/"What is a unique path?"> route/routes between two stations in a transport grid.
+
+=head2 Methods
+
+=head3 new($city)
+
+B<C<$city>>
+
+The name of the city you want to search connections in. Mandatory, unless you are only going to call L</"available_maps">.
+
+
+=head3 parse()
+
+Returns a L<Map::Metro::Graph> object containing the entire graph.
+
+
+=head3 available_maps()
+
+Returns an array reference containing the names of all Map::Metro maps installed on the system.
+
+
+
+=head2 What is a unique path?
+
+The following rules is a guideline:
+
+If the starting station and finishing station...
+
+=over 4
+
+=item ...is on the same line there will be no transfers to other lines.
+
+=item ...shares multiple lines (e.g., both stations are on both line 2 and 4), each line constitutes a route.
+
+=item ...are on different lines a transfer will take place at a shared station. No matter how many shared stations there are, there will only be one route returned (but which transfer station is used can differ between queries).
+
+=item ...has no shared stations, the shortest route/routes will be returned.
+
+
+
+=head1 MORE INFORMATION
+
+=over 4
+
+=item L<Map::Metro::Graph> - What to do with the graph object. This is where it happens.
+
+=item L<Map::Metro::For> - How to make your own maps.
+
+=item L<Map::Metro::Cmd> - A guide to the command line application.
+
+=item L<Map::Metro::Graph::Connection> - Defines a MMG::Connection.
+
+=item L<Map::Metro::Graph::Line> - Defines a MMG::Line.
+
+=item L<Map::Metro::Graph::LineStation> - Defines a MMG::LineStation.
+
+=item L<Map::Metro::Graph::Route> - Defines a MMG::Route.
+
+=item L<Map::Metro::Graph::RouteStation> - Defines a MMG::RouteStation.
+
+=item L<Map::Metro::Graph::Routing> - Defines a MMG::Routing.
+
+=item L<Map::Metro::Graph::Segment> - Defines a MMG::Segment.
+
+=item L<Map::Metro::Graph::Station> - Defines a MMG::Station
+
+=back
+
+
+=head1 Status
+
+This is somewhat experimental. I don't expect that the map file format will I<break>, but it might be
+extended (for example with geo position, transfers to stations where the name differs, custom weight for transfers).
+
+For all maps in the Map::Metro::For namespace (unless noted):
+
+=over 4
+
+=item These maps are not an official source. Use accordingly.
+
+=item Each map should state its own specific status.
+
+=back
+
+=head1 SEE ALSO
+
+L<Map::Tube>
+
+
+=head1 AUTHOR
+
+Erik Carlsson E<lt>info@code301.comE<gt>
+
+=head1 COPYRIGHT
+
+Copyright 2014 - Erik Carlsson
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut

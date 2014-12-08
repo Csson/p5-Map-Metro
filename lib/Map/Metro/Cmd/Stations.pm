@@ -1,11 +1,8 @@
-use Map::Metro::Standard;
-use Moops;
+use Map::Metro::Standard::Moops;
 
 class Map::Metro::Cmd::Stations extends Map::Metro::Cmd using Moose {
 
-    use Unicode::Normalize;
     use MooseX::App::Command;
-    use Types::Standard -types;
     use Term::Size::Any 'chars';
     use experimental 'postderef';
     
