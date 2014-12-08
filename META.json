@@ -44,6 +44,7 @@
             "Moose" : "0",
             "MooseX::App" : "0",
             "MooseX::AttributeShortcuts" : "0",
+            "String::Trim" : "0",
             "Types::Path::Tiny" : "0",
             "experimental" : "0",
             "perl" : "5.020000"

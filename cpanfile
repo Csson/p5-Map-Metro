@@ -8,3 +8,4 @@ requires 'experimental';
 requires 'Eponymous::Hash';
 requires 'MooseX::App';
 requires 'MooseX::AttributeShortcuts';
+requires 'String::Trim';
