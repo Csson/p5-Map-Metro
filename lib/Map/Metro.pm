@@ -82,6 +82,7 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
     }
 }
 
+__END__
 
 =encoding utf-8
 
