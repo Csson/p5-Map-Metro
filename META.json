@@ -1,7 +1,7 @@
 {
-   "abstract" : "Short intro",
+   "abstract" : "Public transport graphing",
    "author" : [
-      "** Replace **"
+      "Erik Carlsson <info@code301.com>"
    ],
    "dynamic_config" : 0,
    "generated_by" : "Dist::Zilla version 5.020, CPAN::Meta::Converter version 2.140640",
@@ -38,21 +38,44 @@
       },
       "runtime" : {
          "requires" : {
-            "perl" : "v5.10.1",
-            "strict" : "0",
+            "Eponymous::Hash" : "0",
+            "Graph" : "0",
+            "IO::File" : "0",
+            "List::AllUtils" : "0",
+            "List::Compare" : "0",
+            "Moops" : "0",
+            "Moose::Role" : "0",
+            "MooseX::App" : "0",
+            "MooseX::App::Command" : "0",
+            "MooseX::AttributeShortcuts" : "0",
+            "MooseX::OneArgNew" : "0",
+            "Role::HasMessage::Errf" : "0",
+            "Role::HasPayload::Merged" : "0",
+            "StackTrace::Auto" : "0",
+            "Sub::Exporter" : "0",
+            "Syntax::Collector" : "0",
+            "Term::Size::Any" : "0",
+            "Throwable" : "0",
+            "Throwable::X::Types" : "0",
+            "Type::Utils" : "0",
+            "Types::Standard" : "0",
+            "XML::Writer" : "0",
+            "aliased" : "0",
+            "base" : "0",
+            "experimental" : "0",
+            "namespace::clean" : "0",
+            "perl" : "v5.20.0",
             "warnings" : "0"
          }
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0"
+            "Test::More" : "0",
+            "strict" : "0"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "0.0001",
-   "x_contributors" : [
-      "Erik Carlsson <info@code301.com>"
-   ]
+   "version" : "0.0001"
 }
 
