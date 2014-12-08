@@ -28,14 +28,17 @@ class Map::Metro::Cmd::Map extends Map::Metro::Cmd using Moose {
     
     method run {
 
-        my $graph = Map::Metro->new($self->cityname)->parse;
+        my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname)->parse : Map::Metro::Shim->new($self->cityname)->parse;
         
         try {
             my $routing = $graph->routes_for($self->origin,  $self->destination);
             say $routing->to_text;
         }
         catch {
+            my $error = $_;
+            $error->out->fatal if $error->does('Map::Metro::Exception');
             say sprintf q{Try search by station id. Run '%s stations %s' to see station ids.}, $0, $self->cityname;
+
         };
     }
 }

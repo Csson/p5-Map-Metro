@@ -9,10 +9,10 @@ declares Connection,
          Line,
          LineStation,
          Route,
-         RouteStation,
          Routing,
          Segment,
-         Station
+         Station,
+         Transfer
     {
 
     use Type::Utils -all;
@@ -21,8 +21,8 @@ declares Connection,
     class_type Line         => { class => 'Map::Metro::Graph::Line' };
     class_type LineStation  => { class => 'Map::Metro::Graph::LineStation' };
     class_type Route        => { class => 'Map::Metro::Graph::Route' };
-    class_type RouteStation => { class => 'Map::Metro::Graph::RouteStation' };
     class_type Routing      => { class => 'Map::Metro::Graph::Routing' };
     class_type Segment      => { class => 'Map::Metro::Graph::Segment' };
     class_type Station      => { class => 'Map::Metro::Graph::Station' };
+    class_type Transfer     => { class => 'Map::Metro::Graph::Transfer' };
 }

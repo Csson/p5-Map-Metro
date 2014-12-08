@@ -26,6 +26,7 @@ class Map::Metro::Graph::Routing using Moose {
         isa => ArrayRef[ Route ],
         traits => ['Array'],
         handles => {
+            get_route => 'get',
             add_route => 'push',
             all_routes => 'elements',
             sort_routes => 'sort',
@@ -52,10 +53,11 @@ class Map::Metro::Graph::Routing using Moose {
 
         my $route_count = 0;
         foreach my $route ($self->ordered_routes) {
-            push @rows => sprintf '-- Route %d  ----------', ++$route_count;
+            push @rows => sprintf '-- Route %d (cost %s) ----------', ++$route_count, $route->weight;
             push @rows => $route->to_text;
             push @rows => '';
         }
+        push @rows => '*: Transfer to other line', '+: Transfer to other station', '';
 
         return join "\n" => @rows;
     }
@@ -68,7 +70,7 @@ __END__
 
 =head1 NAME
 
-Map::Metro::Graph::RouteStation - What is a routing?
+Map::Metro::Graph::Routing - What is a routing?
 
 =head1 DESCRIPTION
 
@@ -92,6 +94,9 @@ Returns an array of all L<LineStation|Map::Metro::Graph::LineStations> possible 
 
 Returns an array of all L<Route|Map::Metro::Graph::Routes> in the routing.
 
+=head2 to_text()
+
+Returns a string representation of the routing, suitable for displaying in a terminal.
 
 =head1 AUTHOR
 

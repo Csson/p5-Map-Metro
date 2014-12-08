@@ -17,7 +17,8 @@ class Map::Metro::Cmd::Stations extends Map::Metro::Cmd using Moose {
     
     method run {
 
-        my $graph = Map::Metro->new($self->cityname)->parse;
+        my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname)->parse : Map::Metro::Shim->new($self->cityname)->parse;
+
         my @station_texts = map { $_->to_text } sort { $a->name cmp $b->name } $graph->all_stations;
 
         my $column_width = length ((sort { length $b <=> length $a } @station_texts)[0]) + 3;

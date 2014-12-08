@@ -2,56 +2,56 @@ use Map::Metro::Standard::Moops;
 
 class Map::Metro::Graph::Route using Moose {
 
-    has route_stations => (
+    has connections => (
         is => 'ro',
-        isa => ArrayRef[ RouteStation ],
+        isa => ArrayRef[ Connection ],
         traits => ['Array'],
-        default => sub { [] },
+        predicate => 1,
         handles => {
-            add_route_station => 'push',
-            route_station_count => 'count',
-            get_route_station => 'get',
-            all_route_stations => 'elements',
+            add_connection => 'push',
+            connection_count => 'count',
+            get_connection => 'get',
+            all_connections => 'elements',
         }
     );
-    has weight => (
-        is => 'rw',
-        isa => Int,
-        default => 0,
-    );
-    
 
-    method get_latest_route_station {
-        return $self->get_route_station( $self->route_station_count - 1);
+    around add_connection($conn) {
+        return $self->$next($conn) if !$self->has_connections;
+
+        my $prev_conn = $self->get_connection(-1);
+        $conn->previous_connection($prev_conn);
+        $prev_conn->next_connection($conn);
+
+        return $self->$next($conn);
     }
 
-    around add_route_station($rs) {
-        my $latest_rs = $self->get_latest_route_station;
-
-        #* Same station? Transfer!
-        if(defined $latest_rs && $latest_rs->line_station->station->id == $rs->line_station->station->id) {
-            $rs->is_transfer(1);
-            $self->weight($self->weight + 3);
-        }
-        else {
-            $self->weight($self->weight + 1);
-        }
-
-        $self->$next($rs);
+    method weight {
+        return sum map { $_->weight } $self->all_connections;
     }
 
     method transfer_on_final_station {
-        return 0 if $self->route_station_count < 2;
-        return $self->get_route_station(-1)->line_station->station->id == $self->get_route_station(-2)->line_station->station->id;
+        return 0 if $self->connection_count < 2;
+        my $final_conn = $self->get_connection(-1);
+        return $final_conn->origin_line_station->station->id == $final_conn->destination_line_station->station->id;
     }
     method transfer_on_first_station {
-        return 0 if $self->route_station_count < 2;
-        return $self->get_route_station(0)->line_station->station->id == $self->get_route_station(1)->line_station->station->id;
+        return 0 if $self->connection_count < 2;
+        my $first_conn = $self->get_connection(0);
+        return $first_conn->origin_line_station->station->id == $first_conn->destination_line_station->station->id;
     }
-
+    method longest_line_name_length {
+        return length((sort { length $b->origin_line_station->line->name <=> length $a->origin_line_station->line->name } $self->all_connections)[0]->origin_line_station->line->name);
+    }
     method to_text {
+        my $name_length = $self->longest_line_name_length;
+        my @rows = map { $_->to_text($name_length) } $self->all_connections;
 
-        return join "\n" => map { $_->to_text } ($self->all_route_stations);
+        push @rows => '', map { $_->to_text($name_length) } 
+                          sort { $a->name cmp $b->name } 
+                          uniq
+                          map { $_->origin_line_station->line } $self->all_connections;
+
+        return join "\n" => @rows;
     }
 }
 
@@ -65,18 +65,18 @@ Map::Metro::Graph::Route - What is a route?
 
 =head1 DESCRIPTION
 
-A route is a specific sequence of L<LineStations|Map::Metro::Graph::LineStation> (contained in L<RouteStations|Map::Metro::Graph::RouteStation>).
+A route is a specific sequence of L<Connections|Map::Metro::Graph::Connection> from one L<LineStation|Map::Metro::Graph::LineStation> to another.
 
 =head1 METHODS
 
-=head2 all_route_stations()
+=head2 all_connections()
 
-Returns an array of the L<RouteStations|Map::Metro::Graph::RouteStation> in the route, in the order they are travelled.
+Returns an array of the L<Connections|Map::Metro::Graph::Connection> in the route, in the order they are travelled.
 
 
 =head2 weight()
 
-Returns an integer representing the total 'cost' of this route.
+Returns an integer representing the total 'cost' of all L<Connections|Map::Metro::Graph::Connection> on this route.
 
 
 =head1 AUTHOR

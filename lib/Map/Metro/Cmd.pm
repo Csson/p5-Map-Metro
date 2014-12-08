@@ -8,6 +8,7 @@ use MooseX::App qw/Config Color/;
     use Types::Standard -types;
 
     use Map::Metro;
+    use Map::Metro::Shim;
 
     app_description 'Command line interface to Map::Metro';
 
@@ -44,6 +45,8 @@ B<C<$city>>
 Mandatory string.
 
 Does B<map> for all stations in the C<Map::Metro::For::$city> map.
+
+If C<$city> contains a dot C<.>, it is assumed to be a file path to a map file. The map file is parsed via L<Map::Metro::Shim>.
 
 
 =head2 map-metro.pl available

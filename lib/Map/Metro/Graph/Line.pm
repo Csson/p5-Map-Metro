@@ -26,6 +26,10 @@ class Map::Metro::Graph::Line using Moose {
         }
         $self->$orig(%args);
     }
+
+    method to_text(Int $name_length = 0) {
+        return sprintf "%-${name_length}s  %s", $self->name, $self->description;
+    }
     
 }
 

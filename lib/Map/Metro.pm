@@ -102,11 +102,11 @@ Map::Metro - Public transport graphing
     my $routing = $graph->routes_for('Universitetet', 'Kista');
     print $routing->to_text;
 
-=head1 NOTE
+=head1 COMPATIBILITY
 
 Currently only Perl 5.20+ is supported.
 
-L<Map::Tube> works with 5.6.
+L<Map::Tube> works with Perl 5.6.
 
 Included in this distribution is a script to convert C<Map::Metro> maps into C<Map::Tube> maps, if L<Map::Tube> misses one you need.
 
@@ -170,13 +170,13 @@ If the starting station and finishing station...
 
 =item L<Map::Metro::Graph::Route> - Defines a MMG::Route.
 
-=item L<Map::Metro::Graph::RouteStation> - Defines a MMG::RouteStation.
-
 =item L<Map::Metro::Graph::Routing> - Defines a MMG::Routing.
 
 =item L<Map::Metro::Graph::Segment> - Defines a MMG::Segment.
 
 =item L<Map::Metro::Graph::Station> - Defines a MMG::Station
+
+=item L<Map::Metro::Graph::Transfer> - Defines a MMG::Transfer.
 
 =back
 
@@ -184,7 +184,7 @@ If the starting station and finishing station...
 =head1 Status
 
 This is somewhat experimental. I don't expect that the map file format will I<break>, but it might be
-extended (for example with geo position, transfers to stations where the name differs, custom weight for transfers).
+extended. Only the documented api should be relied on, though breaking changes might occur.
 
 For all maps in the Map::Metro::For namespace (unless noted):
 
@@ -192,7 +192,7 @@ For all maps in the Map::Metro::For namespace (unless noted):
 
 =item These maps are not an official source. Use accordingly.
 
-=item Each map should state its own specific status.
+=item Each map should state its own specific status with regards to coverage of the transport network.
 
 =back
 

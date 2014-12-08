@@ -4,17 +4,18 @@ class Map::Metro::Graph using Moose {
 
     use Graph;
 
+    use aliased 'Map::Metro::Exception::DuplicateStationName';
     use aliased 'Map::Metro::Exception::LineIdDoesNotExistInLineList';
     use aliased 'Map::Metro::Exception::StationNameDoesNotExistInStationList';
 
-    use Map::Metro::Graph::Station;
-    use Map::Metro::Graph::Line;
-    use Map::Metro::Graph::Segment;
-    use Map::Metro::Graph::LineStation;
     use Map::Metro::Graph::Connection;
-    use Map::Metro::Graph::Routing;
+    use Map::Metro::Graph::Line;
+    use Map::Metro::Graph::LineStation;
     use Map::Metro::Graph::Route;
-    use Map::Metro::Graph::RouteStation;
+    use Map::Metro::Graph::Routing;
+    use Map::Metro::Graph::Segment;
+    use Map::Metro::Graph::Station;
+    use Map::Metro::Graph::Transfer;
 
     with('MooseX::OneArgNew' => {
         type => AbsFile,
@@ -81,7 +82,7 @@ class Map::Metro::Graph using Moose {
             find_line_station => 'first',
         },
     );
-    has connection => (
+    has connections => (
         is => 'ro',
         traits => ['Array'],
         isa => ArrayRef[ Connection ],
@@ -92,6 +93,21 @@ class Map::Metro::Graph using Moose {
             add_connection => 'push',
             all_connections  => 'elements',
             connection_count => 'count',
+            find_connection => 'first',
+        },
+    );
+    has transfers => (
+        is => 'ro',
+        traits => ['Array'],
+        isa => ArrayRef[ Transfer ],
+        predicate => 1,
+        default => sub { [] },
+        init_arg => undef,
+        handles => {
+            add_transfer => 'push',
+            all_transfers => 'elements',
+            transfer_count => 'count',
+            get_transfer => 'get',
         },
     );
     has full_graph => (
@@ -140,26 +156,47 @@ class Map::Metro::Graph using Moose {
         foreach my $row (@rows) {
             next ROW if !length $row || $row =~ m{[ \t]*#};
 
-            if($row =~ m{^--(\w+)} && (any { $_ eq $1 } qw/stations lines segments/)) {
+            if($row =~ m{^--(\w+)} && (any { $_ eq $1 } qw/stations transfers lines segments/)) {
                 $context = $1;
                 next ROW;
             }
 
-              $context eq 'stations' ? $self->add_station($row)
-            : $context eq 'lines'    ? $self->add_line($row)
-            : $context eq 'segments' ? $self->add_segment($row)
-            :                          ()
+              $context eq 'stations'  ? $self->add_station($row)
+            : $context eq 'transfers' ? $self->add_transfer($row)
+            : $context eq 'lines'     ? $self->add_line($row)
+            : $context eq 'segments'  ? $self->add_segment($row)
+            :                           ()
             ;
-
         }
     }
     
     around add_station(Str $text) {
         my $name = trim $text;
+
+        if(my $station = $self->get_station_by_name($name, check => 0)) {
+            return $station;
+        }
+
         my $id = $self->station_count + 1;
         my $station = Map::Metro::Graph::Station->new(eh $name, $id);
 
         $self->$next($station);
+    }
+
+    around add_transfer(Str $text) {
+        $text = trim $text;
+
+        my($origin_station_name, $destination_station_name, $option_string) = split /\|/ => $text;
+        my $origin_station = $self->get_station_by_name($origin_station_name);
+        my $destination_station = $self->get_station_by_name($destination_station_name);
+
+        my $options = defined $option_string ? $self->make_options($option_string, keys => [qw/weight/]) : {};
+
+        my $transfer = Map::Metro::Graph::Transfer->new(origin_station => $origin_station,
+                                                        destination_station => $destination_station,
+                                                        $options->%*);
+
+        $self->$next($transfer);
     }
 
     around add_line(Str $text) {
@@ -184,13 +221,7 @@ class Map::Metro::Graph using Moose {
         }
         catch {
             my $error = $_;
-
-            if($error->does('Map::Metro::Exception')) {
-                $error->out->fatal;
-            }
-            else {
-                die $error;
-            }
+            $error->does('Map::Metro::Exception') ? $error->out->fatal : die $error;
         };
 
         my $segment = Map::Metro::Graph::Segment->new(eh $line_ids, $origin_station, $destination_station);
@@ -210,9 +241,10 @@ class Map::Metro::Graph using Moose {
         return $self->find_line(sub { $_->id eq $line_id })
             || LineIdDoesNotExistInLineList->throw(line_id => $line_id);
     }
-    method get_station_by_name(Str $station_name) {
-        return $self->find_station(sub { fc($_->name) eq fc($station_name) })
-            || StationNameDoesNotExistInStationList->throw(station_name => $station_name);
+    method get_station_by_name(Str $station_name, :$check = 1 ) {
+        my $station = $self->find_station(sub { fc($_->name) eq fc($station_name) });
+        return $station if $station;
+        StationNameDoesNotExistInStationList->throw(station_name => $station_name) if $check;
     }
     method get_station_by_id(Int $id) {
         return $self->find_station(sub { $_->id == $id })
@@ -227,8 +259,32 @@ class Map::Metro::Graph using Moose {
     method get_line_station_by_id(Int $line_station_id) {
         return $self->find_line_station(sub { $_->line_station_id == $line_station_id });
     }
+    method get_connection_by_line_station_ids(Int $first_ls_id, Int $second_ls_id) {
+        my $first_ls = $self->get_line_station_by_id($first_ls_id);
+        my $second_ls = $self->get_line_station_by_id($second_ls_id);
+
+        return $self->find_connection(
+            sub { 
+                 $_->origin_line_station->line_station_id == $first_ls->line_station_id
+              && $_->destination_line_station->line_station_id == $second_ls->line_station_id
+            }
+        );
+    }
     method next_line_station_id {
         return $self->line_station_count + 1;
+    }
+    method make_options(Str $string, ArrayRef[Str] :$keys = []) {
+        my $options = {};
+        my @options = split /, ?/ => $string;
+
+        OPTION:
+        foreach my $option (@options) {
+            my($key, $value) = split /:/ => $option;
+
+            next OPTION if scalar $keys->@* && (none { $key eq $_ } $keys->@*);
+            $options->{ $key } = $value;
+        }
+        return $options;
     }
 
     method construct_connections {
@@ -301,6 +357,38 @@ class Map::Metro::Graph using Moose {
                 }
             }
         }
+
+        #* Walk through all transfers, and add connections between all line stations of the two stations
+        TRANSFER:
+        foreach my $transfer ($self->all_transfers) {
+            my $origin_station = $transfer->origin_station;
+            my $destination_station = $transfer->destination_station;
+            my @line_stations_at_origin = $self->get_line_stations_by_station($origin_station);
+
+            ORIGIN_LINE_STATION:
+            foreach my $origin_line_station (@line_stations_at_origin) {
+                my @line_stations_at_destination = $self->get_line_stations_by_station($destination_station);
+
+                DESTINATION_LINE_STATION:
+                foreach my $destination_line_station (@line_stations_at_destination) {
+
+                    my $conn = Map::Metro::Graph::Connection->new(origin_line_station => $origin_line_station,
+                                                                  destination_line_station => $destination_line_station,
+                                                                  weight => $transfer->weight);
+
+                    my $inv_conn = Map::Metro::Graph::Connection->new(origin_line_station => $destination_line_station,
+                                                                      destination_line_station => $origin_line_station,
+                                                                      weight => $transfer->weight);
+
+                    $origin_line_station->station->add_connecting_station($destination_line_station->station);
+                    $destination_line_station->station->add_connecting_station($origin_line_station->station);
+
+                    $self->add_connection($conn);
+                    $self->add_connection($inv_conn);
+                }
+            }
+
+        }
     }
     multi method routes_for(Int $origin_id, Int $destination_id) {
         my $origin = $self->get_station_by_id($origin_id);
@@ -352,12 +440,12 @@ class Map::Metro::Graph using Moose {
                 my $route = Map::Metro::Graph::Route->new;
 
                 LINE_STATION:
-                foreach my $ls_id ($graphroute->@*) {
-                    my $ls = $self->get_line_station_by_id($ls_id);
-                    my $rs = Map::Metro::Graph::RouteStation->new(line_station => $ls);
+                foreach my $index (0 .. scalar $graphroute->@* - 2) {
+                    my $this_line_station_id = $graphroute->[ $index ];
+                    my $next_line_station_id = $graphroute->[ $index + 1 ];
 
-                    $routing->add_line_station($ls);
-                    $route->add_route_station($rs);
+                    my $connection = $self->get_connection_by_line_station_ids($this_line_station_id, $next_line_station_id);
+                    $route->add_connection($connection);
                 }
 
                 next DESTINATION_LINE_STATION if $route->transfer_on_first_station;

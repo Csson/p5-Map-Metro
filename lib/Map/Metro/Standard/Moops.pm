@@ -14,7 +14,7 @@ package Map::Metro::Standard::Moops {
         my %opts = @_;
 
         push @{ $opts{'imports'} ||= [] } => (
-            'List::AllUtils'    => [qw/any/],
+            'List::AllUtils'    => [qw/any none sum uniq/],
             'Eponymous::Hash'   => ['eh'],
             'String::Trim'      => ['trim'],
             'feature'           => [qw/:5.20 fc/],
