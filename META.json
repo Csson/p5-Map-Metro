@@ -39,6 +39,7 @@
       "runtime" : {
          "requires" : {
             "Eponymous::Hash" : "0",
+            "Graph" : "0",
             "List::AllUtils" : "0",
             "Moops" : "0",
             "Moose" : "0",

@@ -1,12 +1,13 @@
 requires 'perl', '5.020000';
 
-requires 'Moose';
-requires 'Moops';
-requires 'Types::Path::Tiny';
-requires 'List::AllUtils';
-requires 'experimental';
 requires 'Eponymous::Hash';
+requires 'experimental';
+requires 'Graph';
+requires 'List::AllUtils';
+requires 'Moose';
 requires 'MooseX::App';
 requires 'MooseX::AttributeShortcuts';
+requires 'Moops';
 requires 'String::Trim';
 requires 'Throwable::X';
+requires 'Types::Path::Tiny';
