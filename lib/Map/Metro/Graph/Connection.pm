@@ -22,6 +22,7 @@ class Map::Metro::Graph::Connection using Moose {
     has next_connection => (
         is => 'rw',
         isa => Maybe[ Connection ],
+        predicate => 1,
     );
     has weight => (
         is => 'ro',
@@ -54,12 +55,17 @@ class Map::Metro::Graph::Connection using Moose {
         my @rows = ();
 
         push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => ($self->was_line_transfer && !$self->was_station_transfer ? '*' : ''),
-                                                    $self->origin_line_station->line->name,
-                                                    $self->origin_line_station->station->name;
+                                                                       $self->origin_line_station->line->name,
+                                                                       $self->origin_line_station->station->name;
         if($self->is_station_transfer) {
             push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => ($self->is_station_transfer ? '+' : ''),
                                                     ' ' x length $self->origin_line_station->line->name,
                                                     $self->destination_line_station->station->name;
+        }
+        if(!$self->has_next_connection) {
+            push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => '',
+                                                                     $self->destination_line_station->line->name,
+                                                                     $self->destination_line_station->station->name;
         }
         return join "\n" => @rows;
     }
