@@ -22,7 +22,7 @@ class Map::Metro::Graph::Segment using Moose {
         isa => Station,
         required => 1,
     );
-    
+
 }
 
 __END__

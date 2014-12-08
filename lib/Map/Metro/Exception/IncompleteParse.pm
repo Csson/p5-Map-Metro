@@ -10,5 +10,5 @@ class Map::Metro::Exception::IncompleteParse with Map::Metro::Exception using Mo
         lazy => 1,
         default => q{Missing either stations, lines or segments. Check the file for errors.},
     );
-    
+
 }

@@ -10,5 +10,5 @@ class Map::Metro::Exception::IllegalConstructorArguments with Map::Metro::Except
         lazy => 1,
         default => q{Illegal arguments to new(). See documentation.},
     );
-    
+
 }

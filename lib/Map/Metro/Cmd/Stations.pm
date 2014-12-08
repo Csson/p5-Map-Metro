@@ -5,7 +5,7 @@ class Map::Metro::Cmd::Stations extends Map::Metro::Cmd using Moose {
     use MooseX::App::Command;
     use Term::Size::Any 'chars';
     use experimental 'postderef';
-    
+
     parameter cityname => (
         is => 'rw',
         isa => Str,
@@ -14,7 +14,7 @@ class Map::Metro::Cmd::Stations extends Map::Metro::Cmd using Moose {
     );
 
     command_short_description 'Show all stations in a map';
-    
+
     method run {
 
         my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname)->parse : Map::Metro::Shim->new($self->cityname)->parse;
@@ -41,7 +41,7 @@ class Map::Metro::Cmd::Stations extends Map::Metro::Cmd using Moose {
             }
             push $columns->@* => $column;
         }
-        
+
         foreach my $row (0..scalar $columns->[0]->@* - 1) {
             foreach my $column ($columns->@*) {
                 print $column->[$row] if $column->[$row];

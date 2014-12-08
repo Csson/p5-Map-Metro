@@ -4,7 +4,7 @@ class Map::Metro::Cmd::Map extends Map::Metro::Cmd using Moose {
 
     use MooseX::App::Command;
     use experimental 'postderef';
-    
+
     parameter cityname => (
         is => 'rw',
         isa => Str,
@@ -25,11 +25,11 @@ class Map::Metro::Cmd::Map extends Map::Metro::Cmd using Moose {
     );
 
     command_short_description 'Search in a map';
-    
+
     method run {
 
         my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname)->parse : Map::Metro::Shim->new($self->cityname)->parse;
-        
+
         try {
             my $routing = $graph->routes_for($self->origin,  $self->destination);
             say $routing->to_text;

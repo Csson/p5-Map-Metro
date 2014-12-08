@@ -15,7 +15,7 @@ Map::Metro::For - How to make your own map
     Fridhemsplan
     Rådhuset
     T-Centralen
-    
+
     # comments are possible
     Gamla stan
     Slussen
@@ -32,7 +32,7 @@ Map::Metro::For - How to make your own map
     10|T10|Blue line
     11|T11|Blue line
     19|T19|Green line
-    
+
     --segments
     10,11|Stadshagen|Fridhemsplan
     10,11|Fridhemsplan|Rådhuset
@@ -118,7 +118,7 @@ Make a role called C<Map::Metro::For::$city>. See L<Map::Metro::For::Stockholm> 
 An important part is the single attribute the role should have. It B<must> be in this form:
 
     my $city = 'RioDeJaneiro';
-    my $attribute_name = join '_' => map { 
+    my $attribute_name = join '_' => map {
                                   join ('_' => map { lc } grep { length } split m{([A-Z]{1}[^A-Z]*)})
                                } split '::' => $city;
     print $city;

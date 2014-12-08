@@ -46,8 +46,8 @@ class Map::Metro::Graph::Route using Moose {
         my $name_length = $self->longest_line_name_length;
         my @rows = map { $_->to_text($name_length) } $self->all_connections;
 
-        push @rows => '', map { $_->to_text($name_length) } 
-                          sort { $a->name cmp $b->name } 
+        push @rows => '', map { $_->to_text($name_length) }
+                          sort { $a->name cmp $b->name }
                           uniq
                           map { $_->origin_line_station->line } $self->all_connections;
 

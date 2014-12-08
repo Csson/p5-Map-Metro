@@ -1,6 +1,6 @@
 use Map::Metro::Standard::Moops;
 
-library  Map::Metro::Types 
+library  Map::Metro::Types
 
 extends  Types::Standard,
          Types::Path::Tiny

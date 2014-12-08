@@ -6,7 +6,7 @@ class Map::Metro::Cmd::MetroToTube extends Map::Metro::Cmd using Moose {
     use IO::File;
     use XML::Writer;
     use experimental 'postderef';
-    
+
     parameter cityname => (
         is => 'rw',
         isa => Str,
@@ -15,7 +15,7 @@ class Map::Metro::Cmd::MetroToTube extends Map::Metro::Cmd using Moose {
     );
 
     command_short_description 'Convert a Map::Metro map into a Map::Tube map';
-    
+
     method run {
 
         my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname)->parse : Map::Metro::Shim->new($self->cityname)->parse;

@@ -21,7 +21,7 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
         default => undef,
         init_arg => undef,
     );
-    
+
     has _plugin_ns => (
         is => 'ro',
         isa => Str,
@@ -58,9 +58,9 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
         if($self->has_for) {
             my $metromap = $self->get_for(0);
             $self->load_plugin($metromap);
-    
+
             my $filemethod = $self->decamelize($metromap);
-    
+
             $self->filepath($self->$filemethod);
         }
     }
@@ -68,7 +68,7 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
     # Borrowed from Mojo::Util
     method decamelize($string) {
         return $string if $string !~ m{[A-Z]};
-        return join '_' => map { 
+        return join '_' => map {
                                   join ('_' => map { lc } grep { length } split m{([A-Z]{1}[^A-Z]*)})
                                } split '::' => $string;
     }

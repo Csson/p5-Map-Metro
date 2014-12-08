@@ -116,7 +116,7 @@ class Map::Metro::Graph using Moose {
         predicate => 1,
         builder => 1,
     );
-    
+
     has asps => (
         is => 'rw',
         lazy => 1,
@@ -169,7 +169,7 @@ class Map::Metro::Graph using Moose {
             ;
         }
     }
-    
+
     around add_station(Str $text) {
         my $name = trim $text;
 
@@ -232,7 +232,7 @@ class Map::Metro::Graph using Moose {
     around add_line_station($line_station) {
         my $exists = $self->get_line_station_by_line_and_station_id($line_station->line->id, $line_station->station->id);
         return $exists if $exists;
-        
+
         $self->$next($line_station);
         return $line_station;
     }
@@ -264,7 +264,7 @@ class Map::Metro::Graph using Moose {
         my $second_ls = $self->get_line_station_by_id($second_ls_id);
 
         return $self->find_connection(
-            sub { 
+            sub {
                  $_->origin_line_station->line_station_id == $first_ls->line_station_id
               && $_->destination_line_station->line_station_id == $second_ls->line_station_id
             }
@@ -330,7 +330,7 @@ class Map::Metro::Graph using Moose {
 
                 $origin_line_station->station->add_connecting_station($destination_line_station->station);
                 $destination_line_station->station->add_connecting_station($origin_line_station->station);
-                
+
                 $self->add_connection($conn);
                 $self->add_connection($inv_conn);
             }
@@ -398,7 +398,7 @@ class Map::Metro::Graph using Moose {
     }
 
     multi method routes_for(Str $origin_name, Str $destination_name) {
-        
+
         my($origin_station, $destination_station);
         try {
             $origin_station = $self->get_station_by_name($origin_name);
@@ -456,7 +456,7 @@ class Map::Metro::Graph using Moose {
         }
         return $routing;
     }
-    
+
     method all_pairs {
 
         my $routings = [];

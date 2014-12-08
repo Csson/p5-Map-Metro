@@ -7,7 +7,7 @@ class Map::Metro::Graph::Station using Moose {
         isa => Int,
         required => 1,
     );
-    
+
     has name => (
         is => 'ro',
         isa => Str,
