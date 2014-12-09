@@ -103,17 +103,36 @@ Map::Metro - Public transport graphing
     my $routing = $graph->routes_for('Universitetet', 'Kista');
     print $routing->to_text;
 
-=head1 COMPATIBILITY
+prints
 
-Currently only Perl 5.20+ is supported.
+    From Universitetet to Kista
+    =========================
 
-L<Map::Tube> works with Perl 5.6.
+    -- Route 1 (cost 15) ----------
+    [   T14 ] Universitetet
+    [   T14 ] Tekniska högskolan
+    [   T14 ] Stadion
+    [   T14 ] Östermalmstorg
+    [   T14 ] T-Centralen
+    [ * T11 ] T-Centralen
+    [   T11 ] Rådhuset
+    [   T11 ] Fridhemsplan
+    [   T11 ] Stadshagen
+    [   T11 ] Västra skogen
+    [   T11 ] Solna centrum
+    [   T11 ] Näckrosen
+    [   T11 ] Hallonbergen
+    [   T11 ] Kista
 
-Included in this distribution is a script to convert C<Map::Metro> maps into C<Map::Tube> maps, if L<Map::Tube> misses one you need.
+    T11  Blue line
+    T14  Red line
+
+    *: Transfer to other line
+    +: Transfer to other station
 
 =head1 DESCRIPTION
 
-The purpose of this distribution is to find the shortest L<unique|/"What is a unique path?"> route/routes between two stations in a transport grid.
+The purpose of this distribution is to find the shortest L<unique|/"What is a unique path?"> route/routes between two stations in a transport network.
 
 =head2 Methods
 
@@ -197,6 +216,19 @@ For all maps in the Map::Metro::For namespace (unless noted):
 =item Each map should state its own specific status with regards to coverage of the transport network.
 
 =back
+
+=head1 Known bugs
+
+Currently all_pairs() doesn't give entirely correct results.
+
+=head1 COMPATIBILITY
+
+Currently only Perl 5.20+ is supported.
+
+L<Map::Tube> works with Perl 5.6.
+
+Included in this distribution is a script to convert C<Map::Metro> maps into C<Map::Tube> maps, if L<Map::Tube> misses one you need.
+
 
 =head1 SEE ALSO
 

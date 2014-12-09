@@ -17,12 +17,41 @@ class Map::Metro::Graph::LineStation using Moose {
         isa => Line,
         required => 1,
     );
+    has previous_line_station => (
+        is => 'rw',
+        isa => LineStation,
+        traits => ['SetOnce'],
+        predicate => 1,
+    );
+    has next_line_station => (
+        is => 'rw',
+        isa => LineStation,
+        traits => ['SetOnce'],
+        predicate => 1,
+    );
+    
 
     method possible_on_same_line(LineStation $other) {
-        return (any { $self->line->id eq $_->id } $other->station->all_lines);
+        my $station_lines = [ map { $_->id } $self->station->all_lines ];
+        my $other_station_lines = [ map { $_->id } $other->station->all_lines ];
+
+        my $is_possible = !!List::Compare->new($station_lines, $other_station_lines)->get_intersection;
+
+        return $is_possible;
     }
     method on_same_line(LineStation $other) {
         return $self->line->id eq $other->line->id;
+    }
+    method is_transfer_to_next {
+        return if !$self->has_next_line_station,
+        return $self->line->id ne $self->next_line_station->line->id;
+    }
+    method is_transfer_from_previous {
+        return if !$self->has_previous_line_station,
+        return $self->line->id ne $self->previous_line_station->line->id;
+    }
+    method to_text {
+        return sprintf '[ %3s ] %s' => $self->line->name, $self->station->name;
     }
 }
 

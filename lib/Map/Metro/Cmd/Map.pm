@@ -3,7 +3,6 @@ use Map::Metro::Standard::Moops;
 class Map::Metro::Cmd::Map extends Map::Metro::Cmd using Moose {
 
     use MooseX::App::Command;
-    use experimental 'postderef';
 
     parameter cityname => (
         is => 'rw',
@@ -38,7 +37,7 @@ class Map::Metro::Cmd::Map extends Map::Metro::Cmd using Moose {
             my $error = $_;
             $error->out->fatal if $error->does('Map::Metro::Exception');
             say sprintf q{Try search by station id. Run '%s stations %s' to see station ids.}, $0, $self->cityname;
-
+            die $error;
         };
     }
 }

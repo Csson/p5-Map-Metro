@@ -5,7 +5,6 @@ class Map::Metro::Cmd::MetroToTube extends Map::Metro::Cmd using Moose {
     use MooseX::App::Command;
     use IO::File;
     use XML::Writer;
-    use experimental 'postderef';
 
     parameter cityname => (
         is => 'rw',

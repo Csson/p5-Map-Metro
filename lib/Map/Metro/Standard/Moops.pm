@@ -8,6 +8,8 @@ package Map::Metro::Standard::Moops {
     use experimental();
     use Map::Metro::Types();
     use Eponymous::Hash();
+    use List::Compare();
+    use MooseX::SetOnce();
 
     sub import {
         my $class = shift;
@@ -17,9 +19,11 @@ package Map::Metro::Standard::Moops {
             'List::AllUtils'    => [qw/any none sum uniq/],
             'Eponymous::Hash'   => ['eh'],
             'String::Trim'      => ['trim'],
-            'feature'           => [qw/:5.20 fc/],
+            'feature'           => [qw/:5.20/],
             'experimental'      => [qw/postderef/],
             'Map::Metro::Types' => ['-types'],
+            'List::Compare'     => [],
+            'MooseX::SetOnce'   => [],
         );
 
         $class->SUPER::import(%opts);

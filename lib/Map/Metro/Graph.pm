@@ -15,6 +15,7 @@ class Map::Metro::Graph using Moose {
     use Map::Metro::Graph::Routing;
     use Map::Metro::Graph::Segment;
     use Map::Metro::Graph::Station;
+    use Map::Metro::Graph::Step;
     use Map::Metro::Graph::Transfer;
 
     with('MooseX::OneArgNew' => {
@@ -37,7 +38,9 @@ class Map::Metro::Graph using Moose {
         init_arg => undef,
         handles => {
             add_station => 'push',
+            get_station => 'get',
             find_station => 'first',
+            filter_stations => 'grep',
             all_stations  => 'elements',
             station_count => 'count',
         },
@@ -94,6 +97,8 @@ class Map::Metro::Graph using Moose {
             all_connections  => 'elements',
             connection_count => 'count',
             find_connection => 'first',
+            filter_connections => 'grep',
+            get_connection => 'get',
         },
     );
     has transfers => (
@@ -110,6 +115,23 @@ class Map::Metro::Graph using Moose {
             get_transfer => 'get',
         },
     );
+    has routing => (
+        is => 'ro',
+        traits => ['Array'],
+        isa => ArrayRef[ Routing ],
+        predicate => 1,
+        default => sub { [] },
+        init_arg => undef,
+        handles => {
+            add_routing => 'push',
+            all_routings => 'elements',
+            routing_count => 'count',
+            find_routing => 'first',
+            filter_routings => 'grep',
+            get_routing => 'get',
+        },
+    );
+    
     has full_graph => (
         is => 'ro',
         lazy => 1,
@@ -270,6 +292,12 @@ class Map::Metro::Graph using Moose {
             }
         );
     }
+    #method get_first_connection_by_line(Line $line) {
+    #    return $self->find_connection(sub { $_->origin_line_station->line->id eq $line->id && !$_->has_previous_connection });
+    #}
+    #method get_last_connection_by_line(Line $line) {
+    #    return $self->find_connection(sub { $_->origin_line_station->line->id eq $line->id && !$_->has_next_connection });
+    #}
     method next_line_station_id {
         return $self->line_station_count + 1;
     }
@@ -295,26 +323,31 @@ class Map::Metro::Graph using Moose {
         #* Walk through all segments, and all lines for
         #* that segment. Add pairwise connections between
         #* all pair of stations on the same line
+        my $next_line_station_id = 0;
         SEGMENT:
         foreach my $segment ($self->all_segments) {
-
+# fetch line stations if they exist"!!!!!!!!!!!!!!!!!!!!!
             LINE:
             foreach my $line_id ($segment->all_line_ids) {
                 my $line = $self->get_line_by_id($line_id);
 
-                my $origin_line_station = Map::Metro::Graph::LineStation->new(
-                    line_station_id => $self->next_line_station_id,
-                    station => $segment->origin_station,
-                    line => $line,
-                );
+                my $origin_line_station = $self->get_line_station_by_line_and_station_id($line_id, $segment->origin_station->id)
+                                          ||
+                                          Map::Metro::Graph::LineStation->new(
+                                              line_station_id => ++$next_line_station_id,
+                                              station => $segment->origin_station,
+                                              line => $line,
+                                          );
                 $origin_line_station = $self->add_line_station($origin_line_station);
                 $segment->origin_station->add_line($line);
 
-                my $destination_line_station = Map::Metro::Graph::LineStation->new(
-                    line_station_id => $self->next_line_station_id,
-                    station => $segment->destination_station,
-                    line => $line,
-                );
+                my $destination_line_station = $self->get_line_station_by_line_and_station_id($line_id, $segment->destination_station->id)
+                                               ||
+                                               Map::Metro::Graph::LineStation->new(
+                                                   line_station_id => ++$next_line_station_id,
+                                                   station => $segment->destination_station,
+                                                   line => $line,
+                                               );
                 $destination_line_station = $self->add_line_station($destination_line_station);
                 $segment->destination_station->add_line($line);
 
@@ -330,6 +363,24 @@ class Map::Metro::Graph using Moose {
 
                 $origin_line_station->station->add_connecting_station($destination_line_station->station);
                 $destination_line_station->station->add_connecting_station($origin_line_station->station);
+
+                try {
+                    $origin_line_station->next_line_station($destination_line_station);
+                }
+                catch {
+
+                    die sprintf '[%s] %s Current next line station: [%s] %s, new: [%s] %s', 
+                                                                        $origin_line_station->line->name,
+                                                                        $origin_line_station->station->name,
+
+                                                                        $origin_line_station->next_line_station->line->name,
+                                                                        $origin_line_station->next_line_station->station->name,
+
+                                                                        $destination_line_station->line->name,
+                                                                        $destination_line_station->station->name;
+                    
+                };
+                $destination_line_station->previous_line_station($origin_line_station);
 
                 $self->add_connection($conn);
                 $self->add_connection($inv_conn);
@@ -439,21 +490,77 @@ class Map::Metro::Graph using Moose {
 
                 my $route = Map::Metro::Graph::Route->new;
 
+
+                #* REMOVABLE?
                 LINE_STATION:
                 foreach my $index (0 .. scalar $graphroute->@* - 2) {
                     my $this_line_station_id = $graphroute->[ $index ];
                     my $next_line_station_id = $graphroute->[ $index + 1 ];
 
                     my $connection = $self->get_connection_by_line_station_ids($this_line_station_id, $next_line_station_id);
+                    
+
+                    
+          #          say $connection->origin_line_station->station->name . ' - ' . $connection->destination_line_station->station->name;
                     $route->add_connection($connection);
+
+#                    $next_step = 
+#
+#                    my $step = Map::Metro::Graph::Step->new(from_connection => $connection);
+#
+#                    $route->add_step($step);
+#
+#                    $prev_step = $step;
+                }
+                my($prev_step, $prev_conn, $next_step, $next_conn);
+
+                LINE_STATION:
+                foreach my $index (0 .. scalar $graphroute->@* - 2) {
+                    my $this_line_station_id = $graphroute->[ $index ];
+                    my $next_line_station_id = $graphroute->[ $index + 1 ];
+                    my $next_next_line_station_id = $graphroute->[ $index + 2 ] // undef;
+
+
+
+                    my $conn = $self->get_connection_by_line_station_ids($this_line_station_id, $next_line_station_id);
+
+                    #* Don't continue beyond this route, even it connections exist.
+                    if($index + 2 < scalar $graphroute->@*) {
+                        $next_conn = defined $next_next_line_station_id ? $self->get_connection_by_line_station_ids($this_line_station_id, $next_line_station_id) : undef;
+                        $next_step = Map::Metro::Graph::Step->new(from_connection => $next_conn) if defined $next_conn;
+                    }
+                    else {
+                        $next_conn = $next_step = undef;
+                    }
+
+                    my $step = Map::Metro::Graph::Step->new(from_connection => $conn);
+                    $step->previous_step($prev_step) if $prev_step;
+                    $step->next_step($next_step) if $next_step;
+
+                    $next_step->previous_step($step) if defined $next_step;
+
+                    $route->add_step($step);
+                    $prev_step = $step;
+                    $step = $next_step;
+
                 }
 
+                LINE_STATION:
+                foreach my $index (0 .. scalar $graphroute->@* - 1) {
+                    my $line_station = $self->get_line_station_by_id($graphroute->[$index]);
+
+                    $route->add_line_station($line_station);
+                }
+
+                #next DESTINATION_LINE_STATION if $route->transfer_on_first_station;
+                #next DESTINATION_LINE_STATION if $route->transfer_on_final_station;
                 next DESTINATION_LINE_STATION if $route->transfer_on_first_station;
                 next DESTINATION_LINE_STATION if $route->transfer_on_final_station;
 
                 $routing->add_route($route);
             }
         }
+        $self->add_routing($routing);
         return $routing;
     }
 

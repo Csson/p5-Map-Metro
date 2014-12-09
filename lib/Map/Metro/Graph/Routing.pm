@@ -31,6 +31,7 @@ class Map::Metro::Graph::Routing using Moose {
             all_routes => 'elements',
             sort_routes => 'sort',
             route_count => 'count',
+            find_route => 'first',
         },
     );
 

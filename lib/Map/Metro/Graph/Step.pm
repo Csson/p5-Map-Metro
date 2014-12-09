@@ -1,6 +1,6 @@
 use Map::Metro::Standard::Moops;
 
-class Map::Metro::Graph::Connection using Moose {
+class Map::Metro::Graph::Step using Moose {
 
     has origin_line_station => (
         is => 'ro',
@@ -12,14 +12,14 @@ class Map::Metro::Graph::Connection using Moose {
         isa => LineStation,
         required => 1,
     );
-    has previous_connection => (
+    has previous_step => (
         is => 'rw',
-        isa => Maybe[ Connection ],
+        isa => Maybe[ Step ],
         predicate => 1,
     );
-    has next_connection => (
+    has next_step => (
         is => 'rw',
-        isa => Maybe[ Connection ],
+        isa => Maybe[ Step ],
         predicate => 1,
     );
     has weight => (
@@ -28,12 +28,19 @@ class Map::Metro::Graph::Connection using Moose {
         required => 1,
         default => 1,
     );
-        has id => (
-        is => 'ro',
-        isa => Str,
-        init_arg => undef,
-        default => sub { join '' => map { ('a'..'z', 2..9)[int rand 33] } (1..8) },
-    );
+
+    around BUILDARGS($orig: $class, %args) {
+        return $class->$orig(%args) if !exists $args{'from_connection'};
+
+        my $conn = $args{'from_connection'};
+        return if !defined $conn;
+
+        return $class->$orig(
+            origin_line_station => $conn->origin_line_station,
+            destination_line_station => $conn->destination_line_station,
+            weight => $conn->weight,
+        );
+    }
 
     method is_line_transfer {
      #   say sprintf '   line:  %s - %s, [lsid: %s - %s] sid: %s - %s    %s/%s', $self->origin_line_station->line->id,
@@ -58,13 +65,12 @@ class Map::Metro::Graph::Connection using Moose {
         return !$are_on_same_line;
     }
     method was_line_transfer {
-        return if !$self->has_previous_connection;
-        return $self->previous_connection->is_line_transfer;
+        return if !$self->has_previous_step;
+        return $self->previous_step->is_line_transfer;
     }
     method was_station_transfer {
-        return if !$self->has_previous_connection;
-        #return $self->previous_connection->origin_line_station->station->id == $self->origin_line_station->station->id;
-        return $self->previous_connection->is_station_transfer;
+        return if !$self->has_previous_step;
+        return $self->previous_step->is_station_transfer;
     }
 
     method to_text(Int $line_name_length = 0) {
@@ -78,7 +84,7 @@ class Map::Metro::Graph::Connection using Moose {
                                                     ' ' x length $self->origin_line_station->line->name,
                                                     $self->destination_line_station->station->name;
         }
-        if(!$self->has_next_connection) {
+        if(!$self->has_next_step) {
             push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => '',
                                                                      $self->destination_line_station->line->name,
                                                                      $self->destination_line_station->station->name;
@@ -86,35 +92,4 @@ class Map::Metro::Graph::Connection using Moose {
         return join "\n" => @rows;
     }
 
-
 }
-
-__END__
-
-=encoding utf-8
-
-=head1 NAME
-
-Map::Metro::Graph::Connection - What is a connection?
-
-=head1 DESCRIPTION
-
-Connections represent the combination of two specific L<LineStations|Map::Metro::Graph::LineStation>, and the 'cost' of
-travelling between them.
-
-In L<Graph> terms, a connection is a weighted edge.
-
-=head1 AUTHOR
-
-Erik Carlsson E<lt>info@code301.comE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014 - Erik Carlsson
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
-
-=cut

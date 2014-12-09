@@ -12,6 +12,7 @@ declares Connection,
          Routing,
          Segment,
          Station,
+         Step,
          Transfer
     {
 
@@ -24,5 +25,6 @@ declares Connection,
     class_type Routing      => { class => 'Map::Metro::Graph::Routing' };
     class_type Segment      => { class => 'Map::Metro::Graph::Segment' };
     class_type Station      => { class => 'Map::Metro::Graph::Station' };
+    class_type Step         => { class => 'Map::Metro::Graph::Step' };
     class_type Transfer     => { class => 'Map::Metro::Graph::Transfer' };
 }
