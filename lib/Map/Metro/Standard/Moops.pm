@@ -1,5 +1,4 @@
 use 5.20.0;
-use warnings;
 
 package Map::Metro::Standard::Moops {
 
