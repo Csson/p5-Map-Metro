@@ -212,10 +212,6 @@ For all maps in the Map::Metro::Plugin::Map namespace (unless noted):
 
 =back
 
-=head1 Known bugs
-
-Currently all_pairs() doesn't give entirely correct results.
-
 =head1 COMPATIBILITY
 
 Currently only Perl 5.20+ is supported.
