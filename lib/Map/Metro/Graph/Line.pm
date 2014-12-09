@@ -43,7 +43,7 @@ Map::Metro::Graph::Line - What is a line?
 
 =head1 DESCRIPTION
 
-Lines are currently only placeholders to identify a line. They don't have stations.
+Lines are currently only placeholders to identify the concept of a line. They don't have stations.
 
 =head1 METHODS
 

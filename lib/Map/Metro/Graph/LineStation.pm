@@ -78,6 +78,7 @@ Returns the internal line station id. Do not depend on this between executions.
 
 Returns the L<Station|Map::Metro::Graph::Station> object.
 
+
 =head2 line()
 
 eturns the L<Line|Map::Metro::Graph::Line> object.
