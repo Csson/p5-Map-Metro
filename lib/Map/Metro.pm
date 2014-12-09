@@ -6,26 +6,19 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
 
     use Map::Metro::Graph;
 
-    has for => (
+    has map => (
         is => 'ro',
         traits => ['Array'],
         isa => ArrayRef,
         predicate => 1,
         handles => {
-            get_for => 'get',
+            get_map => 'get',
         },
     );
     has filepath => (
         is => 'rw',
         isa => Maybe[AbsFile],
         default => undef,
-        init_arg => undef,
-    );
-
-    has _plugin_ns => (
-        is => 'ro',
-        isa => Str,
-        default => 'For',
         init_arg => undef,
     );
 
@@ -39,15 +32,15 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
         my %args = scalar @args == 2 ? @args : ();
 
         if(scalar @args == 1) {
-            $args{'for'} = shift @args;
+            $args{'map'} = shift @args;
         }
 
         if(scalar keys %args == 1) {
-            if(ArrayRef->check($args{'for'})) {
+            if(ArrayRef->check($args{'map'})) {
                 return $class->$orig(%args);
             }
-            elsif(Str->check($args{'for'})) {
-                $args{'for'} = [ $args{'for'} ];
+            elsif(Str->check($args{'map'})) {
+                $args{'map'} = [ $args{'map'} ];
                 return $class->$orig(%args);
             }
         }
@@ -55,9 +48,9 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
     }
 
     method BUILD {
-        if($self->has_for) {
-            my $metromap = $self->get_for(0);
-            $self->load_plugin($metromap);
+        if($self->has_map) {
+            my $metromap = $self->get_map(0);
+            $self->load_plugin('Map::'.$metromap);
 
             my $filemethod = $self->decamelize($metromap);
 
@@ -95,7 +88,7 @@ Map::Metro - Public transport graphing
 =head1 SYNOPSIS
 
     # Install a map
-    $ cpanm Map::Metro::For::Stockholm
+    $ cpanm Map::Metro::Plugin::Map::Stockholm
 
     # And then
     my $graph = Map::Metro->new('Stockholm')->parse;
@@ -179,7 +172,7 @@ If the starting station and finishing station...
 
 =item L<Map::Metro::Graph> - What to do with the graph object. This is where it happens.
 
-=item L<Map::Metro::For> - How to make your own maps.
+=item L<Map::Metro::Plugin::Map> - How to make your own maps.
 
 =item L<Map::Metro::Cmd> - A guide to the command line application.
 
@@ -207,7 +200,7 @@ If the starting station and finishing station...
 This is somewhat experimental. I don't expect that the map file format will I<break>, but it might be
 extended. Only the documented api should be relied on, though breaking changes might occur.
 
-For all maps in the Map::Metro::For namespace (unless noted):
+For all maps in the Map::Metro::Plugin::Map namespace (unless noted):
 
 =over 4
 
