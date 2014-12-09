@@ -2,19 +2,6 @@ use Map::Metro::Standard::Moops;
 
 class Map::Metro::Graph::Route using Moose {
 
-    has connections => (
-        is => 'ro',
-        isa => ArrayRef[ Connection ],
-        traits => ['Array'],
-        predicate => 1,
-        handles => {
-            add_connection => 'push',
-            connection_count => 'count',
-            get_connection => 'get',
-            all_connections => 'elements',
-            filter_connections => 'grep',
-        }
-    );
     has steps => (
         is => 'ro',
         isa => ArrayRef[ Step ],
@@ -46,30 +33,21 @@ class Map::Metro::Graph::Route using Moose {
         },
     );
 
-    around add_connection($conn) {
-#say sprintf 'on %s adds %s |%s->%s|' => $self->id, $conn->id, $conn->origin_line_station->station->name, $conn->destination_line_station->station->name;
-
-        return $self->$next($conn) if !$self->has_connections;
-
-        my $prev_conn = $self->get_connection(-1);
-        $conn->previous_connection($prev_conn);
-        $prev_conn->next_connection($conn);
-        return $self->$next($conn);
-    }
-
     method weight {
-        return sum map { $_->weight } $self->all_connections;
+        return sum map { $_->weight } $self->all_steps;
     }
 
     method transfer_on_final_station {
-        return 0 if $self->connection_count < 2;
-        my $final_conn = $self->get_connection(-1);
-        return $final_conn->origin_line_station->station->id == $final_conn->destination_line_station->station->id;
+        return 0 if $self->step_count < 2;
+        my $final_step = $self->get_step(-1);
+
+        return $final_step->origin_line_station->station->id == $final_step->destination_line_station->station->id;
     }
     method transfer_on_first_station {
-        return 0 if $self->connection_count < 2;
-        my $first_conn = $self->get_connection(0);
-        return $first_conn->origin_line_station->station->id == $first_conn->destination_line_station->station->id;
+        return 0 if $self->step_count < 2;
+        my $first_step = $self->get_step(0);
+
+        return $first_step->origin_line_station->station->id == $first_step->destination_line_station->station->id;
     }
     method longest_line_name_length {
         return length((sort { length $b->origin_line_station->line->name <=> length $a->origin_line_station->line->name } $self->all_connections)[0]->origin_line_station->line->name);
@@ -101,17 +79,6 @@ class Map::Metro::Graph::Route using Moose {
 
         return join "\n" => @rows;
     }
-
-  #  method to_text_worse {
-  #      my @rows;
-  #      foreach my $i (0 .. $self->line_station_count - 1) {
-  #          my $
-  #      }
-  #      foreach my $ls ($self->all_line_stations) {
-  #          push @rows => $ls->to_text;
-  #      }
-  #      return join "\n" => @rows;
-  #  }
 
     method to_text {
         my @rows = ();

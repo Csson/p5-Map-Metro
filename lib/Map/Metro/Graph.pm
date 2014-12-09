@@ -490,28 +490,6 @@ class Map::Metro::Graph using Moose {
 
                 my $route = Map::Metro::Graph::Route->new;
 
-
-                #* REMOVABLE?
-                LINE_STATION:
-                foreach my $index (0 .. scalar $graphroute->@* - 2) {
-                    my $this_line_station_id = $graphroute->[ $index ];
-                    my $next_line_station_id = $graphroute->[ $index + 1 ];
-
-                    my $connection = $self->get_connection_by_line_station_ids($this_line_station_id, $next_line_station_id);
-
-
-
-          #          say $connection->origin_line_station->station->name . ' - ' . $connection->destination_line_station->station->name;
-                    $route->add_connection($connection);
-
-#                    $next_step =
-#
-#                    my $step = Map::Metro::Graph::Step->new(from_connection => $connection);
-#
-#                    $route->add_step($step);
-#
-#                    $prev_step = $step;
-                }
                 my($prev_step, $prev_conn, $next_step, $next_conn);
 
                 LINE_STATION:
@@ -552,8 +530,6 @@ class Map::Metro::Graph using Moose {
                     $route->add_line_station($line_station);
                 }
 
-                #next DESTINATION_LINE_STATION if $route->transfer_on_first_station;
-                #next DESTINATION_LINE_STATION if $route->transfer_on_final_station;
                 next DESTINATION_LINE_STATION if $route->transfer_on_first_station;
                 next DESTINATION_LINE_STATION if $route->transfer_on_final_station;
 
@@ -626,11 +602,11 @@ the entire network (graph) in a hierarchy of objects.
 
 B<C<$from>>
 
-Mandatory. The starting station, can be either a station id (integer), or a station name (string). Must be of the same type as B<C<$to>>.
+Mandatory. The starting station; can be either a station id (integer), or a station name (string, case insensitive). Must be of the same type as B<C<$to>>.
 
 B<C<$to>>
 
-Mandatory. The finishing station, can be either a station id (integer), or a station name (string). Must be of the same type as B<C<$from>>.
+Mandatory. The finishing station; can be either a station id (integer), or a station name (string, case insensitive). Must be of the same type as B<C<$from>>.
 
 Returns a L<Map::Metro::Graph::Routing> object.
 
