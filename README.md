@@ -100,10 +100,6 @@ For all maps in the Map::Metro::Plugin::Map namespace (unless noted):
 - These maps are not an official source. Use accordingly.
 - Each map should state its own specific status with regards to coverage of the transport network.
 
-# Known bugs
-
-Currently all\_pairs() doesn't give entirely correct results.
-
 # COMPATIBILITY
 
 Currently only Perl 5.20+ is supported.
