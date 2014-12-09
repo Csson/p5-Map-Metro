@@ -115,7 +115,7 @@ class Map::Metro::Graph using Moose {
             get_transfer => 'get',
         },
     );
-    has routing => (
+    has routings => (
         is => 'ro',
         traits => ['Array'],
         isa => ArrayRef[ Routing ],
@@ -466,6 +466,11 @@ class Map::Metro::Graph using Moose {
     multi method routes_for(Station $origin_station, Station $destination_station) {
         my @origin_line_station_ids = map { $_->line_station_id } $self->get_line_stations_by_station($origin_station);
         my @destination_line_station_ids = map { $_->line_station_id } $self->get_line_stations_by_station($destination_station);
+
+        if($self->has_routings) {
+            my $existing_routing = $self->find_routing(sub { $_->origin_station->id == $origin_station->id && $_->destination_station->id == $destination_station->id });
+            return $existing_routing if $existing_routing;
+        }
 
         my $routing = Map::Metro::Graph::Routing->new(origin_station => $origin_station, destination_station => $destination_station);
 
