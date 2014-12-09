@@ -35,8 +35,8 @@ Map::Metro::Graph::Segment - What is a segment?
 
 =head1 DESCRIPTION
 
-Segments are used during the graph building phase. Its main purpose is to describe the combination of two L<Stations|Map::Metro::Graph::Station>
-and all lines that goes between them.
+Segments are used during the graph building phase. Its purpose is to describe the combination of two L<Stations|Map::Metro::Graph::Station>
+and all L<Lines|Map::Metro::Graph::Line> that go between them.
 
 =head1 AUTHOR
 

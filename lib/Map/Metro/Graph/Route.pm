@@ -50,40 +50,13 @@ class Map::Metro::Graph::Route using Moose {
         return $first_step->origin_line_station->station->id == $first_step->destination_line_station->station->id;
     }
     method longest_line_name_length {
-        return length((sort { length $b->origin_line_station->line->name <=> length $a->origin_line_station->line->name } $self->all_connections)[0]->origin_line_station->line->name);
+        return length((sort { length $b->origin_line_station->line->name <=> length $a->origin_line_station->line->name } $self->all_steps)[0]->origin_line_station->line->name);
     }
-    method to_text_old {
-        my $name_length = $self->longest_line_name_length;
-        my @rows = map { $_->to_text($name_length) } $self->all_connections;
-
-        push @rows => '', map { $_->to_text($name_length) }
-                          sort { $a->name cmp $b->name }
-                          uniq
-                          map { $_->origin_line_station->line } $self->all_connections;
-
-        return join "\n" => @rows;
-    }
-
-    method to_text_bad {
-
-        my @rows;
-        my $ls = $self->first_line_station;
-
-        LINE_STATION:
-        while(1) {
-            push @rows => $ls->to_text;
-
-            last LINE_STATION if !$ls->has_next_line_station;
-            $ls = $ls->next_line_station;
-        }
-
-        return join "\n" => @rows;
-    }
-
+ 
     method to_text {
         my @rows = ();
         foreach my $step ($self->all_steps) {
-            push @rows => $step->to_text;
+            push @rows => $step->to_text($self->longest_line_name_length);
         }
         return @rows;
     }
@@ -99,13 +72,13 @@ Map::Metro::Graph::Route - What is a route?
 
 =head1 DESCRIPTION
 
-A route is a specific sequence of L<Connections|Map::Metro::Graph::Connection> from one L<LineStation|Map::Metro::Graph::LineStation> to another.
+A route is a specific sequence of L<Steps|Map::Metro::Graph::Step> from one L<LineStation|Map::Metro::Graph::LineStation> to another.
 
 =head1 METHODS
 
-=head2 all_connections()
+=head2 all_steps()
 
-Returns an array of the L<Connections|Map::Metro::Graph::Connection> in the route, in the order they are travelled.
+Returns an array of the L<Steps|Map::Metro::Graph::Step> in the route, in the order they are travelled.
 
 
 =head2 weight()

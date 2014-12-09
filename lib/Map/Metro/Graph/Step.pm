@@ -43,16 +43,6 @@ class Map::Metro::Graph::Step using Moose {
     }
 
     method is_line_transfer {
-     #   say sprintf '   line:  %s - %s, [lsid: %s - %s] sid: %s - %s    %s/%s', $self->origin_line_station->line->id,
-     #                                                                           $self->destination_line_station->line->id,
-     #                                                                           $self->origin_line_station->line_station_id,
-     #                                                                           $self->destination_line_station->line_station_id,
-     #                                                                           $self->origin_line_station->station->id,
-     #                                                                           $self->destination_line_station->station->id,
-     #                                                                           $self->origin_line_station->station->name,
-     #                                                                           $self->destination_line_station->station->name;
-     #   say sprintf '     next: %s', $self->next_connection->origin_line_station->station->name if $self->next_connection;
-
         return $self->origin_line_station->station->id == $self->destination_line_station->station->id;
         return $self->origin_line_station->line->id ne $self->destination_line_station->line->id;
     }
@@ -93,3 +83,33 @@ class Map::Metro::Graph::Step using Moose {
     }
 
 }
+
+
+__END__
+
+=encoding utf-8
+
+=head1 NAME
+
+Map::Metro::Graph::Step - What is a step?
+
+=head1 DESCRIPTION
+
+Steps are exactly like L<Connections::Map::Metro::Graph::Connection>, in that they describe the combination of two
+specific L<LineStations|Map::Metro::Graph::LineStation>, and the 'cost' of travelling between them, but with an important
+difference: A Step is part of a specific L<Route|Map::Metro::Graph::Route>.
+
+=head1 AUTHOR
+
+Erik Carlsson E<lt>info@code301.comE<gt>
+
+=head1 COPYRIGHT
+
+Copyright 2014 - Erik Carlsson
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
