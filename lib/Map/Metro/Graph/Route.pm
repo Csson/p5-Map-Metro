@@ -52,7 +52,7 @@ class Map::Metro::Graph::Route using Moose {
     method longest_line_name_length {
         return length((sort { length $b->origin_line_station->line->name <=> length $a->origin_line_station->line->name } $self->all_steps)[0]->origin_line_station->line->name);
     }
- 
+
     method to_text {
         my @rows = ();
         foreach my $step ($self->all_steps) {
