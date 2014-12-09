@@ -10,5 +10,6 @@ requires 'MooseX::App';
 requires 'MooseX::AttributeShortcuts';
 requires 'Moops';
 requires 'String::Trim';
+requires 'Syntax::Keyword::Junction';
 requires 'Throwable::X';
 requires 'Types::Path::Tiny';

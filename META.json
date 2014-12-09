@@ -47,6 +47,7 @@
             "MooseX::App" : "0",
             "MooseX::AttributeShortcuts" : "0",
             "String::Trim" : "0",
+            "Syntax::Keyword::Junction" : "0",
             "Throwable::X" : "0",
             "Types::Path::Tiny" : "0",
             "experimental" : "0",

@@ -9,7 +9,7 @@ Map::Metro - Public transport graphing
 # SYNOPSIS
 
     # Install a map
-    $ cpanm Map::Metro::For::Stockholm
+    $ cpanm Map::Metro::Plugin::Map::Stockholm
 
     # And then
     my $graph = Map::Metro->new('Stockholm')->parse;
@@ -17,17 +17,36 @@ Map::Metro - Public transport graphing
     my $routing = $graph->routes_for('Universitetet', 'Kista');
     print $routing->to_text;
 
-# COMPATIBILITY
+prints
 
-Currently only Perl 5.20+ is supported.
+    From Universitetet to Kista
+    =========================
 
-[Map::Tube](https://metacpan.org/pod/Map::Tube) works with Perl 5.6.
+    -- Route 1 (cost 15) ----------
+    [   T14 ] Universitetet
+    [   T14 ] Tekniska högskolan
+    [   T14 ] Stadion
+    [   T14 ] Östermalmstorg
+    [   T14 ] T-Centralen
+    [ * T11 ] T-Centralen
+    [   T11 ] Rådhuset
+    [   T11 ] Fridhemsplan
+    [   T11 ] Stadshagen
+    [   T11 ] Västra skogen
+    [   T11 ] Solna centrum
+    [   T11 ] Näckrosen
+    [   T11 ] Hallonbergen
+    [   T11 ] Kista
 
-Included in this distribution is a script to convert `Map::Metro` maps into `Map::Tube` maps, if [Map::Tube](https://metacpan.org/pod/Map::Tube) misses one you need.
+    T11  Blue line
+    T14  Red line
+
+    *: Transfer to other line
+    +: Transfer to other station
 
 # DESCRIPTION
 
-The purpose of this distribution is to find the shortest [unique](#what-is-a-unique-path) route/routes between two stations in a transport grid.
+The purpose of this distribution is to find the shortest [unique](#what-is-a-unique-path) route/routes between two stations in a transport network.
 
 ## Methods
 
@@ -59,7 +78,7 @@ If the starting station and finishing station...
 # MORE INFORMATION
 
 - [Map::Metro::Graph](https://metacpan.org/pod/Map::Metro::Graph) - What to do with the graph object. This is where it happens.
-- [Map::Metro::For](https://metacpan.org/pod/Map::Metro::For) - How to make your own maps.
+- [Map::Metro::Plugin::Map](https://metacpan.org/pod/Map::Metro::Plugin::Map) - How to make your own maps.
 - [Map::Metro::Cmd](https://metacpan.org/pod/Map::Metro::Cmd) - A guide to the command line application.
 - [Map::Metro::Graph::Connection](https://metacpan.org/pod/Map::Metro::Graph::Connection) - Defines a MMG::Connection.
 - [Map::Metro::Graph::Line](https://metacpan.org/pod/Map::Metro::Graph::Line) - Defines a MMG::Line.
@@ -67,7 +86,8 @@ If the starting station and finishing station...
 - [Map::Metro::Graph::Route](https://metacpan.org/pod/Map::Metro::Graph::Route) - Defines a MMG::Route.
 - [Map::Metro::Graph::Routing](https://metacpan.org/pod/Map::Metro::Graph::Routing) - Defines a MMG::Routing.
 - [Map::Metro::Graph::Segment](https://metacpan.org/pod/Map::Metro::Graph::Segment) - Defines a MMG::Segment.
-- [Map::Metro::Graph::Station](https://metacpan.org/pod/Map::Metro::Graph::Station) - Defines a MMG::Station
+- [Map::Metro::Graph::Station](https://metacpan.org/pod/Map::Metro::Graph::Station) - Defines a MMG::Station.
+- [Map::Metro::Graph::Step](https://metacpan.org/pod/Map::Metro::Graph::Step) - Defines a MMG::Step.
 - [Map::Metro::Graph::Transfer](https://metacpan.org/pod/Map::Metro::Graph::Transfer) - Defines a MMG::Transfer.
 
 # Status
@@ -75,10 +95,22 @@ If the starting station and finishing station...
 This is somewhat experimental. I don't expect that the map file format will _break_, but it might be
 extended. Only the documented api should be relied on, though breaking changes might occur.
 
-For all maps in the Map::Metro::For namespace (unless noted):
+For all maps in the Map::Metro::Plugin::Map namespace (unless noted):
 
 - These maps are not an official source. Use accordingly.
 - Each map should state its own specific status with regards to coverage of the transport network.
+
+# Known bugs
+
+Currently all\_pairs() doesn't give entirely correct results.
+
+# COMPATIBILITY
+
+Currently only Perl 5.20+ is supported.
+
+[Map::Tube](https://metacpan.org/pod/Map::Tube) works with Perl 5.6.
+
+Included in this distribution is a script to convert `Map::Metro` maps into `Map::Tube` maps, if [Map::Tube](https://metacpan.org/pod/Map::Tube) misses one you need.
 
 # SEE ALSO
 
