@@ -1,9 +1,12 @@
-use strict;
+use 5.20.0;
 use Test::More;
-use Map::Metro;
+use Path::Tiny;
+use Map::Metro::Shim;
 
-# replace with the actual test
-ok 1;
+my $metro = Map::Metro::Shim->new('t/share/test-map.metro');
+my $graph = $metro->parse;
+
+is($graph->get_station(0)->name, 'Hjulsta', 'Correct first station');
 
 done_testing;
 
