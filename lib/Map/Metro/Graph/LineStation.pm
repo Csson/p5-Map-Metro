@@ -29,7 +29,7 @@ class Map::Metro::Graph::LineStation using Moose {
         traits => ['SetOnce'],
         predicate => 1,
     );
-    
+
 
     method possible_on_same_line(LineStation $other) {
         my $station_lines = [ map { $_->id } $self->station->all_lines ];

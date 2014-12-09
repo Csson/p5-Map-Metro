@@ -131,7 +131,7 @@ class Map::Metro::Graph using Moose {
             get_routing => 'get',
         },
     );
-    
+
     has full_graph => (
         is => 'ro',
         lazy => 1,
@@ -369,7 +369,7 @@ class Map::Metro::Graph using Moose {
                 }
                 catch {
 
-                    die sprintf '[%s] %s Current next line station: [%s] %s, new: [%s] %s', 
+                    die sprintf '[%s] %s Current next line station: [%s] %s, new: [%s] %s',
                                                                         $origin_line_station->line->name,
                                                                         $origin_line_station->station->name,
 
@@ -378,7 +378,7 @@ class Map::Metro::Graph using Moose {
 
                                                                         $destination_line_station->line->name,
                                                                         $destination_line_station->station->name;
-                    
+
                 };
                 $destination_line_station->previous_line_station($origin_line_station);
 
@@ -498,13 +498,13 @@ class Map::Metro::Graph using Moose {
                     my $next_line_station_id = $graphroute->[ $index + 1 ];
 
                     my $connection = $self->get_connection_by_line_station_ids($this_line_station_id, $next_line_station_id);
-                    
 
-                    
+
+
           #          say $connection->origin_line_station->station->name . ' - ' . $connection->destination_line_station->station->name;
                     $route->add_connection($connection);
 
-#                    $next_step = 
+#                    $next_step =
 #
 #                    my $step = Map::Metro::Graph::Step->new(from_connection => $connection);
 #

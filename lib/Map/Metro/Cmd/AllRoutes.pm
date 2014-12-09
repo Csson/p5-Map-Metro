@@ -42,7 +42,7 @@ class Map::Metro::Cmd::AllRoutes extends Map::Metro::Cmd using Moose {
             say $routing->to_text;
         }
         catch {
-         
+
         };
     }
 

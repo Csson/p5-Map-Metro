@@ -12,7 +12,7 @@ class Map::Metro::Cmd::Lines extends Map::Metro::Cmd using Moose {
         documentation => 'The name of the city',
         required => 1,
     );
-    
+
 
     command_short_description 'Display line information in $city';
 
@@ -30,8 +30,8 @@ class Map::Metro::Cmd::Lines extends Map::Metro::Cmd using Moose {
     }
     method get_shit($graph, Line $line) {
         my @station_ids = map { $_->id } $graph->filter_stations(sub { jany(map { $_->id } $_->all_lines) eq $line->id });
-    
-        my @rows = ();    
+
+        my @rows = ();
         my $line_station = $graph->find_line_station(sub { $_->line->id eq $line->id && !$_->previous_line_station });
         my $first_line_station = $line_station;
 
@@ -70,7 +70,7 @@ __END__
                             )
                        } @routings;
 
-        my @routes = grep { 
+        my @routes = grep {
                         $_->get_connection(0)->origin_line_station->on_same_line($_->get_connection(-1)->destination_line_station); $_
                      }
                      map { $_->all_routes } @routings;
@@ -179,7 +179,7 @@ say '---';
 
 
 
-     
+
 
 __END__
 
@@ -207,7 +207,7 @@ my $count = 0;
 
 
 
-__END__            
+__END__
             my $conn = $graph->get_first_connection_by_line($line);
             my $last_conn = $graph->get_last_connection_by_line($line);
 
