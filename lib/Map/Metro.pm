@@ -188,7 +188,9 @@ If the starting station and finishing station...
 
 =item L<Map::Metro::Graph::Segment> - Defines a MMG::Segment.
 
-=item L<Map::Metro::Graph::Station> - Defines a MMG::Station
+=item L<Map::Metro::Graph::Station> - Defines a MMG::Station.
+
+=item L<Map::Metro::Graph::Step> - Defines a MMG::Step.
 
 =item L<Map::Metro::Graph::Transfer> - Defines a MMG::Transfer.
 
@@ -221,7 +223,6 @@ Currently only Perl 5.20+ is supported.
 L<Map::Tube> works with Perl 5.6.
 
 Included in this distribution is a script to convert C<Map::Metro> maps into C<Map::Tube> maps, if L<Map::Tube> misses one you need.
-
 
 =head1 SEE ALSO
 
