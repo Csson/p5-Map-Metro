@@ -10,7 +10,7 @@ class Map::Metro::Cmd::Available extends Map::Metro::Cmd using Moose {
         my $map = Map::Metro->new;
 
         say "The following maps are available:\n";
-        say join "\n" => map { s{^Map::Metro::Plugin::Map::}{ }; $_ } $map->available_maps;
+        say join "\n" => map { s{^Map::Metro::Plugin::Map::}{ }; $_ } grep { !/^Map::Metro::Plugin::Map$/ } $map->available_maps;
     }
 }
 

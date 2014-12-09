@@ -22,13 +22,13 @@ class Map::Metro::Cmd::Lines extends Map::Metro::Cmd using Moose {
         $graph->all_pairs;
 
         foreach my $line ($graph->all_lines) {
-            $self->get_shit($graph, $line);
+            say $self->line($graph, $line);
         }
 
 
 
     }
-    method get_shit($graph, Line $line) {
+    method line($graph, Line $line) {
         my @station_ids = map { $_->id } $graph->filter_stations(sub { jany(map { $_->id } $_->all_lines) eq $line->id });
 
         my @rows = ();
@@ -45,11 +45,13 @@ class Map::Metro::Cmd::Lines extends Map::Metro::Cmd using Moose {
         my $header = sprintf 'Line %s from %s to %s', $line->name, $first_line_station->station->name, $line_station->station->name;
         unshift @rows => $header, '-' x length $header;
 
-        say join "\n" => @rows, '';
+        return join "\n" => @rows, '';
 
 
     }
 }
+
+1;
 
 __END__
 
@@ -172,7 +174,7 @@ say '---';
     }
 }
 
-
+1;
 
 
 
