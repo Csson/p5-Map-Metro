@@ -16,6 +16,8 @@ use MooseX::App qw/Config Color/;
 
 }
 
+1;
+
 __END__
 
 =encoding utf-8
