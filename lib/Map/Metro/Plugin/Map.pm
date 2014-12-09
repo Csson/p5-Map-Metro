@@ -24,6 +24,7 @@ Map::Metro::Plugin::Map - How to make your own map
     Gullmarsplan
     Globen
     Sergels torg
+    Nybroplan
 
     --transfers
     T-Centralen|Sergels torg|weight:4
@@ -32,6 +33,7 @@ Map::Metro::Plugin::Map - How to make your own map
     10|T10|Blue line
     11|T11|Blue line
     19|T19|Green line
+    7|L7|Spårväg city
 
     --segments
     10,11|Stadshagen|Fridhemsplan
@@ -44,6 +46,7 @@ Map::Metro::Plugin::Map - How to make your own map
     19|Medborgarplatsen|Skanstull
     19|Skanstull|Gullmarsplan
     19|Gullmarsplan|Globen
+    7|Sergels torg|Nybroplan
 
 
 =head1 DESCRIPTION
