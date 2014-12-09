@@ -46,7 +46,7 @@ B<C<$city>>
 
 Mandatory string.
 
-Does B<map> for all stations in the C<Map::Metro::Plugin::Map::$city> map.
+Does B<route> for all stations in the C<Map::Metro::Plugin::Map::$city> map.
 
 If C<$city> contains a dot C<.>, it is assumed to be a file path to a map file. The map file is parsed via L<Map::Metro::Shim>.
 
@@ -61,7 +61,7 @@ Lists all installed maps on the system.
 It's there if you need it...
 
 
-=head2 map-metro.pl map $city $from $to
+=head2 map-metro.pl route $city $from $to
 
 B<C<$city>>
 
@@ -93,7 +93,7 @@ B<C<$city>>
 
 Mandatory string.
 
-Lists all stations in the  C<Map::Metro::Plugin::Map::$city> map. This displays station ids for easy search with B<map>.
+Lists all stations in the  C<Map::Metro::Plugin::Map::$city> map. This displays station ids for easy search with B<route>.
 
 
 =head1 AUTHOR
