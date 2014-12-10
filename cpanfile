@@ -11,6 +11,7 @@ requires 'MooseX::AttributeShortcuts';
 requires 'Moops';
 requires 'String::Trim';
 requires 'Syntax::Keyword::Junction';
+requires 'Syntax::Collector';
 requires 'Throwable::X';
 requires 'Types::Path::Tiny';
 
