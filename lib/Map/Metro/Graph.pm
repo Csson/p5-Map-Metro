@@ -326,7 +326,7 @@ class Map::Metro::Graph using Moose {
         my $next_line_station_id = 0;
         SEGMENT:
         foreach my $segment ($self->all_segments) {
-# fetch line stations if they exist"!!!!!!!!!!!!!!!!!!!!!
+
             LINE:
             foreach my $line_id ($segment->all_line_ids) {
                 my $line = $self->get_line_by_id($line_id);
@@ -441,14 +441,14 @@ class Map::Metro::Graph using Moose {
 
         }
     }
-    multi method routes_for(Int $origin_id, Int $destination_id) {
+    multi method routing_for(Int $origin_id, Int $destination_id) {
         my $origin = $self->get_station_by_id($origin_id);
         my $dest = $self->get_station_by_id($destination_id);
 
-        return $self->routes_for($origin->name, $dest->name);
+        return $self->routing_for($origin->name, $dest->name);
     }
 
-    multi method routes_for(Str $origin_name, Str $destination_name) {
+    multi method routing_for(Str $origin_name, Str $destination_name) {
 
         my($origin_station, $destination_station);
         try {
@@ -460,10 +460,10 @@ class Map::Metro::Graph using Moose {
             $error->does('Map::Metro::Exception') ? return $error : die $error;
         };
 
-        return $self->routes_for($origin_station, $destination_station);
+        return $self->routing_for($origin_station, $destination_station);
     }
 
-    multi method routes_for(Station $origin_station, Station $destination_station) {
+    multi method routing_for(Station $origin_station, Station $destination_station) {
         my @origin_line_station_ids = map { $_->line_station_id } $self->get_line_stations_by_station($origin_station);
         my @destination_line_station_ids = map { $_->line_station_id } $self->get_line_stations_by_station($destination_station);
 
@@ -555,7 +555,7 @@ class Map::Metro::Graph using Moose {
 
             OTHER_STATION:
             foreach my $other_station (@other_stations) {
-                push $routings->@* => $self->routes_for($station, $other_station);
+                push $routings->@* => $self->routing_for($station, $other_station);
             }
         }
         return $routings;
@@ -603,7 +603,7 @@ the entire network (graph) in a hierarchy of objects.
 
 =head2 Methods
 
-=head3 get_routes($from, $to)
+=head3 routing_for($from, $to)
 
 B<C<$from>>
 

@@ -196,6 +196,28 @@ If the starting station and finishing station...
 
 =back
 
+=head2 Hierarchy
+
+The following is a conceptual overview of the various parts of a graph:
+
+At first, the map file is parsed. The four types of blocks (stations, transfers, lines and segments) are translated
+into their respective object.
+
+Next, lines and stations are put together into L<LineStations|Map::Metro::Graph::LineStation>. Every two adjacent LineStations
+are put into two L<Connections|Map::Metro::Graph::Connection> (one for each direction).
+
+Now the network is complete, and it is time to start traversing it.
+
+Once a request to search for paths between two stations is given, we first search for the starting L<Station|Map::Metro::Graph::Station> given either a
+station id or station name. Then we find all L<LineStations|Map::Metro::Graph::LineStation> for that station.
+
+Then we do the same for the destination station.
+
+And then we walk through the network, from L<LineStation|Map::Metro::Graph::LineStation> to L<LineStation|Map::Metro::Graph::LineStation>, finding their L<Connections|Map::Metro::Graph::Connection>
+and turning them into L<Steps|Map::Metro::Graph::Step>, which we then add to the L<Route|Map::Metro::Graph::Route>.
+
+All L<Routes|Map::Metro::Graph::Route> between the two L<Stations|Map::Metro::Graph::Station> are then put into a L<Routing|Map::Metro::Graph::Routing>, which is returned to the user.
+
 
 =head1 Status
 

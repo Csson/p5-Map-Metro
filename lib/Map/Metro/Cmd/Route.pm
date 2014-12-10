@@ -30,7 +30,7 @@ class Map::Metro::Cmd::Route extends Map::Metro::Cmd using Moose {
         my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname)->parse : Map::Metro::Shim->new($self->cityname)->parse;
 
         try {
-            my $routing = $graph->routes_for($self->origin,  $self->destination);
+            my $routing = $graph->routing_for($self->origin,  $self->destination);
             say $routing->to_text;
         }
         catch {

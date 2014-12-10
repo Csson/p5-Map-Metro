@@ -125,64 +125,8 @@ An important part is the single attribute the role should have. It B<must> be in
     my $attribute_name = join '_' => map {
                                   join ('_' => map { lc } grep { length } split m{([A-Z]{1}[^A-Z]*)})
                                } split '::' => $city;
-    print $city;
+    print $attribute_name;
     # rio_de_janeiro
-
-=head1 COMMANDS
-
-=head2 map-metro.pl all_routes $city
-
-B<C<$city>>
-
-Mandatory string.
-
-Does B<map> for all stations in the C<Map::Metro::Plugin::Map::$city> map.
-
-
-=head2 map-metro.pl available
-
-Lists all installed maps on the system.
-
-
-=head2 map-metro.pl help
-
-It's there if you need it...
-
-
-=head2 map-metro.pl map $city $from $to
-
-B<C<$city>>
-
-Mandatory string.
-
-B<C<$from>>
-
-Mandatory. The starting station, can be either a station id (integer), or a station name (string). Must be of the same type as B<C<$to>>. Use single quotes if the name contains spaces.
-
-B<C<$to>>
-
-Mandatory. The finishing station, can be either a station id (integer), or a station name (string). Must be of the same type as B<C<$from>>. Use single quotes if the name contains spaces.
-
-Searches for routes in the C<Map::Metro::Plugin::Map::$city> between C<$from> and C<$to>.
-
-
-=head2 map-metro.pl metro_to_tube $city
-
-B<C<$city>>
-
-Mandatory string.
-
-Converts C<Map::Metro::Plugin::Map::$city> into a L<Map::Tube> ready xml-file. The file is saved in the current working directory with a timestamped filename.
-
-
-=head2 map-metro.pl stations $city
-
-B<C<$city>>
-
-Mandatory string.
-
-Lists all stations in the  C<Map::Metro::Plugin::Map::$city> map. This displays station ids for easy search with B<map>.
-
 
 =head1 AUTHOR
 

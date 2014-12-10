@@ -40,15 +40,13 @@ This collection of commands exposes several parts of the L<Map::Metro> api.
 
 =head1 COMMANDS
 
+If a command takes C<$city>, it is mandatory. Normally it should be a module name in the C<Map::Metro::Plugin::Map> namespace (but only the significant part is necessary). If, however, it contains
+att least one dot it is assumed to be a file path to a map file. The map file is parsed via L<Map::Metro::Shim>.
+
+
 =head2 map-metro.pl all_routes $city
 
-B<C<$city>>
-
-Mandatory string.
-
 Does B<route> for all stations in the C<Map::Metro::Plugin::Map::$city> map.
-
-If C<$city> contains a dot C<.>, it is assumed to be a file path to a map file. The map file is parsed via L<Map::Metro::Shim>.
 
 
 =head2 map-metro.pl available
@@ -61,11 +59,12 @@ Lists all installed maps on the system.
 It's there if you need it...
 
 
+=head2 map-metro.pl lines $city
+
+Lists all lines in the C<Map::Metro::Plugin::Map::$city> map.
+
+
 =head2 map-metro.pl route $city $from $to
-
-B<C<$city>>
-
-Mandatory string.
 
 B<C<$from>>
 
@@ -80,18 +79,10 @@ Searches for routes in the C<Map::Metro::Plugin::Map::$city> between C<$from> an
 
 =head2 map-metro.pl metro_to_tube $city
 
-B<C<$city>>
-
-Mandatory string.
-
 Converts C<Map::Metro::Plugin::Map::$city> into a L<Map::Tube> ready xml-file. The file is saved in the current working directory with a timestamped filename.
 
 
 =head2 map-metro.pl stations $city
-
-B<C<$city>>
-
-Mandatory string.
 
 Lists all stations in the  C<Map::Metro::Plugin::Map::$city> map. This displays station ids for easy search with B<route>.
 

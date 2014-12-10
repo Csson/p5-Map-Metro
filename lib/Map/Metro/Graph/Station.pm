@@ -40,9 +40,7 @@ class Map::Metro::Graph::Station using Moose {
     );
 
     around add_line(Line $line) {
-        #* Only add a line once
         $self->$next($line) if !$self->find_line(sub { $line->id eq $_->id });
-
     }
 
     around add_connecting_station(Station $station) {
@@ -65,7 +63,7 @@ Map::Metro::Graph::Station - What is a station?
 
 =head1 DESCRIPTION
 
-Stations are on the same level as L<Lines|Map::Metro::Graph::Line>.
+Stations represents actual stations, and are used both during the graph building phase and the navigational phase.
 
 =head1 METHODS
 
