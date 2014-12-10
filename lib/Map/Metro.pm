@@ -1,8 +1,15 @@
-use Map::Metro::Standard::Moops;
+use 5.20.0;
+use Map::Metro::Standard;
 
-class Map::Metro with MooseX::Object::Pluggable using Moose  {
+package Map::Metro {
 
+    use Moose;
+    with 'MooseX::Object::Pluggable';
     use aliased 'Map::Metro::Exception::IllegalConstructorArguments';
+    use MooseX::AttributeShortcuts;
+    use Types::Standard -types;
+    use Types::Path::Tiny -types;
+    use experimental qw/postderef signatures/;
 
     use Map::Metro::Graph;
 
@@ -22,7 +29,8 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
         init_arg => undef,
     );
 
-    around BUILDARGS($orig: $class, @args) {
+    around BUILDARGS => sub {
+        my ($orig, $class, @args) = @_;
         if(   (scalar @args == 2 && ArrayRef->check($args[1]) && scalar $args[1]->@* != 1)
            || (scalar @args > 2)) {
 
@@ -45,9 +53,9 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
             }
         }
         return $class->$orig;
-    }
+    };
 
-    method BUILD {
+    sub BUILD($self, @args) {
         if($self->has_map) {
             my $metromap = $self->get_map(0);
             $self->load_plugin('Map::'.$metromap);
@@ -59,18 +67,18 @@ class Map::Metro with MooseX::Object::Pluggable using Moose  {
     }
 
     # Borrowed from Mojo::Util
-    method decamelize($string) {
+    sub decamelize($self, $string) {
         return $string if $string !~ m{[A-Z]};
         return join '_' => map {
                                   join ('_' => map { lc } grep { length } split m{([A-Z]{1}[^A-Z]*)})
                                } split '::' => $string;
     }
 
-    method parse {
+    sub parse($self) {
         return Map::Metro::Graph->new(filepath => $self->filepath)->parse;
     }
 
-    method available_maps {
+    sub available_maps($self) {
         return sort $self->_plugin_locator->plugins;
     }
 }
