@@ -53,9 +53,14 @@
             "experimental" : "0",
             "perl" : "5.020000"
          }
+      },
+      "test" : {
+         "requires" : {
+            "Test::NoTabs" : "0"
+         }
       }
    },
    "release_status" : "stable",
-   "version" : "0.1496"
+   "version" : "0.1497"
 }
 

@@ -13,3 +13,7 @@ requires 'String::Trim';
 requires 'Syntax::Keyword::Junction';
 requires 'Throwable::X';
 requires 'Types::Path::Tiny';
+
+on 'test' => sub {
+    requires 'Test::NoTabs';
+};
