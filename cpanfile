@@ -8,6 +8,7 @@ requires 'List::Compare';
 requires 'Moose';
 requires 'MooseX::App';
 requires 'MooseX::AttributeShortcuts';
+requires 'MooseX::Object::Pluggable';
 requires 'Moops';
 requires 'String::Trim';
 requires 'Syntax::Keyword::Junction';
