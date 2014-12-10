@@ -2,10 +2,13 @@ Revision history for Map-Metro
 
 {{$NEXT}}
  [API Changes]
+ - Renamed get_route() in MM::Graph to routing_for().
 
  [Bug Fixes]
 
  [Documentation]
+ - Cleanup, and minor improvements.
+ - Added documentation about map-metro.pl lines <city>
 
  [Enhancements]
 

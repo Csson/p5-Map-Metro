@@ -90,6 +90,28 @@ If the starting station and finishing station...
 - [Map::Metro::Graph::Step](https://metacpan.org/pod/Map::Metro::Graph::Step) - Defines a MMG::Step.
 - [Map::Metro::Graph::Transfer](https://metacpan.org/pod/Map::Metro::Graph::Transfer) - Defines a MMG::Transfer.
 
+## Hierarchy
+
+The following is a conceptual overview of the various parts of a graph:
+
+At first, the map file is parsed. The four types of blocks (stations, transfers, lines and segments) are translated
+into their respective object.
+
+Next, lines and stations are put together into [LineStations](https://metacpan.org/pod/Map::Metro::Graph::LineStation). Every two adjacent LineStations
+are put into two [Connections](https://metacpan.org/pod/Map::Metro::Graph::Connection) (one for each direction).
+
+Now the network is complete, and it is time to start traversing it.
+
+Once a request to search for paths between two stations is given, we first search for the starting [Station](https://metacpan.org/pod/Map::Metro::Graph::Station) given either a
+station id or station name. Then we find all [LineStations](https://metacpan.org/pod/Map::Metro::Graph::LineStation) for that station.
+
+Then we do the same for the destination station.
+
+And then we walk through the network, from [LineStation](https://metacpan.org/pod/Map::Metro::Graph::LineStation) to [LineStation](https://metacpan.org/pod/Map::Metro::Graph::LineStation), finding their [Connections](https://metacpan.org/pod/Map::Metro::Graph::Connection)
+and turning them into [Steps](https://metacpan.org/pod/Map::Metro::Graph::Step), which we then add to the [Route](https://metacpan.org/pod/Map::Metro::Graph::Route).
+
+All [Routes](https://metacpan.org/pod/Map::Metro::Graph::Route) between the two [Stations](https://metacpan.org/pod/Map::Metro::Graph::Station) are then put into a [Routing](https://metacpan.org/pod/Map::Metro::Graph::Routing), which is returned to the user.
+
 # Status
 
 This is somewhat experimental. I don't expect that the map file format will _break_, but it might be
