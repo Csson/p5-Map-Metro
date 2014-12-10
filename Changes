@@ -15,6 +15,10 @@ Revision history for Map-Metro
 
  [Revision]
 
+0.1497 2014-12-10T15:09:17Z CET
+ [Meta]
+ - Added test prereq
+
 0.1496 2014-12-10T14:24:35Z CET
  [Documentation]
  - Typo
