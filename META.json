@@ -58,11 +58,12 @@
       },
       "test" : {
          "requires" : {
+            "Syntax::Collector" : "0",
             "Test::NoTabs" : "0"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "0.1499"
+   "version" : "0.1500"
 }
 

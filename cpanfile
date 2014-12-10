@@ -18,4 +18,5 @@ requires 'Types::Path::Tiny';
 
 on 'test' => sub {
     requires 'Test::NoTabs';
+    requires 'Syntax::Collector';
 };
