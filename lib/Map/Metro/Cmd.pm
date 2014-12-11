@@ -54,9 +54,24 @@ Does B<route> for all stations in the C<Map::Metro::Plugin::Map::$city> map.
 Lists all installed maps on the system.
 
 
-=head2 map-metro.pl help
+=head2 map-metro.pl dump $city
 
-It's there if you need it...
+Converts the graph into a hash structure, and L<Data::Dump::Streamer> dumps it into a textfile. See C<hoist> for how to retrieve it.
+
+
+=head2 map-metro.pl hoist $filename $from $to
+
+B<C<$from>>
+
+Mandatory. The starting station, can be either a station id (integer), or a station name (string). Use single quotes if the name contains spaces.
+
+B<C<$to>>
+
+Mandatory. The finishing station, can be either a station id (integer), or a station name (string). Use single quotes if the name contains spaces.
+
+Reads a file dumped by C<dump> and searches for routes between the two stations, just like C<route>. If you are going to search for many routes using C<map-metro.pl> this can be a
+significantly faster way to do it than C<route>, since it is much faster to read a hash from file than constructing the graph from scratch on every execution. C<dump> and C<hoist>
+can also serve as a base on how to construct a custom dump/hoist solution.
 
 
 =head2 map-metro.pl lines $city
@@ -85,6 +100,11 @@ Converts C<Map::Metro::Plugin::Map::$city> into a L<Map::Tube> ready xml-file. T
 =head2 map-metro.pl stations $city
 
 Lists all stations in the  C<Map::Metro::Plugin::Map::$city> map. This displays station ids for easy search with B<route>.
+
+
+=head2 map-metro.pl help
+
+It's there if you need it...
 
 
 =head1 AUTHOR

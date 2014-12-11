@@ -16,7 +16,6 @@ class Map::Metro::Cmd::Lines extends Map::Metro::Cmd using Moose {
     command_short_description 'Display line information in $city';
 
     method run {
-
         my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname)->parse : Map::Metro::Shim->new($self->cityname)->parse;
         $graph->all_pairs;
 

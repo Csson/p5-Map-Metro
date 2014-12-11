@@ -1,5 +1,9 @@
 package Map::Metro::Plugin::Map;
 
+use Moose::Role;
+
+with 'MooseX::Object::Pluggable';
+
 1;
 
 =encoding utf-8
