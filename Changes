@@ -15,6 +15,10 @@ Revision history for Map-Metro
 
  [Revision]
 
+0.1501 2014-12-11T15:39:01Z CET
+ [Enhancements]
+ - Added dump and hoist commands to map-metro.pl
+
 0.1500 2014-12-10T19:06:42Z CET
  [Meta]
  - More prereqs.
