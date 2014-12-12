@@ -5,6 +5,7 @@ requires 'experimental';
 requires 'Graph';
 requires 'List::AllUtils';
 requires 'List::Compare';
+requires 'Module::Pluggable';
 requires 'Moose';
 requires 'MooseX::App';
 requires 'MooseX::AttributeShortcuts';
