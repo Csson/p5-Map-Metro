@@ -43,7 +43,6 @@ package Map::Metro {
         default => 'Plugin::Map',
         init_arg => undef,
     );
-    
 
     around BUILDARGS => sub {
         my ($orig, $class, @args) = @_;
