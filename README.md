@@ -69,29 +69,45 @@ Returns an array reference containing the names of all Map::Metro maps installed
 
 ## What is a unique path?
 
-The following rules is a guideline:
+The following rules are a guideline:
 
 If the starting station and finishing station...
 
-- ...is on the same line there will be no transfers to other lines.
-- ...shares multiple lines (e.g., both stations are on both line 2 and 4), each line constitutes a route.
-- ...are on different lines a transfer will take place at a shared station. No matter how many shared stations there are, there will only be one route returned (but which transfer station is used can differ between queries).
-- ...has no shared stations, the shortest route/routes will be returned.
+...is on the same line there will be no transfers to other lines.
+
+...shares multiple lines (e.g., both stations are on both line 2 and 4), each line constitutes a route.
+
+...are on different lines a transfer will take place at a shared station. No matter how many shared stations there are, there will only be one route returned (but which transfer station is used can differ between queries).
+
+...has no shared stations, the shortest route/routes will be returned.
 
 # MORE INFORMATION
 
-- [Map::Metro::Graph](https://metacpan.org/pod/Map::Metro::Graph) - What to do with the graph object. This is where it happens.
-- [Map::Metro::Plugin::Map](https://metacpan.org/pod/Map::Metro::Plugin::Map) - How to make your own maps.
-- [Map::Metro::Cmd](https://metacpan.org/pod/Map::Metro::Cmd) - A guide to the command line application.
-- [Map::Metro::Graph::Connection](https://metacpan.org/pod/Map::Metro::Graph::Connection) - Defines a MMG::Connection.
-- [Map::Metro::Graph::Line](https://metacpan.org/pod/Map::Metro::Graph::Line) - Defines a MMG::Line.
-- [Map::Metro::Graph::LineStation](https://metacpan.org/pod/Map::Metro::Graph::LineStation) - Defines a MMG::LineStation.
-- [Map::Metro::Graph::Route](https://metacpan.org/pod/Map::Metro::Graph::Route) - Defines a MMG::Route.
-- [Map::Metro::Graph::Routing](https://metacpan.org/pod/Map::Metro::Graph::Routing) - Defines a MMG::Routing.
-- [Map::Metro::Graph::Segment](https://metacpan.org/pod/Map::Metro::Graph::Segment) - Defines a MMG::Segment.
-- [Map::Metro::Graph::Station](https://metacpan.org/pod/Map::Metro::Graph::Station) - Defines a MMG::Station.
-- [Map::Metro::Graph::Step](https://metacpan.org/pod/Map::Metro::Graph::Step) - Defines a MMG::Step.
-- [Map::Metro::Graph::Transfer](https://metacpan.org/pod/Map::Metro::Graph::Transfer) - Defines a MMG::Transfer.
+[Map::Metro::Graph](https://metacpan.org/pod/Map::Metro::Graph) - How to use graph object.
+
+[Map::Metro::Plugin::Map](https://metacpan.org/pod/Map::Metro::Plugin::Map) - How to make your own maps.
+
+[Map::Metro::Hook](https://metacpan.org/pod/Map::Metro::Hook) - How to extend Map::Metro via hooks/events.
+
+[Map::Metro::Cmd](https://metacpan.org/pod/Map::Metro::Cmd) - A guide to the command line application.
+
+[Map::Metro::Graph::Connection](https://metacpan.org/pod/Map::Metro::Graph::Connection) - Defines a MMG::Connection.
+
+[Map::Metro::Graph::Line](https://metacpan.org/pod/Map::Metro::Graph::Line) - Defines a MMG::Line.
+
+[Map::Metro::Graph::LineStation](https://metacpan.org/pod/Map::Metro::Graph::LineStation) - Defines a MMG::LineStation.
+
+[Map::Metro::Graph::Route](https://metacpan.org/pod/Map::Metro::Graph::Route) - Defines a MMG::Route.
+
+[Map::Metro::Graph::Routing](https://metacpan.org/pod/Map::Metro::Graph::Routing) - Defines a MMG::Routing.
+
+[Map::Metro::Graph::Segment](https://metacpan.org/pod/Map::Metro::Graph::Segment) - Defines a MMG::Segment.
+
+[Map::Metro::Graph::Station](https://metacpan.org/pod/Map::Metro::Graph::Station) - Defines a MMG::Station.
+
+[Map::Metro::Graph::Step](https://metacpan.org/pod/Map::Metro::Graph::Step) - Defines a MMG::Step.
+
+[Map::Metro::Graph::Transfer](https://metacpan.org/pod/Map::Metro::Graph::Transfer) - Defines a MMG::Transfer.
 
 ## Hierarchy
 

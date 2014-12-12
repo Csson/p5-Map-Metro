@@ -4,11 +4,12 @@ use Map::Metro::Standard;
 package Map::Metro {
 
     use Moose;
-    with 'MooseX::Object::Pluggable';
-    use aliased 'Map::Metro::Exception::IllegalConstructorArguments';
+    use Module::Pluggable search_path => ['Map::Metro::Plugin::Map'], require => 1, sub_name => 'system_maps';
     use MooseX::AttributeShortcuts;
+    use aliased 'Map::Metro::Exception::IllegalConstructorArguments';
     use Types::Standard -types;
     use Types::Path::Tiny -types;
+    use List::AllUtils 'any';
     use experimental qw/postderef signatures/;
 
     use Map::Metro::Graph;
@@ -70,13 +71,14 @@ package Map::Metro {
     };
 
     sub BUILD($self, @args) {
+
         if($self->has_map) {
-            my $metromap = $self->get_map(0);
-            $self->load_plugin($metromap);
+            my @system_maps = map { s{^Map::Metro::Plugin::Map::}{}; $_ } $self->system_maps;
 
-            my $filemethod = $self->decamelize($metromap);
-
-            $self->filepath($self->$filemethod);
+            if(any { $_ eq $self->get_map(0) } @system_maps) {
+                my $mapclass = 'Map::Metro::Plugin::Map::'.$self->get_map(0);
+                $self->filepath($mapclass->new->mapfile);
+            }
         }
     }
 
