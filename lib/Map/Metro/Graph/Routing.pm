@@ -79,10 +79,6 @@ Returns an array of all L<LineStation|Map::Metro::Graph::LineStations> possible 
 
 Returns an array of all L<Route|Map::Metro::Graph::Routes> in the routing.
 
-=head2 to_text()
-
-Returns a string representation of the routing, suitable for displaying in a terminal.
-
 =head1 AUTHOR
 
 Erik Carlsson E<lt>info@code301.comE<gt>
