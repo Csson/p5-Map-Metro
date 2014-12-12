@@ -7,7 +7,7 @@ package Map::Metro::Emitter {
     use List::AllUtils 'none';
     use Types::Standard -types;
 
-    use Module::Pluggable search_path => ['Map::Metro::Plugin::Hook'], require => 1, asdf => 'new';
+    use Module::Pluggable search_path => ['Map::Metro::Plugin::Hook'], require => 1, asdf => 'new', sub_name => 'found_plugins';
 
     has wanted_hook_plugins => (
         is => 'ro',
@@ -22,9 +22,19 @@ package Map::Metro::Emitter {
         isa => ArrayRef,
         traits => ['Array'],
         handles => {
-            add_registered => 'push',
-            all_registered => 'elements',
-            filter_registered => 'grep',
+            add_registered_hook => 'push',
+            all_registered_hooks => 'elements',
+            filter_registered_hooks => 'grep',
+        },
+    );
+    has plugins => (
+        is => 'rw',
+        isa => HashRef,
+        traits => ['Hash'],
+        handles => {
+            add_plugin => 'set',
+            get_plugin => 'get',
+            plugin_names => 'keys',
         },
     );
 
@@ -32,11 +42,13 @@ package Map::Metro::Emitter {
         my $self = shift;
 
         PLUGIN:
-        foreach my $pluginname ($self->plugins) {
+        foreach my $pluginname ($self->found_plugins) {
             my $actual = $pluginname =~ s{^Map::Metro::Plugin::Hook::}{}r;
             next PLUGIN if none { $_ eq $actual } $self->all_wanted_hook_plugins;
+
             my $plugin = $pluginname->new;
             $self->register($plugin);
+            $self->add_plugin($actual => $plugin);
         }
     }
     method register($plugin) {
@@ -44,7 +56,7 @@ package Map::Metro::Emitter {
 
         foreach my $event (keys %hooks_list) {
             my $hook = Map::Metro::Hook->new(event => $event, action => $hooks_list{ $event }, plugin => $plugin);
-            $self->add_registered($hook);
+            $self->add_registered_hook($hook);
         }
     }
 
@@ -56,7 +68,7 @@ package Map::Metro::Emitter {
     }
 
     method emit($event, @args) {
-        my @hooks = $self->filter_registered(sub { $_->event eq $event });
+        my @hooks = $self->filter_registered_hooks(sub { $_->event eq $event });
 
         foreach my $hook (@hooks) {
             $hook->action->($hook->plugin, @args);
