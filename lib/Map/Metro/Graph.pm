@@ -40,6 +40,7 @@ class Map::Metro::Graph using Moose {
         init_arg => undef,
         lazy => 1,
         default => sub { Map::Metro::Emitter->new(wanted_hook_plugins => [shift->all_wanted_hook_plugins]) },
+        handles => [qw/get_plugin all_plugins plugin_names/],
     );
 
     has stations => (
