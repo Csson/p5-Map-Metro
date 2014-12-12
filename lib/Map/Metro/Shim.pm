@@ -31,6 +31,9 @@ class Map::Metro::Shim using Moose  {
         else {
             %args = @args;
         }
+        if(exists $args{'hooks'} && !ArrayRef->check($args{'hooks'})) {
+            $args{'hooks'} = [$args{'hooks'}];
+        }
 
         return $class->$orig(%args);
     };
