@@ -62,26 +62,6 @@ class Map::Metro::Graph::Step using Moose {
         return if !$self->has_previous_step;
         return $self->previous_step->is_station_transfer;
     }
-
-    method to_text(Int $line_name_length = 0) {
-        my @rows = ();
-
-        push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => ($self->was_line_transfer && !$self->was_station_transfer ? '*' : ''),
-                                                                       $self->origin_line_station->line->name,
-                                                                       $self->origin_line_station->station->name;
-        if($self->is_station_transfer) {
-            push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => ($self->is_station_transfer ? '+' : ''),
-                                                    ' ' x length $self->origin_line_station->line->name,
-                                                    $self->destination_line_station->station->name;
-        }
-        if(!$self->has_next_step) {
-            push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => '',
-                                                                     $self->destination_line_station->line->name,
-                                                                     $self->destination_line_station->station->name;
-        }
-        return join "\n" => @rows;
-    }
-
 }
 
 
