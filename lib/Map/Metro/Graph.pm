@@ -213,8 +213,9 @@ class Map::Metro::Graph using Moose {
         }
 
         my $id = $self->station_count + 1;
-        my $station = Map::Metro::Graph::Station->new(eh $name, $id);
+        my $station = Map::Metro::Graph::Station->new(original_name => $name, eh $name, $id);
 
+        $self->emit->before_add_station($station);
         $self->$next($station);
     }
 
@@ -249,6 +250,7 @@ class Map::Metro::Graph using Moose {
 
         #* Check that lines and stations in segments exist in the other lists
         my($origin_station, $destination_station);
+
         try {
             $self->get_line_by_id($_) foreach $line_ids->@*;
             $origin_station = $self->get_station_by_name($start);
@@ -278,7 +280,11 @@ class Map::Metro::Graph using Moose {
     }
     method get_station_by_name(Str $station_name, :$check = 1 ) {
         my $station = $self->find_station(sub { fc($_->name) eq fc($station_name) });
-        return $station if $station;
+        return $station if Station->check($station);
+
+        $station = $self->find_station(sub { fc($_->original_name) eq fc($station_name) });
+        return $station if Station->check($station);
+
         StationNameDoesNotExistInStationList->throw(station_name => $station_name) if $check;
     }
     method get_station_by_id(Int $id) {
@@ -456,7 +462,6 @@ class Map::Metro::Graph using Moose {
     }
 
     multi method routing_for(Str $origin_name, Str $destination_name) {
-
         my($origin_station, $destination_station);
         try {
             $origin_station = $self->get_station_by_name($origin_name);
@@ -464,7 +469,7 @@ class Map::Metro::Graph using Moose {
         }
         catch {
             my $error = $_;
-            $error->does('Map::Metro::Exception') ? return $error : die $error;
+            $error->does('Map::Metro::Exception') ? $error->throw : die $error;
         };
 
         return $self->routing_for($origin_station, $destination_station);
@@ -548,8 +553,9 @@ class Map::Metro::Graph using Moose {
                 $routing->add_route($route);
             }
         }
+        $self->emit->before_add_routing($routing) if $self->has_wanted_hook_plugins;
         $self->add_routing($routing);
-        $self->emit->routing_completed($routing) if $self->has_wanted_hook_plugins;
+
         return $routing;
     }
 
