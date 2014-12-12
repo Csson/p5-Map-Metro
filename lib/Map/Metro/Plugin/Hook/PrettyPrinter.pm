@@ -5,7 +5,7 @@ class Map::Metro::Plugin::Hook::PrettyPrinter using Moose {
     use Map::Metro::Hook;
 
     method register {
-        routing_completed => sub {
+        after_add_routing => sub {
 
             my $self = shift;
             my $routing = shift;
