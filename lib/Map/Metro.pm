@@ -62,6 +62,9 @@ package Map::Metro {
         if(exists $args{'map'} && !ArrayRef->check($args{'map'})) {
             $args{'map'} = [$args{'map'}];
         }
+        if(exists $args{'hooks'} && !ArrayRef->check($args{'hooks'})) {
+            $args{'hooks'} = [$args{'hooks'}];
+        }
 
         return $class->$orig(%args);
     };
