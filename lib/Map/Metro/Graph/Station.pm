@@ -9,9 +9,13 @@ class Map::Metro::Graph::Station using Moose {
     );
 
     has name => (
-        is => 'ro',
+        is => 'rw',
         isa => Str,
         required => 1,
+    );
+    has original_name => (
+        is => 'ro',
+        isa => Maybe[Str],
     );
 
     has lines => (
