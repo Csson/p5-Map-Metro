@@ -31,8 +31,8 @@ Map::Metro::Cmd - The command line interface
     #* General form
     $ map-metro.pl <command> [ <city> ] [ <arguments> ]
 
-    #* Does the same as  $graph->routes_for('Sundbybergs centrum', 'T-Centralen')->to_text
-    $ map-metro.pl map Stockholm 'Sundbybergs centrum' T-Centralen
+    #* Prints the route using the PrettyPrinter hook plugin
+    $ map-metro.pl route Stockholm 'Sundbybergs centrum' T-Centralen
 
 =head1 DESCRIPTION
 
@@ -70,8 +70,7 @@ B<C<$to>>
 Mandatory. The finishing station, can be either a station id (integer), or a station name (string). Use single quotes if the name contains spaces.
 
 Reads a file dumped by C<dump> and searches for routes between the two stations, just like C<route>. If you are going to search for many routes using C<map-metro.pl> this can be a
-significantly faster way to do it than C<route>, since it is much faster to read a hash from file than constructing the graph from scratch on every execution. C<dump> and C<hoist>
-can also serve as a base on how to construct a custom dump/hoist solution.
+faster way to do it than C<route>. C<dump> and C<hoist> can also serve as a base on how to construct a custom dump/hoist solution.
 
 
 =head2 map-metro.pl lines $city
