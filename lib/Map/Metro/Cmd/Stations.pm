@@ -20,18 +20,19 @@ class Map::Metro::Cmd::Stations extends Map::Metro::Cmd using Moose {
         my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname)->parse : Map::Metro::Shim->new($self->cityname)->parse;
 
         my @station_texts = map { $self->station_to_text($_) } sort { $a->name cmp $b->name } $graph->all_stations;
+        my $intro_text = sprintf 'Stations: %s', scalar @station_texts;
 
         my $column_width = length ((sort { length $b <=> length $a } @station_texts)[0]) + 3;
         my($terminal_width, $terminal_height) = chars;
 
 
-        my $column_count = (int $terminal_width / $column_width) - 1;
+        my $column_count = (int $terminal_width / $column_width) - 2;
+        $column_count = 9 if $column_count > 9;
 
         my $columns = [];
-        my $max_per_column = int scalar @station_texts / $column_count;
+        my $max_per_column = 1 + int scalar @station_texts / $column_count;
 
-
-        foreach my $i (0..$column_count) {
+        foreach (1..$column_count) {
             my $column = [];
             while(scalar $column->@* < $max_per_column && scalar @station_texts) {
                 my $text = shift @station_texts;
@@ -42,12 +43,14 @@ class Map::Metro::Cmd::Stations extends Map::Metro::Cmd using Moose {
             push $columns->@* => $column;
         }
 
+        say join "\n" => '', $intro_text, '';
         foreach my $row (0..scalar $columns->[0]->@* - 1) {
             foreach my $column ($columns->@*) {
                 print $column->[$row] if $column->[$row];
             }
             say '';
         }
+        say '';
     }
     method station_to_text($station) {
         return sprintf '%3s. %s', $station->id, $station->name;
