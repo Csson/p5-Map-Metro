@@ -48,8 +48,11 @@ package Map::Metro::Emitter {
         }
     }
 
-    method routing_completed($routing) {
-        $self->emit('routing_completed', $routing);
+    method before_add_station($station) {
+        $self->emit('before_add_station', $station);
+    }
+    method before_add_routing($routing) {
+        $self->emit('before_add_routing', $routing);
     }
 
     method emit($event, @args) {
