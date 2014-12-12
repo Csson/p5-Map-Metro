@@ -15,6 +15,19 @@ Revision history for Map-Metro
 
  [Revision]
 
+0.1600 2014-12-12T02:29:55Z CET
+ [API Changes]
+ - Removed add to_text() (and related) methods from MM::Graph::*.
+
+ [Enhancements]
+ - All relevant MM::Cmd classes are adapted to the new hook system.
+ - Ensures that maps only resides in the MM::Plugin::Map namespace.
+
+ [New Features]
+ - Created an event/hook system (so far only emits 'routing_completed').
+ - Implemented a MM::Plugin::Hook::PrettyPrinter that auto-prints on
+   routing_completed.
+
 0.1501 2014-12-11T15:39:01Z CET
  [Enhancements]
  - Added dump and hoist commands to map-metro.pl
