@@ -37,7 +37,13 @@ package Map::Metro {
             all_hooks => 'elements',
         },
     );
-
+    has _plugin_ns => (
+        is => 'ro',
+        isa => Str,
+        default => 'Plugin::Map',
+        init_arg => undef,
+    );
+    
 
     around BUILDARGS => sub {
         my ($orig, $class, @args) = @_;
@@ -54,7 +60,7 @@ package Map::Metro {
             %args = @args;
         }
 
-        if(!ArrayRef->check($args{'map'})) {
+        if(exists $args{'map'} && !ArrayRef->check($args{'map'})) {
             $args{'map'} = [$args{'map'}];
         }
 
@@ -64,7 +70,7 @@ package Map::Metro {
     sub BUILD($self, @args) {
         if($self->has_map) {
             my $metromap = $self->get_map(0);
-            $self->load_plugin('Map::'.$metromap);
+            $self->load_plugin($metromap);
 
             my $filemethod = $self->decamelize($metromap);
 
