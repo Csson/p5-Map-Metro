@@ -29,6 +29,7 @@ class Map::Metro::Graph using Moose {
         isa => ArrayRef[Str],
         default => sub { [] },
         traits => ['Array'],
+        predicate => 1,
         handles => {
             all_wanted_hook_plugins => 'elements',
         }
@@ -548,7 +549,7 @@ class Map::Metro::Graph using Moose {
             }
         }
         $self->add_routing($routing);
-        $self->emit->routing_completed($routing);
+        $self->emit->routing_completed($routing) if $self->has_wanted_hook_plugins;
         return $routing;
     }
 
@@ -582,12 +583,10 @@ Map::Metro::Graph - An entire graph
 
     my $graph = Map::Metro->new('Stockholm')->parse;
 
-    my $routing = $graph->routes_for('Universitetet',  'Kista');
+    my $routing = $graph->routing_for('Universitetet',  'Kista');
 
-    #* prints a text representation of routes between the two stations
-    say $routing->to_text;
-
-    #* It is also possible to traverse the constructed objects
+    # And then it's traversing time. Also see the
+    # Map::Metro::Plugin::Hook::PrettyPrinter hook
     say $routing->origin_station->name;
     say $routing->destination_station->name;
 
