@@ -16,9 +16,11 @@ class Map::Metro::Graph::Routing using Moose {
         is => 'ro',
         isa => ArrayRef[ LineStation ],
         traits => ['Array'],
+        default => sub {[]},
         handles => {
             add_line_station => 'push',
             find_line_station => 'first',
+            all_line_stations => 'elements',
         }
     );
     has routes => (
@@ -43,24 +45,6 @@ class Map::Metro::Graph::Routing using Moose {
 
     method ordered_routes {
         $self->sort_routes(sub { $_[0]->weight <=> $_[1]->weight });
-    }
-
-    method text_header {
-        return sprintf q{From %s to %s} => $self->origin_station->name, $self->destination_station->name;
-    }
-
-    method to_text {
-        my @rows = ('', $self->text_header, '=' x 25, '');
-
-        my $route_count = 0;
-        foreach my $route ($self->ordered_routes) {
-            push @rows => sprintf '-- Route %d (cost %s) ----------', ++$route_count, $route->weight;
-            push @rows => $route->to_text;
-            push @rows => '';
-        }
-        push @rows => '*: Transfer to other line', '+: Transfer to other station', '';
-
-        return join "\n" => @rows;
     }
 }
 

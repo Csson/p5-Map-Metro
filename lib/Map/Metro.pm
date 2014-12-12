@@ -28,31 +28,37 @@ package Map::Metro {
         default => undef,
         init_arg => undef,
     );
+    has hooks => (
+        is => 'ro',
+        isa => ArrayRef[ Str ],
+        traits => ['Array'],
+        default => sub { [] },
+        handles => {
+            all_hooks => 'elements',
+        },
+    );
+    
 
     around BUILDARGS => sub {
         my ($orig, $class, @args) = @_;
-        if(   (scalar @args == 2 && ArrayRef->check($args[1]) && scalar $args[1]->@* != 1)
-           || (scalar @args > 2)) {
-
-            IllegalConstructorArguments->throw;
-        }
-
-        my %args = scalar @args == 2 ? @args : ();
-
+        my %args;
         if(scalar @args == 1) {
             $args{'map'} = shift @args;
         }
-
-        if(scalar keys %args == 1) {
-            if(ArrayRef->check($args{'map'})) {
-                return $class->$orig(%args);
-            }
-            elsif(Str->check($args{'map'})) {
-                $args{'map'} = [ $args{'map'} ];
-                return $class->$orig(%args);
-            }
+        elsif(scalar @args % 2 != 0) {
+            my $map = shift @args;
+            %args = @args;
+            $args{'map'} = $map;
         }
-        return $class->$orig;
+        else {
+            %args = @args;
+        }
+
+        if(!ArrayRef->check($args{'map'})) {
+            $args{'map'} = [$args{'map'}];
+        }
+
+        return $class->$orig(%args);
     };
 
     sub BUILD($self, @args) {
@@ -75,7 +81,7 @@ package Map::Metro {
     }
 
     sub parse($self) {
-        return Map::Metro::Graph->new(filepath => $self->filepath)->parse;
+        return Map::Metro::Graph->new(filepath => $self->filepath, wanted_hook_plugins => [$self->all_hooks])->parse;
     }
 
     sub available_maps($self) {

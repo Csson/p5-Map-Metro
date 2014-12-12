@@ -17,17 +17,30 @@ class Map::Metro::Graph using Moose {
     use Map::Metro::Graph::Station;
     use Map::Metro::Graph::Step;
     use Map::Metro::Graph::Transfer;
-
-    with('MooseX::OneArgNew' => {
-        type => AbsFile,
-        init_arg => 'filepath',
-    });
+    use Map::Metro::Emitter;
 
     has filepath => (
         is => 'ro',
         isa => AbsFile,
         required => 1,
     );
+    has wanted_hook_plugins => (
+        is => 'ro',
+        isa => ArrayRef[Str],
+        default => sub { [] },
+        traits => ['Array'],
+        handles => {
+            all_wanted_hook_plugins => 'elements',
+        }
+    );
+    
+    has emit => (
+        is => 'ro',
+        init_arg => undef,
+        lazy => 1,
+        default => sub { Map::Metro::Emitter->new(wanted_hook_plugins => [shift->all_wanted_hook_plugins]) },
+    );
+    
 
     has stations => (
         is => 'ro',
@@ -292,12 +305,6 @@ class Map::Metro::Graph using Moose {
             }
         );
     }
-    #method get_first_connection_by_line(Line $line) {
-    #    return $self->find_connection(sub { $_->origin_line_station->line->id eq $line->id && !$_->has_previous_connection });
-    #}
-    #method get_last_connection_by_line(Line $line) {
-    #    return $self->find_connection(sub { $_->origin_line_station->line->id eq $line->id && !$_->has_next_connection });
-    #}
     method next_line_station_id {
         return $self->line_station_count + 1;
     }
@@ -542,6 +549,7 @@ class Map::Metro::Graph using Moose {
             }
         }
         $self->add_routing($routing);
+        $self->emit->routing_completed($routing);
         return $routing;
     }
 

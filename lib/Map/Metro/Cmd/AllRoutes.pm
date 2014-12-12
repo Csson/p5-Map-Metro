@@ -16,12 +16,12 @@ class Map::Metro::Cmd::AllRoutes extends Map::Metro::Cmd using Moose {
 
     method run {
 
-        my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname)->parse : Map::Metro::Shim->new($self->cityname)->parse;
+        my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname, hooks => ['PrettyPrinter'])->parse : Map::Metro::Shim->new($self->cityname, hooks => ['PrettyPrinter'])->parse;
         my $all = $graph->all_pairs;
 
-        foreach my $route ($all->@*) {
-            say $route->to_text;
-        }
+       # foreach my $route ($all->@*) {
+       #     say $route->to_text;
+       # }
     }
 }
 

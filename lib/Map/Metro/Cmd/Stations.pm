@@ -19,7 +19,7 @@ class Map::Metro::Cmd::Stations extends Map::Metro::Cmd using Moose {
 
         my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname)->parse : Map::Metro::Shim->new($self->cityname)->parse;
 
-        my @station_texts = map { $_->to_text } sort { $a->name cmp $b->name } $graph->all_stations;
+        my @station_texts = map { $self->station_to_text($_) } sort { $a->name cmp $b->name } $graph->all_stations;
 
         my $column_width = length ((sort { length $b <=> length $a } @station_texts)[0]) + 3;
         my($terminal_width, $terminal_height) = chars;
@@ -48,6 +48,9 @@ class Map::Metro::Cmd::Stations extends Map::Metro::Cmd using Moose {
             }
             say '';
         }
+    }
+    method station_to_text($station) {
+        return sprintf '%3s. %s', $station->id, $station->name;
     }
 
 }
