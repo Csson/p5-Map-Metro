@@ -12,15 +12,14 @@ Map::Metro - Public transport graphing
     $ cpanm Map::Metro::Plugin::Map::Stockholm
 
     # And then
-    my $graph = Map::Metro->new('Stockholm')->parse;
+    my $graph = Map::Metro->new('Stockholm', hooks => ['PrettyPrinter'])->parse;
 
     my $routing = $graph->routes_for('Universitetet', 'Kista');
-    print $routing->to_text;
 
 prints
 
     From Universitetet to Kista
-    =========================
+    ===========================
 
     -- Route 1 (cost 15) ----------
     [   T14 ] Universitetet
@@ -50,11 +49,15 @@ The purpose of this distribution is to find the shortest [unique](#what-is-a-uni
 
 ## Methods
 
-### new($city)
+### new($city, hooks => \[\])
 
 **`$city`**
 
 The name of the city you want to search connections in. Mandatory, unless you are only going to call ["available\_maps"](#available_maps).
+
+**`$hooks`**
+
+Array reference of [Hooks](https://metacpan.org/pod/Map::Metro::Hook) that listens for events.
 
 ### parse()
 

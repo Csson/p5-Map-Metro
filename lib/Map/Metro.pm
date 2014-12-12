@@ -37,7 +37,7 @@ package Map::Metro {
             all_hooks => 'elements',
         },
     );
-    
+
 
     around BUILDARGS => sub {
         my ($orig, $class, @args) = @_;
@@ -105,15 +105,14 @@ Map::Metro - Public transport graphing
     $ cpanm Map::Metro::Plugin::Map::Stockholm
 
     # And then
-    my $graph = Map::Metro->new('Stockholm')->parse;
+    my $graph = Map::Metro->new('Stockholm', hooks => ['PrettyPrinter'])->parse;
 
     my $routing = $graph->routes_for('Universitetet', 'Kista');
-    print $routing->to_text;
 
 prints
 
     From Universitetet to Kista
-    =========================
+    ===========================
 
     -- Route 1 (cost 15) ----------
     [   T14 ] Universitetet
@@ -143,12 +142,15 @@ The purpose of this distribution is to find the shortest L<unique|/"What is a un
 
 =head2 Methods
 
-=head3 new($city)
+=head3 new($city, hooks => [])
 
 B<C<$city>>
 
 The name of the city you want to search connections in. Mandatory, unless you are only going to call L</"available_maps">.
 
+B<C<$hooks>>
+
+Array reference of L<Hooks|Map::Metro::Hook> that listens for events.
 
 =head3 parse()
 

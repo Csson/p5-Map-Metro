@@ -33,14 +33,13 @@ class Map::Metro::Graph using Moose {
             all_wanted_hook_plugins => 'elements',
         }
     );
-    
+
     has emit => (
         is => 'ro',
         init_arg => undef,
         lazy => 1,
         default => sub { Map::Metro::Emitter->new(wanted_hook_plugins => [shift->all_wanted_hook_plugins]) },
     );
-    
 
     has stations => (
         is => 'ro',
