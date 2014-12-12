@@ -77,6 +77,6 @@ class Map::Metro::Cmd::Hoist extends Map::Metro::Cmd using Moose {
     }
 }
 
-__END__
-
 1;
+
+__END__

@@ -33,7 +33,7 @@ class Map::Metro::Cmd::Lines extends Map::Metro::Cmd using Moose {
 
         LINE_STATION:
         while(1) {
-            push @rows => $line_station->to_text;
+            push @rows => $line_station->station->name;
             last LINE_STATION if !$line_station->has_next_line_station;
             $line_station = $line_station->next_line_station;
         }
