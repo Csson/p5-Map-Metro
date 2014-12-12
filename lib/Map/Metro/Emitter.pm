@@ -7,7 +7,7 @@ package Map::Metro::Emitter {
     use List::AllUtils 'none';
     use Types::Standard -types;
 
-    use Module::Pluggable search_path => ['Map::Metro::Plugin::Hook'], require => 1, asdf => 'new', sub_name => 'found_plugins';
+    use Module::Pluggable search_path => ['Map::Metro::Plugin::Hook'], require => 1, sub_name => 'found_plugins';
 
     has wanted_hook_plugins => (
         is => 'ro',
