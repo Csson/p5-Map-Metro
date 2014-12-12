@@ -2,6 +2,21 @@ Revision history for Map-Metro
 
 {{$NEXT}}
  [API Changes]
+
+ [Bug Fixes]
+
+ [Documentation]
+
+ [Enhancements]
+
+ [Meta]
+
+ [New Features]
+
+ [Revision]
+
+0.1700 2014-12-12T23:54:30Z CET
+ [API Changes]
  - Renamed routing_completed hook to before_add_routing.
  - Revamped plugin systems for maps.
 
@@ -12,17 +27,13 @@ Revision history for Map-Metro
  - Fleshed out hook example.
 
  [Enhancements]
- - Argument hooks to Map::Metro->new can now be a string (when only using one hook).
+ - Argument hooks to Map::Metro->new can now be a string (when only using
+   one hook).
  - Added before_add_station hook.
- - Added original_name to Station, so if before_add_station changes the station's name,
-   we can still search for the old name (esp when creating Segments, but also in routing_for()).
+ - Added original_name to Station, so if before_add_station changes the
+   station's name, we can still search for the old name (esp when creating
+   Segments, but also in routing_for()).
  - Added MM::Plugin::Hook::StreamStations, mostly as a hook example.
-
- [Meta]
-
- [New Features]
-
- [Revision]
 
 0.1600 2014-12-12T02:29:55Z CET
  [API Changes]
