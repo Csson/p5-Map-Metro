@@ -6,7 +6,10 @@ class Map::Metro::Hook using Moose {
 
     has event => (
         is => 'ro',
-        isa => Type::Tiny::Enum->new(values => [qw/routing_completed/]),
+        isa => Type::Tiny::Enum->new(values => [qw/
+            before_add_station
+            before_add_routing
+            /]),
     );
     has action => (
         is => 'ro',
