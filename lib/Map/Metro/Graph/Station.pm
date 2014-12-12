@@ -46,11 +46,6 @@ class Map::Metro::Graph::Station using Moose {
     around add_connecting_station(Station $station) {
         $self->$next($station) if !$self->find_connecting_station(sub { $station->id eq $_->id });
     }
-
-    method to_text {
-        return sprintf '%3s. %s', $self->id, $self->name;
-    }
-
 }
 
 __END__

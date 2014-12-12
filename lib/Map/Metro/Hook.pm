@@ -1,28 +1,23 @@
-use Map::Metro::Standard;
+use Map::Metro::Standard::Moops;
 
-package Map::Metro::Hook {
+class Map::Metro::Hook using Moose {
 
-	use Types::Standard -types;
-	use Moose 2.00 ();
-	use Moose::Exporter;
+    use Type::Tiny::Enum;
 
-	Moose::Exporter->setup_import_methods(
-		with_meta => [qw/
-			on
-		/],
-		also => 'Moose',
-	);
+    has event => (
+        is => 'ro',
+        isa => Type::Tiny::Enum->new(values => [qw/routing_completed/]),
+    );
+    has action => (
+        is => 'ro',
+        isa => CodeRef,
+    );
+    has plugin => (
+        is => 'ro',
+    );
 
-	sub on ($$) {
-		my $meta = shift;
-		my $event = shift;
-		my $value = shift;
-		my @moose = @_;
+    method perform(@args) {
+        $self->action(@args);
+    }
 
-		$meta->add_attribute($event, is => 'rw',
-									 isa => Str,
-									 default => $value,
-									 @moose);
-		return 1;
-	}
 }

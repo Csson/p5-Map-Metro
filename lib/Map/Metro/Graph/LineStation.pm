@@ -50,9 +50,6 @@ class Map::Metro::Graph::LineStation using Moose {
         return if !$self->has_previous_line_station,
         return $self->line->id ne $self->previous_line_station->line->id;
     }
-    method to_text {
-        return sprintf '[ %3s ] %s' => $self->line->name, $self->station->name;
-    }
 }
 
 __END__

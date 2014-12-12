@@ -17,6 +17,24 @@ class Map::Metro::Shim using Moose  {
         IllegalConstructorArguments->throw;
     }
 
+
+    around BUILDARGS($orig: $class, @args) {
+        return $class->$orig(@args) if scalar @args == 2;
+        return $class->$orig(filepath => shift @args) if scalar @args == 1;
+
+        my %args;
+        if(scalar @args % 2 != 0) {
+            my $filepath = shift @args;
+            %args = @args;
+            $args{'filepath'} = $filepath;
+        }
+        else {
+            %args = @args;
+        }
+
+        return $class->$orig(%args);
+    };
+
     method parse {
         return Map::Metro::Graph->new(filepath => $self->filepath)->parse;
     }

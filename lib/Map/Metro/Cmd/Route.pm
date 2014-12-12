@@ -27,11 +27,10 @@ class Map::Metro::Cmd::Route extends Map::Metro::Cmd using Moose {
 
     method run {
 
-        my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname)->parse : Map::Metro::Shim->new($self->cityname)->parse;
+        my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname, hooks => ['PrettyPrinter'])->parse : Map::Metro::Shim->new($self->cityname)->parse;
 
         try {
-            my $routing = $graph->routing_for($self->origin,  $self->destination);
-            say $routing->to_text;
+            $graph->routing_for($self->origin,  $self->destination);
         }
         catch {
             my $error = $_;
