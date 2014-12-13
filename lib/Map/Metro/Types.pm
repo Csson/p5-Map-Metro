@@ -1,4 +1,5 @@
-use Map::Metro::Standard::Moops;
+use feature ':5.20';
+use Moops;
 
 library  Map::Metro::Types
 
