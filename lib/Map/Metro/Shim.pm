@@ -11,12 +11,15 @@ class Map::Metro::Shim using Moose  {
         required => 1,
         coerce => 1,
     );
-    around BUILDARGS($orig: $class, @args) {
-        return $class->$orig(@args) if scalar @args == 2;
-        return $class->$orig(filepath => shift @args) if scalar @args == 1;
-        IllegalConstructorArguments->throw;
-    }
-
+    has hooks => (
+        is => 'ro',
+        isa => ArrayRef,
+        traits => ['Array'],
+        default => sub { [] },
+        handles => {
+            all_hooks => 'elements',
+        }
+    );
 
     around BUILDARGS($orig: $class, @args) {
         return $class->$orig(@args) if scalar @args == 2;
@@ -39,7 +42,7 @@ class Map::Metro::Shim using Moose  {
     };
 
     method parse {
-        return Map::Metro::Graph->new(filepath => $self->filepath)->parse;
+        return Map::Metro::Graph->new(filepath => $self->filepath, wanted_hook_plugins => [$self->all_hooks])->parse;
     }
 }
 
