@@ -52,7 +52,6 @@
             "MooseX::SetOnce" : "0",
             "String::Trim" : "0",
             "Syntax::Collector" : "0",
-            "Syntax::Keyword::Junction" : "0",
             "Term::Size::Any" : "0",
             "Throwable::X" : "0",
             "Types::Path::Tiny" : "0",
@@ -69,6 +68,6 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.1702"
+   "version" : "0.1703"
 }
 
