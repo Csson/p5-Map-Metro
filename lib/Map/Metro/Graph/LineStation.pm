@@ -42,14 +42,6 @@ class Map::Metro::Graph::LineStation using Moose {
     method on_same_line(LineStation $other) {
         return $self->line->id eq $other->line->id;
     }
-    method is_transfer_to_next {
-        return if !$self->has_next_line_station,
-        return $self->line->id ne $self->next_line_station->line->id;
-    }
-    method is_transfer_from_previous {
-        return if !$self->has_previous_line_station,
-        return $self->line->id ne $self->previous_line_station->line->id;
-    }
 }
 
 __END__
