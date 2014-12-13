@@ -49,7 +49,7 @@
             "Moose" : "0",
             "MooseX::App" : "0",
             "MooseX::AttributeShortcuts" : "0",
-            "MooseX::Object::Pluggable" : "0",
+            "MooseX::SetOnce" : "0",
             "String::Trim" : "0",
             "Syntax::Collector" : "0",
             "Syntax::Keyword::Junction" : "0",

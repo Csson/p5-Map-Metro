@@ -10,11 +10,19 @@ Revision history for Map-Metro
  [Enhancements]
 
  [Meta]
- - Added missing prereqs (thanks SREZIC)
 
  [New Features]
 
  [Revision]
+
+0.1702 2014-12-13T12:52:32Z CET
+ [Bug Fixes]
+ - Thanks to SREZIC: - Added missing prereqs - Fixed shebang in
+   map-metro.pl
+
+ [Meta]
+ - Removed MooseX::Object::Pluggable prereq (replaced by Module::Pluggable
+   in 0.1700)
 
 0.1701 2014-12-13T02:04:19Z CET
  [API Changes]
