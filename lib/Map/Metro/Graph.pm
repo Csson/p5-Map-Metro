@@ -246,8 +246,10 @@ class Map::Metro::Graph using Moose {
 
     around add_segment(Str $text) {
         $text = trim $text;
-        my($linestring, $start, $end) = split /\|/ => $text;
+        my($linestring, $start, $end, $option_string) = split /\|/ => $text;
         my $line_ids = [ split m/,/ => $linestring ];
+        my $options = defined $option_string ? $self->make_options($option_string, keys => [qw/dir/]) : {};
+        my $is_one_way = $options->{'dir'} eq '->' ? 1 : 0;
 
         #* Check that lines and stations in segments exist in the other lists
         my($origin_station, $destination_station);
@@ -262,7 +264,7 @@ class Map::Metro::Graph using Moose {
             $error->does('Map::Metro::Exception') ? $error->out->fatal : die $error;
         };
 
-        my $segment = Map::Metro::Graph::Segment->new(eh $line_ids, $origin_station, $destination_station);
+        my $segment = Map::Metro::Graph::Segment->new(eh $line_ids, $origin_station, $destination_station, $is_one_way);
 
         $self->$next($segment);
     }
@@ -376,7 +378,7 @@ class Map::Metro::Graph using Moose {
                                                                    weight => $weight);
 
                 $origin_line_station->station->add_connecting_station($destination_line_station->station);
-                $destination_line_station->station->add_connecting_station($origin_line_station->station);
+                $destination_line_station->station->add_connecting_station($origin_line_station->station) if !$segment->is_one_way;
 
                 try {
                     $origin_line_station->next_line_station($destination_line_station);
@@ -394,10 +396,9 @@ class Map::Metro::Graph using Moose {
                                                                         $destination_line_station->station->name;
 
                 };
-                $destination_line_station->previous_line_station($origin_line_station);
 
                 $self->add_connection($conn);
-                $self->add_connection($inv_conn);
+                $self->add_connection($inv_conn) if !$segment->is_one_way;
             }
         }
 
@@ -598,10 +599,10 @@ Map::Metro::Graph - An entire graph
     say $routing->destination_station->name;
 
     foreach my $route ($routing->all_routes) {
-        foreach my $route_station ($route->all_route_stations) {
-            say 'Transfer!' if $route_station->is_transfer;
-            say $route_station->line_station->line->id;
-            say $route_station->line_station->station->name;
+        foreach my $step ($route->all_steps) {
+            say 'Transfer!' if $step->was_line_transfer;
+            say $step->origin_line_station->line->id;
+            say $step->origin_line_station->station->name;
         }
         say '----';
     }
