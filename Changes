@@ -15,6 +15,19 @@ Revision history for Map-Metro
 
  [Revision]
 
+0.1701 2014-12-13T02:04:19Z CET
+ [API Changes]
+ - Removed a couple of undocumented methods from LineStation. Their purpose
+   is better handled by Step.
+
+ [Bug Fixes]
+ - Suppressed much warnings during build.
+
+ [Enhancements]
+ - Added one-way option to segments.
+ - Rewrote Lines command to step through lines using Step (instead of
+   LineStation).
+
 0.1700 2014-12-12T23:54:30Z CET
  [API Changes]
  - Renamed routing_completed hook to before_add_routing.
