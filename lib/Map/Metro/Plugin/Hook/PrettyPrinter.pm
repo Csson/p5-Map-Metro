@@ -27,16 +27,16 @@ class Map::Metro::Plugin::Hook::PrettyPrinter using Moose {
                 foreach my $step ($route->all_steps) {
                     push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => ($step->was_line_transfer && !$step->was_station_transfer ? '*' : ''),
                                                                                    $step->origin_line_station->line->name,
-                                                                                   $step->origin_line_station->station->name;
+                                                                                   join '/' => $step->origin_line_station->station->name_with_alternative;
                     if($step->is_station_transfer) {
                         push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => ($step->is_station_transfer ? '+' : ''),
-                                                                ' ' x length $step->origin_line_station->line->name,
-                                                                $step->destination_line_station->station->name;
+                                                                                   ' ' x length $step->origin_line_station->line->name,
+                                                                                   join '/' => $step->destination_line_station->station->name_with_alternative;
                     }
                     if(!$step->has_next_step) {
                         push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => '',
                                                                                  $step->destination_line_station->line->name,
-                                                                                 $step->destination_line_station->station->name;
+                                                                                 join '/' => $step->destination_line_station->station->name_with_alternative;
                     }
                 }
                 push @rows => '';
