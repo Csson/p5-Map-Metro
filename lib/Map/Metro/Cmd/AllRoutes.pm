@@ -15,8 +15,8 @@ class Map::Metro::Cmd::AllRoutes extends Map::Metro::Cmd using Moose {
     command_short_description 'Display routes for *all* pairs of stations (slow)';
 
     method run {
-
-        my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname, hooks => ['PrettyPrinter'])->parse : Map::Metro::Shim->new($self->cityname, hooks => ['PrettyPrinter'])->parse;
+        my %hooks = (hooks => ['PrettyPrinter']);
+        my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname, %hooks)->parse : Map::Metro::Shim->new($self->cityname, %hooks)->parse;
         my $all = $graph->all_pairs;
 
     }
