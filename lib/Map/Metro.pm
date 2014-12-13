@@ -95,7 +95,7 @@ package Map::Metro {
     }
 
     sub available_maps($self) {
-        return sort $self->_plugin_locator->plugins;
+        return sort $self->system_maps;
     }
 }
 
