@@ -15,6 +15,14 @@ Revision history for Map-Metro
 
  [Revision]
 
+0.1801 2014-12-13T17:19:37Z CET
+ [Bug Fixes]
+ - available_maps() and map-metro.pl available works again.
+ - MM::Emitter should use MM::Hook.
+
+ [Enhancements]
+ - Added notation to add extra names (for search and display) to stations.
+
 0.1800 2014-12-13T15:12:14Z CET
  [API Changes]
  - Changed notation to describe segments where a line travels in one
