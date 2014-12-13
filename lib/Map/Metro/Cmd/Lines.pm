@@ -3,7 +3,7 @@ use Map::Metro::Standard::Moops;
 class Map::Metro::Cmd::Lines extends Map::Metro::Cmd using Moose {
 
     use MooseX::App::Command;
-    use Syntax::Keyword::Junction any => { -as => 'jany' };
+    use List::AllUtils 'all';
     use experimental 'postderef';
 
     parameter cityname => (
@@ -25,25 +25,35 @@ class Map::Metro::Cmd::Lines extends Map::Metro::Cmd using Moose {
     }
 
     method line($graph, Line $line) {
-        my @station_ids = map { $_->id } $graph->filter_stations(sub { jany(map { $_->id } $_->all_lines) eq $line->id });
+        my @all_first_routes = sort { $b->step_count <=> $a->step_count } map { $_->get_route(0) } $graph->all_routings;
 
-        my @rows = ();
-        my $line_station = $graph->find_line_station(sub { $_->line->id eq $line->id && !$_->previous_line_station });
-        my $first_line_station = $line_station;
+        my $chosen_route;
 
-        LINE_STATION:
-        while(1) {
-            push @rows => $line_station->station->name;
-            last LINE_STATION if !$line_station->has_next_line_station;
-            $line_station = $line_station->next_line_station;
+        ROUTE:
+        foreach my $route (@all_first_routes) {
+            my @step_line_ids = map { $_->origin_line_station->line->id } $route->all_steps;
+
+            if(all { $_ eq $line->id} @step_line_ids) {
+                $chosen_route = $route;
+                last ROUTE;
+            }
+        }
+        die sprintf "No good route found for line", $line->id if !$chosen_route;
+
+        say '';
+        my $header = sprintf '%s: %s' => $line->name, $line->description;
+        say $header;
+        say '=' x length $header;
+        foreach my $step ($chosen_route->all_steps) {
+            say $step->origin_line_station->station->name;
+
+            if(!$step->has_next_step) {
+                say $step->destination_line_station->station->name;
+            }
         }
 
-        my $header = sprintf 'Line %s from %s to %s', $line->name, $first_line_station->station->name, $line_station->station->name;
-        unshift @rows => $header, '-' x length $header;
-
-        return join "\n" => @rows, '';
-
     }
+
 }
 
 1;
