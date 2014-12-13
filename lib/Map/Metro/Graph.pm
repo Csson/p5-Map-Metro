@@ -281,13 +281,13 @@ class Map::Metro::Graph using Moose {
         my @segments = ();
 
         foreach my $line_info (@line_ids_with_dir) {
-            if($line_info =~ m{^[a-z0-9]+$}) {
+            if($line_info =~ m{^[a-z0-9]+$}i) {
                 push @both_dir => $line_info;
             }
-            elsif($line_info =~ m{^([a-z0-9]+)->$}) {
+            elsif($line_info =~ m{^([a-z0-9]+)->$}i) {
                 push @forward => $1;
             }
-            elsif($line_info =~ m{^([a-z0-9]+)<-$}) {
+            elsif($line_info =~ m{^([a-z0-9]+)<-$}i) {
                 push @backward => $1;
             }
         }
