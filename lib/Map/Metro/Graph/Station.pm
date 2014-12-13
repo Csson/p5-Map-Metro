@@ -17,6 +17,26 @@ class Map::Metro::Graph::Station using Moose {
         is => 'ro',
         isa => Maybe[Str],
     );
+    has search_names => (
+        is => 'rw',
+        isa => ArrayRef[Str],
+        traits => ['Array'],
+        default => sub { [] },
+        handles => {
+            add_search_name => 'push',
+            all_search_names => 'elements',
+        }
+    );
+    has alternative_names => (
+        is => 'rw',
+        isa => ArrayRef[Str],
+        traits => ['Array'],
+        default => sub { [] },
+        handles => {
+            add_alternative_name => 'push',
+            all_alternative_names => 'elements',
+        }
+    );
 
     has lines => (
         is => 'rw',
@@ -49,6 +69,10 @@ class Map::Metro::Graph::Station using Moose {
 
     around add_connecting_station(Station $station) {
         $self->$next($station) if !$self->find_connecting_station(sub { $station->id eq $_->id });
+    }
+
+    method name_with_alternative {
+        return ($self->name, $self->all_alternative_names);
     }
 }
 
