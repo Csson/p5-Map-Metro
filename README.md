@@ -149,6 +149,10 @@ Currently only Perl 5.20+ is supported.
 
 Included in this distribution is a script to convert `Map::Metro` maps into `Map::Tube` maps, if [Map::Tube](https://metacpan.org/pod/Map::Tube) misses one you need.
 
+# BUGS & ISSUES
+
+The repository and issue tracker is at: [https://github.com/Csson/p5-Map-Metro](https://github.com/Csson/p5-Map-Metro)
+
 # SEE ALSO
 
 [Map::Tube](https://metacpan.org/pod/Map::Tube)
