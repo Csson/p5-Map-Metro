@@ -247,15 +247,16 @@ class Map::Metro::Graph using Moose {
     around add_segment(Str $text) {
         $text = trim $text;
         my($linestring, $start, $end, $option_string) = split /\|/ => $text;
-        my $line_ids = [ split m/,/ => $linestring ];
+        my @line_ids_with_dir = split m/,/ => $linestring;
+        my @clean_line_ids = map { my $clean = $_ =~ s{[^a-z0-9]}{}gir; $clean } @line_ids_with_dir;
+
         my $options = defined $option_string ? $self->make_options($option_string, keys => [qw/dir/]) : {};
-        my $is_one_way = $options->{'dir'} eq '->' ? 1 : 0;
 
         #* Check that lines and stations in segments exist in the other lists
         my($origin_station, $destination_station);
 
         try {
-            $self->get_line_by_id($_) foreach $line_ids->@*;
+            $self->get_line_by_id($_) foreach @clean_line_ids;
             $origin_station = $self->get_station_by_name($start);
             $destination_station = $self->get_station_by_name($end);
         }
@@ -263,10 +264,34 @@ class Map::Metro::Graph using Moose {
             my $error = $_;
             $error->does('Map::Metro::Exception') ? $error->out->fatal : die $error;
         };
+        my @both_dir = ();
+        my @forward = ();
+        my @backward = ();
+        my @segments = ();
 
-        my $segment = Map::Metro::Graph::Segment->new(eh $line_ids, $origin_station, $destination_station, $is_one_way);
+        foreach my $line_info (@line_ids_with_dir) {
+            if($line_info =~ m{^[a-z0-9]+$}) {
+                push @both_dir => $line_info;
+            }
+            elsif($line_info =~ m{^([a-z0-9]+)->$}) {
+                push @forward => $1;
+            }
+            elsif($line_info =~ m{^([a-z0-9]+)<-$}) {
+                push @backward => $1;
+            }
+        }
 
-        $self->$next($segment);
+        if(scalar @both_dir) {
+            push @segments => Map::Metro::Graph::Segment->new(line_ids => \@both_dir, origin_station => $origin_station, destination_station => $destination_station);
+        }
+        if(scalar @forward) {
+            push @segments => Map::Metro::Graph::Segment->new(line_ids => \@forward, is_one_way => 1, origin_station => $origin_station, destination_station => $destination_station);
+        }
+        if(scalar @backward) {
+            push @segments => Map::Metro::Graph::Segment->new(line_ids => \@backward, is_one_way => 1, origin_station => $destination_station, destination_station => $origin_station);
+        }
+
+        $self->$next(@segments);
     }
 
     around add_line_station($line_station) {
