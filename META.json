@@ -38,8 +38,10 @@
       },
       "runtime" : {
          "requires" : {
+            "Data::Dump::Streamer" : "0",
             "Eponymous::Hash" : "0",
             "Graph" : "0",
+            "IO::Interactive" : "0",
             "List::AllUtils" : "0",
             "List::Compare" : "0",
             "Module::Pluggable" : "0",
@@ -51,8 +53,10 @@
             "String::Trim" : "0",
             "Syntax::Collector" : "0",
             "Syntax::Keyword::Junction" : "0",
+            "Term::Size::Any" : "0",
             "Throwable::X" : "0",
             "Types::Path::Tiny" : "0",
+            "XML::Writer" : "0",
             "experimental" : "0",
             "perl" : "5.020000"
          }
@@ -65,6 +69,6 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.1701"
+   "version" : "0.1702"
 }
 
