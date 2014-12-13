@@ -11,7 +11,7 @@ requires 'Module::Pluggable';
 requires 'Moose';
 requires 'MooseX::App';
 requires 'MooseX::AttributeShortcuts';
-requires 'MooseX::Object::Pluggable';
+requires 'MooseX::SetOnce',
 requires 'Moops';
 requires 'String::Trim';
 requires 'Syntax::Keyword::Junction';
