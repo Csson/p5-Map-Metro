@@ -97,7 +97,7 @@ class Map::Metro::Graph::Station using Moose {
     method set_original_name(Str $name) {
         if($self->do_undiacritic) {
             my $no_diacritic = undiacriticise($name);
-    
+
             if(defined $no_diacritic) {
                 $self->add_search_name($no_diacritic);
             }
