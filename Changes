@@ -15,6 +15,13 @@ Revision history for Map-Metro
 
  [Revision]
 
+0.1802 2014-12-13T19:13:25Z CET
+ [Bug Fixes]
+ - Line ids can again be both letters and digits.
+
+ [Documentation]
+ - Fixed error in synopsis.
+
 0.1801 2014-12-13T17:19:37Z CET
  [Bug Fixes]
  - available_maps() and map-metro.pl available works again.
