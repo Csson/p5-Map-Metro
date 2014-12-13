@@ -59,7 +59,7 @@ All hooks get the hook class instance as its first parameter, and can beyond tha
 There are currently two hooks (events) available:
 
 
-=head3 before_station_add($plugin, $station)
+=head3 before_add_station($plugin, $station)
 
 C<$station>
 
