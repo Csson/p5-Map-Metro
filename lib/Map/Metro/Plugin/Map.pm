@@ -18,6 +18,8 @@ Map::Metro::Plugin::Map - How to make your own map
 
 =head1 SYNOPSIS
 
+    # This is a modified part of the map from Map::Metro::Plugin::Map::Stockholm
+
     --stations
     Stadshagen
     Fridhemsplan
@@ -44,8 +46,8 @@ Map::Metro::Plugin::Map - How to make your own map
     7|L7|Spårväg city
 
     --segments
-    10->,11<-|Stadshagen|Fridhemsplan
-    10,11|Fridhemsplan|Rådhuset
+    10->,11<-|Stadshagen|Fridhemsplan % Västermalmsgallerian
+    10,11|Fridhemsplan|Rådhuset % :Radhuset
     10,11|Rådhuset|T-Centralen
     10,11|T-Centralen|Kungsträdgården
     19|T-Centralen|Gamla stan
@@ -115,15 +117,32 @@ This is a list of all L<Segments|Map::Metro::Graph::Segment> in the network. (A 
 
 * The following station
 
-In the synopsis, one of the segments look like this:
+In the synopsis, segments part starts like this:
 
-   10->,11<-|Stadshagen|Fridhemsplan
+    10->,11<-|Stadshagen|Fridhemsplan % Västermalmsgallerian
+    10,11|Fridhemsplan|Rådhuset % :Radhuset
 
-The arrow notation describes the direction of travel (the default is both ways, all three can be combined in one segment definition).
+First, the arrow notation describes the direction of travel (the default is both ways, all three can be combined in one segment definition).
 
 C<-E<gt>> means that the line only travels I<from> Stadshagen I<to> Fridhemsplan.
 
 C<E<lt>-> means that the line only travels I<from> Fridhemsplan I<to> Stadshagen.
+
+Second, the C<%> notation makes it possible to attach more names to the station.
+
+If the name begins with a C<:> it is considered a I<search name>. This mean that it is possible to search, but it is generally not displayed (eg. by the L<PrettyPrinter|Map::Metro::Plugin::Hook::PrettyPrinter> hook).
+
+If the name doesn't begin with a C<:> it is considered an I<alternative name>. The L<PrettyPrinter|Map::Metro::Plugin::Hook::PrettyPrinter> hook displays them as "first given name/alternative name".
+
+=head3 When to use what?
+
+B<Alternative names> are used when the I<same station> is known as both names. This is not very common.
+
+B<Search names> can be used when 1) a station has changed names (keep the old name as a search name), or 2) when dealing with latin alphabet languages with diacritics so that international users can skip those.
+
+Overriding station names through a hook (as L<Map::Metro::Plugin::Hook::Helsinki::Swedish> does) can be a good way to present translations or transliterations of station names.
+
+Just make sure that no names collide.
 
 =head1 WHAT NOW?
 
