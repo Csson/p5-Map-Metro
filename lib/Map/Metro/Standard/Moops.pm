@@ -20,7 +20,7 @@ package Map::Metro::Standard::Moops {
             'String::Trim'      => ['trim'],
             'feature'           => [qw/:5.20/],
             'experimental'      => [qw/postderef/],
-            'Map::Metro::Types' => ['-types', { replace => 1 }],
+            'Map::Metro::Types' => [{ replace => 1 }, '-types'],
             'List::Compare'     => [],
             'MooseX::SetOnce'   => [],
         );
