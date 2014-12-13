@@ -44,7 +44,7 @@ Map::Metro::Plugin::Map - How to make your own map
     7|L7|Spårväg city
 
     --segments
-    10,11|Stadshagen|Fridhemsplan
+    10->,11<-|Stadshagen|Fridhemsplan
     10,11|Fridhemsplan|Rådhuset
     10,11|Rådhuset|T-Centralen
     10,11|T-Centralen|Kungsträdgården
@@ -109,32 +109,43 @@ This is a list of all lines in the network. Three values per line (delimited by 
 
 This is a list of all L<Segments|Map::Metro::Graph::Segment> in the network. (A segment is a pair of consecutive stations.) Three groups of data per line (delimited by C<|>):
 
-=over 4
+* A list of line ids (comma delimited). This references the line list above. The list of line ids represents all lines travelling between the two stations.
 
-=item A list of line ids (comma delimited). This references the line list above. The list of line ids represents all lines travelling between the two stations.
+* The first station.
 
-=item The first station.
+* The following station
 
-=item The following station
+In the synopsis, one of the segments look like this:
 
-=back
+   10->,11<-|Stadshagen|Fridhemsplan
+
+The arrow notation describes the direction of travel (the default is both ways, all three can be combined in one segment definition).
+
+C<-E<gt>> means that the line only travels I<from> Stadshagen I<to> Fridhemsplan.
+
+C<E<lt>-> means that the line only travels I<from> Fridhemsplan I<to> Stadshagen.
 
 =head1 WHAT NOW?
 
 Start a distribution called C<Map::Metro::Plugin::Map::$city>.
 
-Save this file as C<map-$city.metro> in the C<share> directory.
+Save the map file as C<map-$city.metro> in the C<share> directory.
 
-Make a role called C<Map::Metro::Plugin::Map::$city>. See L<Map::Metro::Plugin::Map::Stockholm> for a template.
+Say we make a map for London; then C<Map::Metro::Plugin::Map::London> would look like this:
 
-An important part is the single attribute the role should have. It B<must> be in this form:
+    package Map::Metro::Plugin::Map::London {
 
-    my $city = 'RioDeJaneiro';
-    my $attribute_name = join '_' => map {
-                                  join ('_' => map { lc } grep { length } split m{([A-Z]{1}[^A-Z]*)})
-                               } split '::' => $city;
-    print $attribute_name;
-    # rio_de_janeiro
+        use Moose;
+        use File::ShareDir 'dist_dir';
+        use Path::Tiny;
+        with 'Map::Metro::Plugin::Map';
+
+        has '+mapfile' => (
+            default => sub { path(dist_dir('Map-Metro-Plugin-Map-London'))->child('map-london.metro')->absolute },
+        );
+    }
+
+    1;
 
 =head1 AUTHOR
 
