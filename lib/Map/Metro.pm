@@ -263,6 +263,10 @@ L<Map::Tube> works with Perl 5.6.
 
 Included in this distribution is a script to convert C<Map::Metro> maps into C<Map::Tube> maps, if L<Map::Tube> misses one you need.
 
+=head1 BUGS & ISSUES
+
+The repository and issue tracker is at: L<https://github.com/Csson/p5-Map-Metro>
+
 =head1 SEE ALSO
 
 L<Map::Tube>
