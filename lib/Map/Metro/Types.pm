@@ -16,8 +16,6 @@ declares Connection,
          Transfer
     {
 
-    use Type::Utils -all;
-
     class_type Connection   => { class => 'Map::Metro::Graph::Connection' };
     class_type Line         => { class => 'Map::Metro::Graph::Line' };
     class_type LineStation  => { class => 'Map::Metro::Graph::LineStation' };
