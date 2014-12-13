@@ -14,7 +14,7 @@ Map::Metro - Public transport graphing
     # And then
     my $graph = Map::Metro->new('Stockholm', hooks => ['PrettyPrinter'])->parse;
 
-    my $routing = $graph->routes_for('Universitetet', 'Kista');
+    my $routing = $graph->routing_for('Universitetet', 'Kista');
 
 prints
 
