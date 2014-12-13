@@ -207,7 +207,9 @@ class Map::Metro::Graph using Moose {
     }
 
     around add_station(Str $text) {
-        my $name = trim $text;
+        $text = trim $text;
+        my @names = split m{\h*%\h*} => $text;
+        my $name = shift @names;
 
         if(my $station = $self->get_station_by_name($name, check => 0)) {
             return $station;
@@ -215,6 +217,15 @@ class Map::Metro::Graph using Moose {
 
         my $id = $self->station_count + 1;
         my $station = Map::Metro::Graph::Station->new(original_name => $name, eh $name, $id);
+
+        foreach my $another_name (@names) {
+            if($another_name =~ m{^:(.+)}) {
+                $station->add_search_name($1);
+            }
+            else {
+                $station->add_alternative_name($another_name);
+            }
+        }
 
         $self->emit->before_add_station($station);
         $self->$next($station);
@@ -310,8 +321,26 @@ class Map::Metro::Graph using Moose {
         my $station = $self->find_station(sub { fc($_->name) eq fc($station_name) });
         return $station if Station->check($station);
 
-        $station = $self->find_station(sub { fc($_->original_name) eq fc($station_name) });
-        return $station if Station->check($station);
+        if($check) {
+            $station = $self->find_station(sub { fc($_->original_name) eq fc($station_name) });
+            return $station if Station->check($station);
+
+            $station = $self->find_station(sub {
+                my $current_station = $_;
+                if(any { fc($station_name) eq fc($_) } $current_station->all_alternative_names) {
+                    return $current_station;
+                }
+            });
+            return $station if Station->check($station);
+
+            $station = $self->find_station(sub {
+                my $current_station = $_;
+                if(any { fc($station_name) eq fc($_) } $current_station->all_search_names) {
+                    return $current_station;
+                }
+            });
+            return $station if Station->check($station);
+        }
 
         StationNameDoesNotExistInStationList->throw(station_name => $station_name) if $check;
     }
