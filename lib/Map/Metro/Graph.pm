@@ -34,6 +34,11 @@ class Map::Metro::Graph using Moose {
             all_wanted_hook_plugins => 'elements',
         }
     );
+    has do_undiacritic => (
+        is => 'rw',
+        isa => Bool,
+        default => 1,
+    );
 
     has emit => (
         is => 'ro',
@@ -216,7 +221,7 @@ class Map::Metro::Graph using Moose {
         }
 
         my $id = $self->station_count + 1;
-        my $station = Map::Metro::Graph::Station->new(original_name => $name, eh $name, $id);
+        my $station = Map::Metro::Graph::Station->new(original_name => $name, do_undiacritic => $self->do_undiacritic, eh $name, $id);
 
         foreach my $another_name (@names) {
             if($another_name =~ m{^:(.+)}) {
@@ -226,7 +231,6 @@ class Map::Metro::Graph using Moose {
                 $station->add_alternative_name($another_name);
             }
         }
-
         $self->emit->before_add_station($station);
         $self->$next($station);
     }
