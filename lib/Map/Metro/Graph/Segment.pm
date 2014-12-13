@@ -22,6 +22,11 @@ class Map::Metro::Graph::Segment using Moose {
         isa => Station,
         required => 1,
     );
+    has is_one_way => (
+        is => 'ro',
+        isa => Bool,
+        default => 0,
+    );
 
 }
 
