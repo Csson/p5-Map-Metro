@@ -16,6 +16,7 @@ requires 'Moops';
 requires 'String::Trim';
 requires 'Syntax::Collector';
 requires 'Term::Size::Any';
+requires 'Text::Undiacritic';
 requires 'Throwable::X';
 requires 'Types::Path::Tiny';
 requires 'XML::Writer';

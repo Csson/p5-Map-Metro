@@ -1,11 +1,17 @@
 package Map::Metro::Plugin::Map;
 
 use Moose::Role;
+use Types::Standard 'Bool';
 use Types::Path::Tiny 'AbsPath';
 
 has mapfile => (
     is => 'ro',
     isa => AbsPath,
+);
+has do_undiacritic => (
+    is => 'rw',
+    isa => Bool,
+    default => 1,
 );
 
 1;
@@ -138,7 +144,7 @@ If the name doesn't begin with a C<:> it is considered an I<alternative name>. T
 
 B<Alternative names> are used when the I<same station> is known as both names. This is not very common.
 
-B<Search names> can be used when 1) a station has changed names (keep the old name as a search name), or 2) when dealing with latin alphabet languages with diacritics so that international users can skip those.
+B<Search names> is mostly useful when a station has changed names (keep the old name as a search name)
 
 Overriding station names through a hook (as L<Map::Metro::Plugin::Hook::Helsinki::Swedish> does) can be a good way to present translations or transliterations of station names.
 
@@ -165,6 +171,12 @@ Say we make a map for London; then C<Map::Metro::Plugin::Map::London> would look
     }
 
     1;
+
+By default, station names with diacritics get their un-diacritic form added as a search name. If this causes problems with a map file, add this to the module definition and it is turned off:
+
+    has '+do_undiacritic' => (
+        default => 0,
+    );
 
 =head1 AUTHOR
 

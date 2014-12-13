@@ -23,6 +23,11 @@ package Map::Metro {
             get_map => 'get',
         },
     );
+    has do_undiacritic => (
+        is => 'rw',
+        isa => Bool,
+        default => 1,
+    );
     has filepath => (
         is => 'rw',
         isa => Maybe[AbsFile],
@@ -77,7 +82,9 @@ package Map::Metro {
 
             if(any { $_ eq $self->get_map(0) } @system_maps) {
                 my $mapclass = 'Map::Metro::Plugin::Map::'.$self->get_map(0);
-                $self->filepath($mapclass->new->mapfile);
+                my $mapobj = $mapclass->new;
+                $self->filepath($mapobj->mapfile);
+                $self->do_undiacritic($mapobj->do_undiacritic);
             }
         }
     }
@@ -91,7 +98,7 @@ package Map::Metro {
     }
 
     sub parse($self) {
-        return Map::Metro::Graph->new(filepath => $self->filepath, wanted_hook_plugins => [$self->all_hooks])->parse;
+        return Map::Metro::Graph->new(filepath => $self->filepath, do_undiacritic => $self->do_undiacritic, wanted_hook_plugins => [$self->all_hooks])->parse;
     }
 
     sub available_maps($self) {

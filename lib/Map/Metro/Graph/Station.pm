@@ -2,6 +2,8 @@ use Map::Metro::Standard::Moops;
 
 class Map::Metro::Graph::Station using Moose {
 
+    use Text::Undiacritic 'undiacritic';
+
     has id => (
         is => 'ro',
         isa => Int,
@@ -62,13 +64,75 @@ class Map::Metro::Graph::Station using Moose {
             find_connecting_station => 'first',
         },
     );
+    has do_undiacritic => (
+        is => 'rw',
+        isa => Bool,
+        default => 1,
+    );
 
+    around BUILDARGS($orig: $class, %args) {
+        return $class->$orig(%args) if exists $args{'do_undiacritic'} && !$args{'do_undiacritic'};
+
+        my $no_diacritic = undiacriticise($args{'name'});
+        if(defined $no_diacritic) {
+            if(exists $args{'search_names'}) {
+                push @{ $args{'search_names'} } => $no_diacritic;
+            }
+            else {
+                $args{'search_names'} = [$no_diacritic];
+            }
+        }
+        return $class->$orig(%args);
+    }
+
+    method set_name(Str $name) {
+        if($self->do_undiacritic) {
+            my $no_diacritic = undiacriticise($name);
+            if(defined $no_diacritic) {
+                $self->add_search_name($no_diacritic);
+            }
+        }
+        $self->name($name);
+    }
+    method set_original_name(Str $name) {
+        if($self->do_undiacritic) {
+            my $no_diacritic = undiacriticise($name);
+
+            if(defined $no_diacritic) {
+                $self->add_search_name($no_diacritic);
+            }
+        }
+        $self->original_name($name);
+    }
+    around add_search_name(@names) {
+        if($self->do_undiacritic) {
+            foreach my $name (@names) {
+                my $no_diacritic = undiacriticise($name);
+                push @names => $no_diacritic if defined $no_diacritic;
+            }
+        }
+        $self->$next(@names);
+    }
+    around add_alternative_name(@names) {
+        if($self->do_undiacritic) {
+            foreach my $name (@names) {
+                my $no_diacritic = undiacriticise($name);
+                push @names => $no_diacritic if defined $no_diacritic;
+            }
+        }
+        $self->$next(@names);
+    }
     around add_line(Line $line) {
         $self->$next($line) if !$self->find_line(sub { $line->id eq $_->id });
     }
 
     around add_connecting_station(Station $station) {
         $self->$next($station) if !$self->find_connecting_station(sub { $station->id eq $_->id });
+    }
+    fun undiacriticise(Str $text) {
+        my $undia = undiacritic($text);
+        return $undia if $undia ne $text;
+        return;
     }
 
     method name_with_alternative {
