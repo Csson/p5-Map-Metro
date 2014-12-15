@@ -58,6 +58,8 @@ Lists all installed maps on the system.
 
 Converts the graph into a hash structure, and L<Data::Dump::Streamer> dumps it into a textfile. See C<hoist> for how to retrieve it.
 
+Consider using C<serealize>/C<deserealize> instead.
+
 
 =head2 map-metro.pl hoist $filename $from $to
 
@@ -69,13 +71,17 @@ B<C<$to>>
 
 Mandatory. The finishing station, can be either a station id (integer), or a station name (string). Use single quotes if the name contains spaces.
 
-Reads a file dumped by C<dump> and searches for routes between the two stations, just like C<route>. If you are going to search for many routes using C<map-metro.pl> this can be a
-faster way to do it than C<route>. C<dump> and C<hoist> can also serve as a base on how to construct a custom dump/hoist solution.
+Reads a file dumped by C<dump> and searches for routes between the two stations, just like C<route>.
 
 
 =head2 map-metro.pl lines $city
 
 Lists all lines in the C<Map::Metro::Plugin::Map::$city> map.
+
+
+=head2 map-metro.pl metro_to_tube $city
+
+Converts C<Map::Metro::Plugin::Map::$city> into a L<Map::Tube> ready xml-file. The file is saved in the current working directory with a timestamped filename.
 
 
 =head2 map-metro.pl route $city $from $to
@@ -90,10 +96,18 @@ Mandatory. The finishing station, can be either a station id (integer), or a sta
 
 Searches for routes in the C<Map::Metro::Plugin::Map::$city> between C<$from> and C<$to>.
 
+Consider using C<serealize>/C<deserealize>.
 
-=head2 map-metro.pl metro_to_tube $city
 
-Converts C<Map::Metro::Plugin::Map::$city> into a L<Map::Tube> ready xml-file. The file is saved in the current working directory with a timestamped filename.
+=head2 map-metro.pl serealize $city
+
+Uses L<Sereal> to serialize a map. Use C<deserealize> to use that file to search for routes. This is much faster than C<route>.
+
+=head2 map-metro.pl deserealize $filename $from $to
+
+Reads a file created with C<serealize> and searches for routes.
+
+
 
 
 =head2 map-metro.pl stations $city
