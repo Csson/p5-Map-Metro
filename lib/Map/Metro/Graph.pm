@@ -543,7 +543,7 @@ class Map::Metro::Graph using Moose {
             my $existing_routing = $self->find_routing(sub { $_->origin_station->id == $origin_station->id && $_->destination_station->id == $destination_station->id });
             return $existing_routing if $existing_routing;
         }
-
+        $self->emit->before_start_routing;
         my $routing = Map::Metro::Graph::Routing->new(origin_station => $origin_station, destination_station => $destination_station);
 
         #* Find all lines going from origin station
