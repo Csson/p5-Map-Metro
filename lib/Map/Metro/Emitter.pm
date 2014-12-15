@@ -67,6 +67,9 @@ package Map::Metro::Emitter {
     method before_add_routing($routing) {
         $self->emit('before_add_routing', $routing);
     }
+    method before_start_routing {
+        $self->emit('before_start_routing');
+    }
 
     method emit($event, @args) {
         my @hooks = $self->filter_registered_hooks(sub { $_->event eq $event });
