@@ -37,6 +37,10 @@
          }
       },
       "runtime" : {
+         "recommends" : {
+            "Sereal::Decoder" : "0",
+            "Sereal::Encoder" : "0"
+         },
          "requires" : {
             "Data::Dump::Streamer" : "0",
             "Eponymous::Hash" : "0",
@@ -53,6 +57,7 @@
             "String::Trim" : "0",
             "Syntax::Collector" : "0",
             "Term::Size::Any" : "0",
+            "Text::Undiacritic" : "0",
             "Throwable::X" : "0",
             "Types::Path::Tiny" : "0",
             "XML::Writer" : "0",
@@ -68,6 +73,6 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.1802"
+   "version" : "0.1803"
 }
 

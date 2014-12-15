@@ -131,7 +131,14 @@ and turning them into [Steps](https://metacpan.org/pod/Map::Metro::Graph::Step),
 
 All [Routes](https://metacpan.org/pod/Map::Metro::Graph::Route) between the two [Stations](https://metacpan.org/pod/Map::Metro::Graph::Station) are then put into a [Routing](https://metacpan.org/pod/Map::Metro::Graph::Routing), which is returned to the user.
 
-# Status
+# PERFORMANCE
+
+During development of the [Berlin](https://metacpan.org/pod/Map::Metro::Plugin::Map::Berlin) map it was discovered that performance on large maps suffered badly.
+
+One stopgap measure to deal with this is to use [Sereal](https://metacpan.org/pod/Sereal) to serialize the graph object. Included are two [commands](https://metacpan.org/pod/Metro::Map::Cmd), `serealize` and `deserealize`. On my machine the time spent searching for a route
+is reduced by 50-85%. Larger maps, larger savings. It is currently not possible to add hooks to serealizing graphs; the `deserealize` command works as if [PrettyPrinter](https://metacpan.org/pod/Map::Metro::Plugin::Hook::PrettyPrinter) was attached.
+
+# STATUS
 
 This is somewhat experimental. I don't expect that the map file format will _break_, but it might be
 extended. Only the documented api should be relied on, though breaking changes might occur.
