@@ -15,6 +15,17 @@ Revision history for Map-Metro
 
  [Revision]
 
+0.1803 2014-12-15T14:15:34Z CET
+ [Documentation]
+ - Added a note on the performance issue on large maps.
+
+ [Enhancements]
+ - Added serealize and deserealize commands to MM::Cmd. Helps a bit with
+   the performance issue.
+ - By default, station names with diacritics (like å, ä and ö) are added
+   with their diacritics removed as a search name.
+ - This can be turned off if it causes problems. See MM::Plugin::Map.
+
 0.1802 2014-12-13T19:13:25Z CET
  [Bug Fixes]
  - Line ids can again be both letters and digits.
