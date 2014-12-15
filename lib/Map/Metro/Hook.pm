@@ -8,6 +8,7 @@ class Map::Metro::Hook using Moose {
         is => 'ro',
         isa => Type::Tiny::Enum->new(values => [qw/
             before_add_station
+            before_start_routing
             before_add_routing
             /]),
     );
