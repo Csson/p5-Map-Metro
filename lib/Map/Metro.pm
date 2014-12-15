@@ -246,8 +246,14 @@ and turning them into L<Steps|Map::Metro::Graph::Step>, which we then add to the
 
 All L<Routes|Map::Metro::Graph::Route> between the two L<Stations|Map::Metro::Graph::Station> are then put into a L<Routing|Map::Metro::Graph::Routing>, which is returned to the user.
 
+=head1 PERFORMANCE
 
-=head1 Status
+During development of the L<Berlin|Map::Metro::Plugin::Map::Berlin> map it was discovered that performance on large maps suffered badly.
+
+One stopgap measure to deal with this is to use L<Sereal> to serialize the graph object. Included are two L<commands|Metro::Map::Cmd>, C<serealize> and C<deserealize>. On my machine the time spent searching for a route
+is reduced by 50-85%. Larger maps, larger savings. It is currently not possible to add hooks to serealizing graphs; the C<deserealize> command works as if L<PrettyPrinter|Map::Metro::Plugin::Hook::PrettyPrinter> was attached.
+
+=head1 STATUS
 
 This is somewhat experimental. I don't expect that the map file format will I<break>, but it might be
 extended. Only the documented api should be relied on, though breaking changes might occur.
