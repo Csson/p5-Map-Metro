@@ -73,6 +73,17 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.1803"
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/Csson/p5-Map-Metro/issues"
+      },
+      "homepage" : "https://github.com/Csson/p5-Map-Metro",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/Csson/p5-Map-Metro.git",
+         "web" : "https://github.com/Csson/p5-Map-Metro"
+      }
+   },
+   "version" : "0.1804"
 }
 
