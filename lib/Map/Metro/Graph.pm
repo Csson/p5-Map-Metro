@@ -443,7 +443,8 @@ class Map::Metro::Graph using Moose {
                 }
                 catch {
 
-                    die sprintf '[%s] %s Current next line station: [%s] %s, new: [%s] %s',
+                    die sprintf '[%s,%s] %s Current next line station: [%s] %s, new: [%s] %s',
+                                                                        $origin_line_station->line->id,
                                                                         $origin_line_station->line->name,
                                                                         $origin_line_station->station->name,
 
