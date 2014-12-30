@@ -15,6 +15,28 @@ Revision history for Map-Metro
 
  [Revision]
 
+0.1900 2014-12-30T22:16:46Z CET
+ [API Changes]
+ - The MM::Plugin::Map api is changed. The old api will continue to work
+   for now (this is not a deprecation notice). The new api allows
+   MM::Cmd::Serealize to know the version of the map.
+
+ [Bug Fixes]
+ - Removed next_line_station/previous_line_station from LineStation, and
+   the setting of them in MM::Graph. These weren't used, and made it harder
+   to map a network (eg Oslo) where a line stops at a station in one
+   direction, but not in the other.
+
+ [Enhancements]
+ - MM::Cmd::Serealize now saves the Sereal-ized file in the
+   File::ShareDir::dist_dir of the map distribution.
+ - MM::Cmd::Deserealize can now also (for maps serealized starting with
+   this version) deserealize maps given the city name (previously you could
+   only give a file path).
+ - If there is a Serealized file for the current map (and, if applicable,
+   version), *and* no hooks are attached, then that file will be
+   deserealized and used (instead of re-building the network).
+
 0.1804 2014-12-19T19:17:48Z CET
  [Meta]
  - Add github as issue tracker/repo
@@ -27,8 +49,8 @@ Revision history for Map-Metro
  - Added serealize and deserealize commands to MM::Cmd. Helps a bit with
    the performance issue.
  - By default, station names with diacritics (like å, ä and ö) are added
-   with their diacritics removed as a search name.
- - This can be turned off if it causes problems. See MM::Plugin::Map.
+   with their diacritics removed as a search name. This can be turned off
+   if it causes problems. See MM::Plugin::Map.
 
 0.1802 2014-12-13T19:13:25Z CET
  [Bug Fixes]
