@@ -1,18 +1,90 @@
+use 5.14.0;
+
 package Map::Metro::Plugin::Map;
 
 use Moose::Role;
-use Types::Standard 'Bool';
-use Types::Path::Tiny 'AbsPath';
+use MooseX::AttributeShortcuts;
+use File::ShareDir 'dist_dir';
+use Path::Tiny;
+use Types::Standard -types;
+use Types::Path::Tiny -types;
+use Map::Metro::Exception::NeedSereal;
 
 has mapfile => (
     is => 'ro',
-    isa => AbsPath,
+    isa => Path,
+    predicate => 1,
+    coerce => 1,
 );
 has do_undiacritic => (
     is => 'rw',
     isa => Bool,
     default => 1,
 );
+has serealfile => (
+    is => 'rw',
+    isa => Maybe[AbsPath],
+    lazy => 1,
+    builder => 1,
+    predicate => 1,
+);
+has hooks => (
+    is => 'ro',
+    isa => ArrayRef[ Str ],
+    traits => ['Array'],
+    default => sub { [] },
+    handles => {
+        all_hooks => 'elements',
+    },
+);
+sub BUILD {
+    my $self = shift;
+    $self->serealfile;
+    return $self;
+}
+sub mapdir {
+    my $self = shift;
+    return $self->mapfile->parent if $self->mapfile->is_absolute; # work with old api
+    my $package = $self->map_package;
+    $package =~ s{::}{-}g;
+    return path(dist_dir($package));
+}
+sub maplocation {
+    my $self = shift;
+    return $self->mapfile if $self->mapfile->is_absolute; # work with old api
+    return $self->mapdir->child($self->mapfile);
+}
+
+
+sub serealfilename {
+    my $self = shift;
+    my $version = $self->version;
+    $version =~ s{[^\d.]}{}g;
+
+    my $mapname = $self->maplocation->basename;
+    return $self->mapdir->child("$mapname.$version.sereal")->absolute;
+}
+
+sub _build_serealfile {
+    my $self = shift;
+    return $self->serealfilename->absolute if $self->serealfilename->exists;
+}
+sub deserealized {
+    my $self = shift;
+
+    eval "use Sereal::Decoder qw/sereal_decode_with_object/";
+    die $@ if $@;
+    my $contents = $self->serealfile->slurp;
+    my $serealizer = Sereal::Decoder->new;
+    my $graph = sereal_decode_with_object($serealizer, $contents);
+    return $graph;
+}
+sub version {
+    my $self = shift;
+    return 0 if $self->mapfile->is_absolute; # work with old api when we had no map_version()
+    return $self->map_version;
+}
+
 
 1;
 
@@ -158,16 +230,23 @@ Save the map file as C<map-$city.metro> in the C<share> directory.
 
 Say we make a map for London; then C<Map::Metro::Plugin::Map::London> would look like this:
 
-    package Map::Metro::Plugin::Map::London {
+    use strict;
 
-        use Moose;
-        use File::ShareDir 'dist_dir';
-        use Path::Tiny;
-        with 'Map::Metro::Plugin::Map';
+    package Map::Metro::Plugin::Map::London;
 
-        has '+mapfile' => (
-            default => sub { path(dist_dir('Map-Metro-Plugin-Map-London'))->child('map-london.metro')->absolute },
-        );
+    our $VERSION = 0.01;
+
+    use Moose;
+    with 'Map::Metro::Plugin::Map';
+
+    has '+mapfile' => (
+        default => 'map-london.metro',
+    );
+    sub map_version {
+        return $VERSION;
+    }
+    sub map_package {
+        return __PACKAGE__;
     }
 
     1;
