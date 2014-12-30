@@ -17,19 +17,6 @@ class Map::Metro::Graph::LineStation using Moose {
         isa => Line,
         required => 1,
     );
-    has previous_line_station => (
-        is => 'rw',
-        isa => LineStation,
-        traits => ['SetOnce'],
-        predicate => 1,
-    );
-    has next_line_station => (
-        is => 'rw',
-        isa => LineStation,
-        traits => ['SetOnce'],
-        predicate => 1,
-    );
-
 
     method possible_on_same_line(LineStation $other) {
         my $station_lines = [ map { $_->id } $self->station->all_lines ];

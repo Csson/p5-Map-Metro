@@ -438,24 +438,6 @@ class Map::Metro::Graph using Moose {
                 $origin_line_station->station->add_connecting_station($destination_line_station->station);
                 $destination_line_station->station->add_connecting_station($origin_line_station->station) if !$segment->is_one_way;
 
-                try {
-                    $origin_line_station->next_line_station($destination_line_station);
-                }
-                catch {
-
-                    die sprintf '[%s,%s] %s Current next line station: [%s] %s, new: [%s] %s',
-                                                                        $origin_line_station->line->id,
-                                                                        $origin_line_station->line->name,
-                                                                        $origin_line_station->station->name,
-
-                                                                        $origin_line_station->next_line_station->line->name,
-                                                                        $origin_line_station->next_line_station->station->name,
-
-                                                                        $destination_line_station->line->name,
-                                                                        $destination_line_station->station->name;
-
-                };
-
                 $self->add_connection($conn);
                 $self->add_connection($inv_conn) if !$segment->is_one_way;
             }
