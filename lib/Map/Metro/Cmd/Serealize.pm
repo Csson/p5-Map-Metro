@@ -22,15 +22,17 @@ class Map::Metro::Cmd::Serealize extends Map::Metro::Cmd using Moose {
     method run {
 
         my %hooks = ();
-        my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname, %hooks)->parse : Map::Metro::Shim->new($self->cityname, %hooks)->parse;
 
+        my $from_map_class = $self->cityname !~ m{\.};
+        my $mapclass = $from_map_class ? 'Map::Metro::Plugin::Map::'.$self->cityname : undef;
 
+        my $metro = $from_map_class ? Map::Metro->new($self->cityname, %hooks) : Map::Metro::Shim->new($self->cityname, %hooks);
+        my $graph = $metro->parse;
         my $serealizer = Sereal::Encoder->new;
         my $out = sereal_encode_with_object($serealizer, $graph);
-
-        my $filename = sprintf 'serealized-%s-%s.txt', $self->cityname, time;
-        path($filename)->spew($out);
-        say sprintf 'Saved in %s.', $filename;
+        my $path = $from_map_class ? $metro->get_mapclass(0)->serealfilename : path(sprintf 'serealized-%s-%s.txt', $self->cityname, time);
+        $path->spew($out);
+        say sprintf 'Saved in %s.', $path;
     }
 }
 

@@ -33,9 +33,16 @@ class Map::Metro::Cmd::Deserealize extends Map::Metro::Cmd using Moose {
 
     method run {
 
-        my $contents = path($self->filename)->slurp;
-        my $serealizer = Sereal::Decoder->new;
-        my $graph = sereal_decode_with_object($serealizer, $contents);
+        my $graph;
+        if($self->filename =~ m{\.}) {
+            my $contents = path($self->filename)->slurp;
+            my $serealizer = Sereal::Decoder->new;
+            $graph = sereal_decode_with_object($serealizer, $contents);
+        }
+        else {
+            $graph = Map::Metro->new($self->filename, hooks => [])->parse;
+        }
+
         my $routing;
         try {
             $routing = $graph->routing_for($self->origin,  $self->destination);
@@ -45,8 +52,6 @@ class Map::Metro::Cmd::Deserealize extends Map::Metro::Cmd using Moose {
             say sprintf q{Try search by station id. Run '%s stations %s' to see station ids.}, $0, $self->filename;
             $error->does('Map::Metro::Exception') ? $error->out->fatal : die $error;
         };
-
-
 
         my $header = sprintf q{From %s to %s} => $routing->origin_station->name, $routing->destination_station->name;
 
