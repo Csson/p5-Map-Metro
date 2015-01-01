@@ -226,6 +226,12 @@ Just make sure that no names collide.
 
 Start a distribution called C<Map::Metro::Plugin::Map::$city>.
 
+=head2 With Dist::Zilla
+
+The easiest way to do that is to use L<Dist::Zilla> with L<Dist::Zilla::MintingProfile::MapMetro::Map>:
+
+=head2 Without Dist::Zilla
+
 Save the map file as C<map-$city.metro> in the C<share> directory.
 
 Say we make a map for London; then C<Map::Metro::Plugin::Map::London> would look like this:
@@ -250,6 +256,8 @@ Say we make a map for London; then C<Map::Metro::Plugin::Map::London> would look
     }
 
     1;
+
+=head2 Diacritics?
 
 By default, station names with diacritics get their un-diacritic form added as a search name. If this causes problems with a map file, add this to the module definition and it is turned off:
 
