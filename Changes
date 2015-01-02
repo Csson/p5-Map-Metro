@@ -14,6 +14,7 @@ Revision history for Map-Metro
  [Meta]
 
  [New Features]
+ - Introduced graphviz command, which creates a schematic view of a network.
 
  [Revision]
 
