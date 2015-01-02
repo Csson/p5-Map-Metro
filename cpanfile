@@ -23,6 +23,7 @@ requires 'XML::Writer';
 
 recommends 'Sereal::Encoder';
 recommends 'Sereal::Decoder';
+recommends 'GraphViz2';
 
 on 'test' => sub {
     requires 'Test::NoTabs';
