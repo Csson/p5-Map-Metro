@@ -38,6 +38,7 @@
       },
       "runtime" : {
          "recommends" : {
+            "GraphViz2" : "0",
             "Sereal::Decoder" : "0",
             "Sereal::Encoder" : "0"
          },
