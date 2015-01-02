@@ -4,14 +4,17 @@ Revision history for Map-Metro
  [API Changes]
 
  [Bug Fixes]
+ - Comments (in the map file) must be at the beginning of a line, or preceeded only by whitespace.
 
  [Documentation]
 
  [Enhancements]
+ - Lines can have options. So far only 'color'.
 
  [Meta]
 
  [New Features]
+ - Introduced graphviz command, which creates a schematic view of a network.
 
  [Revision]
 

@@ -61,6 +61,13 @@ Converts the graph into a hash structure, and L<Data::Dump::Streamer> dumps it i
 Consider using C<serealize>/C<deserealize> instead.
 
 
+=head2 map-metro.pl graphviz $city --into=$file
+
+Creates a png via L<GraphViz2>.
+
+If I<into=$file> is given the png is saved with that filename, otherwise a timestamped file will be saved in the current directory.
+
+
 =head2 map-metro.pl hoist $filename $from $to
 
 B<C<$from>>
@@ -101,9 +108,9 @@ Consider using C<serealize>/C<deserealize>.
 
 =head2 map-metro.pl serealize $city
 
-Uses L<Sereal> to serialize a map. Use C<deserealize> to use that file to search for routes. This is much faster than C<route>.
+Uses L<Sereal> to serialize a map. Use C<deserealize> to use that file to search for routes. This is generally much faster than C<route>.
 
-=head2 map-metro.pl deserealize $filename $from $to
+=head2 map-metro.pl deserealize $city $from $to
 
 Reads a file created with C<serealize> and searches for routes.
 

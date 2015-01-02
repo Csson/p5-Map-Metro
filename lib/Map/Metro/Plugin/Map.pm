@@ -120,7 +120,7 @@ Map::Metro::Plugin::Map - How to make your own map
     --lines
     10|T10|Blue line
     11|T11|Blue line
-    19|T19|Green line
+    19|T19|Green line|color:#79c142
     7|L7|Spårväg city
 
     --segments
@@ -182,7 +182,18 @@ This is a list of all lines in the network. Three values per line (delimited by 
 
 =item Line description. This can be a longer common name for the line.
 
+=item Optional options.
+
 =back
+
+The options in turn is a comma separated list of colon separated key-value pairs. Currently the only supported option is:
+
+=over 4
+
+=item color. Hexadecimal, preceeded by '#'. Can be used by visualization tools to give lines their regular colours.
+
+=back
+
 
 
 =head2 --segments
