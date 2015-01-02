@@ -195,7 +195,7 @@ class Map::Metro::Graph using Moose {
 
         ROW:
         foreach my $row (@rows) {
-            next ROW if !length $row || $row =~ m{[ \t]*#};
+            next ROW if !length $row || $row =~ m{^[ \t]*#};
 
             if($row =~ m{^--(\w+)} && (any { $_ eq $1 } qw/stations transfers lines segments/)) {
                 $context = $1;
@@ -253,8 +253,10 @@ class Map::Metro::Graph using Moose {
 
     around add_line(Str $text) {
         $text = trim $text;
-        my($id, $name, $description) = split /\|/ => $text;
-        my $line = Map::Metro::Graph::Line->new(eh $id, $name, $description);
+        my($id, $name, $description, $option_string) = split /\|/ => $text;
+
+        my $options = defined $option_string ? $self->make_options($option_string, keys => [qw/color/]) : {};
+        my $line = Map::Metro::Graph::Line->new(%{ $options }, id => $id, name => $name, description => $description);
 
         $self->$next($line);
     }
