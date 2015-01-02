@@ -19,6 +19,12 @@ class Map::Metro::Graph::Line using Moose {
         isa => Str,
         required => 1,
     );
+    has color => (
+        is => 'rw',
+        isa => Str,
+        default => '#333333',
+    );
+
 
     around BUILDARGS($orig: $self, %args) {
         if($args{'id'} =~ m{([^a-z0-9])}i)  {
