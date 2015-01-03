@@ -255,7 +255,7 @@ class Map::Metro::Graph using Moose {
         $text = trim $text;
         my($id, $name, $description, $option_string) = split /\|/ => $text;
 
-        my $options = defined $option_string ? $self->make_options($option_string, keys => [qw/color/]) : {};
+        my $options = defined $option_string ? $self->make_options($option_string, keys => [qw/color width/]) : {};
         my $line = Map::Metro::Graph::Line->new(%{ $options }, id => $id, name => $name, description => $description);
 
         $self->$next($line);

@@ -24,7 +24,11 @@ class Map::Metro::Graph::Line using Moose {
         isa => Str,
         default => '#333333',
     );
-
+    has width => (
+        is => 'rw',
+        isa => Int,
+        default => 3,
+    );
 
     around BUILDARGS($orig: $self, %args) {
         if($args{'id'} =~ m{([^a-z0-9])}i)  {
