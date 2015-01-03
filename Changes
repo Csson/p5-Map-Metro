@@ -8,14 +8,19 @@ Revision history for Map-Metro
  [Documentation]
 
  [Enhancements]
- - Added width option on lines.
- - MM::Cmd::Graphviz takes an optional string parameter to set custom lengths on edges. The string can alternatively be a path to a file containing the settings. This feature is undocumented.
 
  [Meta]
 
  [New Features]
 
  [Revision]
+
+0.2001 2015-01-03T11:48:46Z CET
+ [Enhancements]
+ - Added width option on lines.
+ - MM::Cmd::Graphviz takes an optional string parameter to set custom
+   lengths on edges. The string can alternatively be a path to a file
+   containing the settings. This feature is undocumented.
 
 0.2000 2015-01-02T22:51:13Z CET
  [Bug Fixes]
