@@ -174,23 +174,19 @@ The options in turn is a comma separated list of colon separated key-value pairs
 
 This is a list of all lines in the network. Three values per line (delimited by C<|>):
 
-=over 4
+* Line id (only a-z, A-Z and 0-9 allowed). Used in segments.
 
-=item Line id (only a-z, A-Z and 0-9 allowed). Used in segments.
+* Line name. This should preferably be short(ish) and a common name for the line.
 
-=item Line name. This should preferably be short(ish) and a common name for the line.
+* Line description. This can be a longer common name for the line.
 
-=item Line description. This can be a longer common name for the line.
-
-=item Optional options.
-
-=back
-
-The options in turn is a comma separated list of colon separated key-value pairs. Currently the only supported option is:
+* Optional options, a comma separated list of colon separated key-value pairs:
 
 =over 4
 
-=item color. Hexadecimal, preceeded by '#'. Can be used by visualization tools to give lines their regular colours.
+* color. Hexadecimal, preceeded by '#'. Can be used by visualization tools to give lines their regular colours.
+
+* width. Integer. Can be used by visualization tools to give lines different widths, for example differentiate different types of transport.
 
 =back
 
