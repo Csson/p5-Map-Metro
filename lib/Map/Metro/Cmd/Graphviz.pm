@@ -3,6 +3,7 @@ use Map::Metro::Standard::Moops;
 class Map::Metro::Cmd::Graphviz extends Map::Metro::Cmd using Moose {
 
     use MooseX::App::Command;
+    use Path::Tiny;
 
     parameter cityname => (
         is => 'rw',
@@ -37,9 +38,18 @@ class Map::Metro::Cmd::Graphviz extends Map::Metro::Cmd using Moose {
         my %hooks = (hooks => ['PrettyPrinter']);
         my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname, %hooks)->parse : Map::Metro::Shim->new($self->cityname, %hooks)->parse;
 
-        my $customdata = { };
+        my $customconnections = { };
         if($self->customlens) {
-            foreach my $custom (split m/ +/ => $self->customlens) {
+            my $customlens = path($self->customlens)->exists ? do {
+                                                                   my $settings = path($self->customlens)->slurp;
+                                                                   $settings =~  s{^#.*$}{}g;
+                                                                   $settings =~ s{\n}{ }g;
+                                                                   $settings;
+                                                               }
+                           :                                   $self->customlens
+                           ;
+
+            foreach my $custom (split m/ +/ => $customlens) {
                 if($custom =~ m{^(\d+)->(\d+):([\d\.]+)$}) {
                     my $origin_station_id = $1;
                     my $destination_station_id = $2;
@@ -47,6 +57,13 @@ class Map::Metro::Cmd::Graphviz extends Map::Metro::Cmd using Moose {
 
                     $self->set_len(sprintf ('%s-%s', $origin_station_id, $destination_station_id), $len);
                     $self->set_len(sprintf ('%s-%s', $destination_station_id, $origin_station_id), $len);
+                }
+                elsif($custom =~ m{^!(\d+)->(\d+):([\d\.]+)$}) {
+                    my $origin_station_id = $1;
+                    my $destination_station_id = $2;
+                    my $len = $3;
+
+                    $customconnections->{ $origin_station_id }{ $destination_station_id } = $len;
                 }
             }
         }
@@ -68,16 +85,27 @@ class Map::Metro::Cmd::Graphviz extends Map::Metro::Cmd using Moose {
         foreach my $segment ($graph->all_segments) {
             foreach my $line_id ($segment->all_line_ids) {
                 my $color = $graph->get_line_by_id($line_id)->color;
-                #my %len = exists $customdata->{ $segment->origin_station->id }{ $segment->destination_station->id }
-                #        ? (len => $customdata->{ $segment->origin_station->id }{ $segment->destination_station->id })
-                #        : ()
-                #        ;
+                my $width = $graph->get_line_by_id($line_id)->width;
                 my %len = $self->get_len_for($segment->origin_station->id, $segment->destination_station->id);
-                #my $len = $segment->origin_station->id == 13 && $segment->destination_station->id == 14  ? 3
-                #        : $segment->origin_station->id == 101 && $segment->destination_station->id == 14 ? 3
-                #        : $segment->origin_station->id == 71                                             ? 3
-                #        :                                                                                  1.2;
-                $viz->add_edge(from => $segment->origin_station->id, to => $segment->destination_station->id, color => $color, %len);
+
+                $viz->add_edge(from => $segment->origin_station->id,
+                               to => $segment->destination_station->id,
+                               color => $color,
+                               penwidth => $width,
+                               %len,
+                );
+            }
+        }
+        #* Custom connections (for better visuals)
+        foreach my $origin_station_id (keys %{ $customconnections }) {
+            foreach my $destination_station_id (keys %{ $customconnections->{ $origin_station_id }}) {
+                my $len = $customconnections->{ $origin_station_id }{ $destination_station_id };
+                $viz->add_edge(from => $origin_station_id,
+                               to => $destination_station_id,
+                               color => '#ffffff',
+                               penwidth => 0,
+                               len => $len,
+                );
             }
         }
 
