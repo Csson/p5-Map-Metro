@@ -3,6 +3,7 @@ requires 'perl', '5.020000';
 requires 'Data::Dump::Streamer';
 requires 'Eponymous::Hash';
 requires 'experimental';
+requires 'File::ShareDir';
 requires 'Graph';
 requires 'IO::Interactive';
 requires 'List::AllUtils';

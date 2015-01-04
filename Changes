@@ -10,6 +10,7 @@ Revision history for Map-Metro
  [Enhancements]
 
  [Meta]
+ - Added prereq (was missing since the map api change in 0.1900)
 
  [New Features]
 

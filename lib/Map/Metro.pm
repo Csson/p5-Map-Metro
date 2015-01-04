@@ -27,6 +27,7 @@ package Map::Metro {
         is => 'ro',
         traits => ['Array'],
         isa => ArrayRef,
+        default => sub { [] },
         handles => {
             add_mapclass => 'push',
             get_mapclass => 'get',

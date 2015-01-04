@@ -4,7 +4,7 @@
       "Erik Carlsson <info@code301.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.020, CPAN::Meta::Converter version 2.143240",
+   "generated_by" : "Dist::Zilla version 5.029, CPAN::Meta::Converter version 2.143240",
    "license" : [
       "perl_5"
    ],
@@ -31,6 +31,7 @@
       },
       "develop" : {
          "requires" : {
+            "Test::EOL" : "0",
             "Test::More" : "0",
             "Test::NoTabs" : "0",
             "Test::Pod" : "1.41"
@@ -45,6 +46,7 @@
          "requires" : {
             "Data::Dump::Streamer" : "0",
             "Eponymous::Hash" : "0",
+            "File::ShareDir" : "0",
             "Graph" : "0",
             "IO::Interactive" : "0",
             "List::AllUtils" : "0",
@@ -85,6 +87,6 @@
          "web" : "https://github.com/Csson/p5-Map-Metro"
       }
    },
-   "version" : "0.2001"
+   "version" : "0.2002"
 }
 
