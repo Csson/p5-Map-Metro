@@ -8,6 +8,8 @@ Revision history for Map-Metro
  [Documentation]
 
  [Enhancements]
+ - By default, paths are now only searched between the chosen stations. This leads to significantly improved performance when search one/few routes per execution.
+ - Remoted use of 'aliased', for an extra (and cheap) performance gain.
 
  [Meta]
 

@@ -133,10 +133,7 @@ All [Routes](https://metacpan.org/pod/Map::Metro::Graph::Route) between the two 
 
 # PERFORMANCE
 
-During development of the [Berlin](https://metacpan.org/pod/Map::Metro::Plugin::Map::Berlin) map it was discovered that performance on large maps suffered badly.
-
-One stopgap measure to deal with this is to use [Sereal](https://metacpan.org/pod/Sereal) to serialize the graph object. Included are two [commands](https://metacpan.org/pod/Metro::Map::Cmd), `serealize` and `deserealize`. On my machine the time spent searching for a route
-is reduced by 50-85%. Larger maps, larger savings. It is currently not possible to add hooks to serealizing graphs; the `deserealize` command works as if [PrettyPrinter](https://metacpan.org/pod/Map::Metro::Plugin::Hook::PrettyPrinter) was attached.
+Since 0.2100 performance is less than an issue than it used to be, but it can still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when search one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see [asps](https://metacpan.org/pod/Map::Metro::Graph#asps).
 
 # STATUS
 
@@ -145,20 +142,31 @@ extended. Only the documented api should be relied on, though breaking changes m
 
 For all maps in the Map::Metro::Plugin::Map namespace (unless noted):
 
-- These maps are not an official source. Use accordingly.
-- Each map should state its own specific status with regards to coverage of the transport network.
+\* These maps are not an official source. Use accordingly.
+
+\* There should be a note regarding what routes the map covers.
 
 # COMPATIBILITY
 
 Currently only Perl 5.20+ is supported.
 
-[Map::Tube](https://metacpan.org/pod/Map::Tube) works with Perl 5.6.
-
 Included in this distribution is a script to convert `Map::Metro` maps into `Map::Tube` maps, if [Map::Tube](https://metacpan.org/pod/Map::Tube) misses one you need.
 
-# BUGS & ISSUES
+# Map::Metro or Map::Tube?
 
-The repository and issue tracker is at: [https://github.com/Csson/p5-Map-Metro](https://github.com/Csson/p5-Map-Metro)
+[Map::Tube](https://metacpan.org/pod/Map::Tube) is the main alternative to `Map::Metro`. They both have their strong and weak points.
+
+\* Map::Tube is faster.
+
+\* Map::Tube is more stable: It has been on Cpan for a long time, and is under active development.
+
+\* Map::Metro has (in my opinion) a better map format.
+
+\* Map::Metro supports eg. transfers between stations.
+
+\* See [Task::MapMetro::Maps](https://metacpan.org/pod/Task::MapMetro::Maps) and [Task::Map::Tube](https://metacpan.org/pod/Task::Map::Tube) for available maps.
+
+\* It is possible to convert Map::Metro maps into Map::Tube maps using [map-metro.pl](https://metacpan.org/pod/Map::Metro::Cmd#map-metro.pl-metro_to_tube-city).
 
 # SEE ALSO
 

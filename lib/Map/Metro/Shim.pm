@@ -3,7 +3,6 @@ use Map::Metro::Standard::Moops;
 class Map::Metro::Shim using Moose  {
 
     use Map::Metro::Graph;
-    use aliased 'Map::Metro::Exception::IllegalConstructorArguments';
 
     has filepath => (
         is => 'rw',

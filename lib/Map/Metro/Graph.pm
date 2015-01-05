@@ -4,9 +4,8 @@ class Map::Metro::Graph using Moose {
 
     use Graph;
 
-    use aliased 'Map::Metro::Exception::DuplicateStationName';
-    use aliased 'Map::Metro::Exception::LineIdDoesNotExistInLineList';
-    use aliased 'Map::Metro::Exception::StationNameDoesNotExistInStationList';
+    use Map::Metro::Exception::LineIdDoesNotExistInLineList;
+    use Map::Metro::Exception::StationNameDoesNotExistInStationList;
 
     use Map::Metro::Graph::Connection;
     use Map::Metro::Graph::Line;
@@ -323,7 +322,7 @@ class Map::Metro::Graph using Moose {
 
     method get_line_by_id(Str $line_id) {
         return $self->find_line(sub { $_->id eq $line_id })
-            || LineIdDoesNotExistInLineList->throw(line_id => $line_id);
+            || Map::Metro::Exception::::LineIdDoesNotExistInLineList->throw(line_id => $line_id);
     }
     method get_station_by_name(Str $station_name, :$check = 1 ) {
         my $station = $self->find_station(sub { fc($_->name) eq fc($station_name) });
@@ -350,7 +349,7 @@ class Map::Metro::Graph using Moose {
             return $station if Station->check($station);
         }
 
-        StationNameDoesNotExistInStationList->throw(station_name => $station_name) if $check;
+        Map::Metro::Exception::StationNameDoesNotExistInStationList->throw(station_name => $station_name) if $check;
     }
     method get_station_by_id(Int $id) {
         return $self->find_station(sub { $_->id == $id })
@@ -546,7 +545,7 @@ class Map::Metro::Graph using Moose {
             foreach my $dest_id (@destination_line_station_ids) {
                 my $dest = $self->get_line_station_by_id($dest_id);
 
-                my $graphroute = [ $self->asps->path_vertices($origin_id, $dest_id) ];
+                my $graphroute = [ $self->has_asps ? $self->asps->path_vertices($origin_id, $dest_id) : $self->full_graph->SP_Dijkstra($origin_id, $dest_id) ];
 
                 if($origin->possible_on_same_line($dest) && !$origin->on_same_line($dest)) {
                     next DESTINATION_LINE_STATION;
@@ -609,6 +608,7 @@ class Map::Metro::Graph using Moose {
     method all_pairs {
 
         my $routings = [];
+        $self->calculate_shortest_paths
 
         STATION:
         foreach my $station ($self->all_stations) {
@@ -682,14 +682,15 @@ Returns an array reference of L<Map::Metro::Graph::Routing> objects containing e
 
 =head3 asps()
 
-This class uses L<Graph> under the hood. This method exposes the L<Graph/"All-Pairs Shortest Paths (APSP)"> object returned
+This class uses L<Graph> under the hood. This method returns the L<Graph/"All-Pairs Shortest Paths (APSP)"> object returned
 by the APSP_Floyd_Warshall() method. If you prefer to traverse the graph via this object, observe that the vertices is identified
 by their C<line_station_id> in L<Map::Metro::Graph::LineStation>.
 
+Call this method after creation if you prefer long startup times but faster searches.
+
 =head3 full_graph()
 
-This is the other L<Graph> related method. This returns the complete Graph object created from parsing the map.
-
+This returns the complete L<Graph> object created from parsing the map.
 
 =head1 AUTHOR
 

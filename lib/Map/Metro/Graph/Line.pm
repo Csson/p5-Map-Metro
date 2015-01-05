@@ -2,8 +2,6 @@ use Map::Metro::Standard::Moops;
 
 class Map::Metro::Graph::Line using Moose {
 
-    use aliased 'Map::Metro::Exception::LineIdContainsIllegalCharacter';
-
     has id => (
         is => 'ro',
         isa => Str,
@@ -32,7 +30,7 @@ class Map::Metro::Graph::Line using Moose {
 
     around BUILDARGS($orig: $self, %args) {
         if($args{'id'} =~ m{([^a-z0-9])}i)  {
-            LineIdContainsIllegalCharacter->throw(line_id => $args{'id'}, illegal_character => $_, ident => 'parser: line_id');
+            Map::Metro::Exception::LineIdContainsIllegalCharacter::LineIdContainsIllegalCharacter->throw(line_id => $args{'id'}, illegal_character => $_, ident => 'parser: line_id');
         }
         $self->$orig(%args);
     }
