@@ -93,9 +93,13 @@ package Map::Metro {
                                } split '::' => $string;
     }
 
-    sub parse($self) {
+    sub parse($self, :$override_line_change_weight) {
         return $self->get_mapclass(0)->deserealized if $self->get_mapclass(0)->has_serealfile && defined $self->get_mapclass(0)->serealfile && !$self->hook_count;
-        return Map::Metro::Graph->new(filepath => $self->get_mapclass(0)->maplocation, do_undiacritic => $self->get_mapclass(0)->do_undiacritic, wanted_hook_plugins => [$self->all_hooks])->parse;
+        return Map::Metro::Graph->new(filepath => $self->get_mapclass(0)->maplocation,
+                                      do_undiacritic => $self->get_mapclass(0)->do_undiacritic,
+                                      wanted_hook_plugins => [$self->all_hooks],
+                                      defined $override_line_change_weight ? (override_line_change_weight => $override_line_change_weight) : (),
+                                )->parse;
     }
 
     sub available_maps($self) {
@@ -261,8 +265,6 @@ For all maps in the Map::Metro::Plugin::Map namespace (unless noted):
 =head1 COMPATIBILITY
 
 Currently only Perl 5.20+ is supported.
-
-Included in this distribution is a script to convert C<Map::Metro> maps into C<Map::Tube> maps, if L<Map::Tube> misses one you need.
 
 =head1 Map::Metro or Map::Tube?
 

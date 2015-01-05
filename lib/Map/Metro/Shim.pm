@@ -40,8 +40,11 @@ class Map::Metro::Shim using Moose  {
         return $class->$orig(%args);
     };
 
-    method parse {
-        return Map::Metro::Graph->new(filepath => $self->filepath, wanted_hook_plugins => [$self->all_hooks])->parse;
+    method parse(:$override_line_change_weight) {
+        return Map::Metro::Graph->new(filepath => $self->filepath,
+                                      wanted_hook_plugins => [$self->all_hooks],
+                                      defined $override_line_change_weight ? (override_line_change_weight => $override_line_change_weight) : (),
+                               )->parse;
     }
 }
 

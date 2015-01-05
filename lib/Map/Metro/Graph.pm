@@ -38,7 +38,16 @@ class Map::Metro::Graph using Moose {
         isa => Bool,
         default => 1,
     );
-
+    has default_line_change_weight => (
+        is => 'ro',
+        isa => Int,
+        default => 3,
+    );
+    has override_line_change_weight => (
+        is => 'ro',
+        isa => Maybe[Int],
+        predicate => 1,
+    );
     has emit => (
         is => 'ro',
         init_arg => undef,
@@ -459,7 +468,7 @@ class Map::Metro::Graph using Moose {
                 OTHER_LINE_STATION:
                 foreach my $other_line_station (@other_line_stations) {
 
-                    my $weight = 3;
+                    my $weight = $self->has_override_line_change_weight ? $self->override_line_change_weight : $self->default_line_change_weight;
                     my $conn = Map::Metro::Graph::Connection->new(origin_line_station => $line_station,
                                                                    destination_line_station => $other_line_station,
                                                                    weight => $weight);
@@ -608,7 +617,7 @@ class Map::Metro::Graph using Moose {
     method all_pairs {
 
         my $routings = [];
-        $self->calculate_shortest_paths
+        $self->calculate_shortest_paths;
 
         STATION:
         foreach my $station ($self->all_stations) {
