@@ -6,18 +6,26 @@ Revision history for Map-Metro
  [Bug Fixes]
 
  [Documentation]
- - Added a short comparison between Map::Metro and Map::Tube.
 
  [Enhancements]
- - By default, paths are now only searched between the chosen stations. This leads to significantly improved performance when searching one/few routes per execution.
- - Remoted use of 'aliased', for an extra (and easy) performance gain.
- - Can override cost of line changes (to force route finder to follow lines). Undocumented.
 
  [Meta]
 
  [New Features]
 
  [Revision]
+
+0.2100 2015-01-05T14:43:04Z CET
+ [Documentation]
+ - Added a short comparison between Map::Metro and Map::Tube.
+
+ [Enhancements]
+ - By default, paths are now only searched between the chosen stations.
+   This leads to significantly improved performance when searching one/few
+   routes per execution.
+ - Remoted use of 'aliased', for an extra (and easy) performance gain.
+ - Can override cost of line changes (to force route finder to follow
+   lines). Undocumented.
 
 0.2002 2015-01-04T13:12:02Z CET
  [Meta]
