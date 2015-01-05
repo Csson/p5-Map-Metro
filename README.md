@@ -150,8 +150,6 @@ For all maps in the Map::Metro::Plugin::Map namespace (unless noted):
 
 Currently only Perl 5.20+ is supported.
 
-Included in this distribution is a script to convert `Map::Metro` maps into `Map::Tube` maps, if [Map::Tube](https://metacpan.org/pod/Map::Tube) misses one you need.
-
 # Map::Metro or Map::Tube?
 
 [Map::Tube](https://metacpan.org/pod/Map::Tube) is the main alternative to `Map::Metro`. They both have their strong and weak points.
