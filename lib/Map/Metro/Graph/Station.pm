@@ -50,6 +50,7 @@ class Map::Metro::Graph::Station using Moose {
             add_line => 'push',
             all_lines => 'elements',
             find_line => 'first',
+            filter_lines => 'grep',
         },
     );
     has connecting_stations => (

@@ -87,6 +87,7 @@ class Map::Metro::Graph using Moose {
         handles => {
             add_segment => 'push',
             all_segments => 'elements',
+            filter_segments => 'grep',
         },
     );
     has line_stations => (
@@ -132,6 +133,7 @@ class Map::Metro::Graph using Moose {
             all_transfers => 'elements',
             transfer_count => 'count',
             get_transfer => 'get',
+            filter_transfers => 'grep',
         },
     );
     has routings => (
