@@ -127,6 +127,9 @@ Map::Metro - Public transport graphing
 
     my $routing = $graph->routing_for('Universitetet', 'Kista');
 
+    # or in a terminal
+    $ map-metro.pl route Stockholm Universitetet Kista
+
 prints
 
     From Universitetet to Kista
@@ -157,6 +160,8 @@ prints
 =head1 DESCRIPTION
 
 The purpose of this distribution is to find the shortest L<unique|/"What is a unique path?"> route/routes between two stations in a transport network.
+
+See L<Task::MapMetro::Maps> for a list of released maps.
 
 =head2 Methods
 
@@ -224,7 +229,6 @@ L<Map::Metro::Graph::Step> - Defines a MMG::Step.
 
 L<Map::Metro::Graph::Transfer> - Defines a MMG::Transfer.
 
-
 =head2 Hierarchy
 
 The following is a conceptual overview of the various parts of a graph:
@@ -249,7 +253,7 @@ All L<Routes|Map::Metro::Graph::Route> between the two L<Stations|Map::Metro::Gr
 
 =head1 PERFORMANCE
 
-Since 0.2100 performance is less than an issue than it used to be, but it can still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when search one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see L<asps|Map::Metro::Graph/"asps()">.
+Since 0.2100 performance is less than an issue than it used to be, but it can still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see L<asps|Map::Metro::Graph/"asps()">.
 
 =head1 STATUS
 

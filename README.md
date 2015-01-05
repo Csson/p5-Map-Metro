@@ -16,6 +16,9 @@ Map::Metro - Public transport graphing
 
     my $routing = $graph->routing_for('Universitetet', 'Kista');
 
+    # or in a terminal
+    $ map-metro.pl route Stockholm Universitetet Kista
+
 prints
 
     From Universitetet to Kista
@@ -46,6 +49,8 @@ prints
 # DESCRIPTION
 
 The purpose of this distribution is to find the shortest [unique](#what-is-a-unique-path) route/routes between two stations in a transport network.
+
+See [Task::MapMetro::Maps](https://metacpan.org/pod/Task::MapMetro::Maps) for a list of released maps.
 
 ## Methods
 
@@ -133,7 +138,7 @@ All [Routes](https://metacpan.org/pod/Map::Metro::Graph::Route) between the two 
 
 # PERFORMANCE
 
-Since 0.2100 performance is less than an issue than it used to be, but it can still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when search one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see [asps](https://metacpan.org/pod/Map::Metro::Graph#asps).
+Since 0.2100 performance is less than an issue than it used to be, but it can still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see [asps](https://metacpan.org/pod/Map::Metro::Graph#asps).
 
 # STATUS
 
