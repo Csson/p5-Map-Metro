@@ -9,7 +9,7 @@ package Map::Metro {
     use Types::Standard -types;
     use Types::Path::Tiny -types;
     use List::AllUtils 'any';
-    use experimental qw/postderef signatures/;
+    use experimental qw/postderef/;
 
     use Map::Metro::Graph;
 
@@ -74,7 +74,10 @@ package Map::Metro {
         return $class->$orig(%args);
     };
 
-    sub BUILD($self, @args) {
+    sub BUILD {
+        my $self = shift;
+        my @args = @_;
+
         if($self->has_map) {
             my @system_maps = map { s{^Map::Metro::Plugin::Map::}{}; $_ } $self->system_maps;
             if(any { $_ eq $self->get_map(0) } @system_maps) {
@@ -86,23 +89,30 @@ package Map::Metro {
     }
 
     # Borrowed from Mojo::Util
-    sub decamelize($self, $string) {
+    sub decamelize {
+        my $self = shift;
+        my $string = shift;
+
         return $string if $string !~ m{[A-Z]};
         return join '_' => map {
                                   join ('_' => map { lc } grep { length } split m{([A-Z]{1}[^A-Z]*)})
                                } split '::' => $string;
     }
 
-    sub parse($self, :$override_line_change_weight) {
+    sub parse {
+        my $self = shift;
+        my %args = @_;
+
         return $self->get_mapclass(0)->deserealized if $self->get_mapclass(0)->has_serealfile && defined $self->get_mapclass(0)->serealfile && !$self->hook_count;
         return Map::Metro::Graph->new(filepath => $self->get_mapclass(0)->maplocation,
                                       do_undiacritic => $self->get_mapclass(0)->do_undiacritic,
                                       wanted_hook_plugins => [$self->all_hooks],
-                                      defined $override_line_change_weight ? (override_line_change_weight => $override_line_change_weight) : (),
+                                      exists $args{'override_line_change_weight'} ? (override_line_change_weight => $args{'override_line_change_weight'}) : (),
                                 )->parse;
     }
 
-    sub available_maps($self) {
+    sub available_maps {
+        my $self = shift;
         return sort $self->system_maps;
     }
 }
