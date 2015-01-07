@@ -46,7 +46,7 @@ att least one dot it is assumed to be a file path to a map file. The map file is
 
 =head2 map-metro.pl all_routes $city
 
-Does B<route> for all stations in the C<Map::Metro::Plugin::Map::$city> map.
+Does B<route> for all stations in the C<Map::Metro::Plugin::Map::$city> map. This gets exponentially slower with bigger maps.
 
 
 =head2 map-metro.pl available
@@ -54,31 +54,12 @@ Does B<route> for all stations in the C<Map::Metro::Plugin::Map::$city> map.
 Lists all installed maps on the system.
 
 
-=head2 map-metro.pl dump $city
-
-Converts the graph into a hash structure, and L<Data::Dump::Streamer> dumps it into a textfile. See C<hoist> for how to retrieve it.
-
-Consider using C<serealize>/C<deserealize> instead.
-
 
 =head2 map-metro.pl graphviz $city --into=$file
 
 Creates a png via L<GraphViz2>.
 
 If I<into=$file> is given the png is saved with that filename, otherwise a timestamped file will be saved in the current directory.
-
-
-=head2 map-metro.pl hoist $filename $from $to
-
-B<C<$from>>
-
-Mandatory. The starting station, can be either a station id (integer), or a station name (string). Use single quotes if the name contains spaces.
-
-B<C<$to>>
-
-Mandatory. The finishing station, can be either a station id (integer), or a station name (string). Use single quotes if the name contains spaces.
-
-Reads a file dumped by C<dump> and searches for routes between the two stations, just like C<route>.
 
 
 =head2 map-metro.pl lines $city
@@ -95,26 +76,13 @@ Converts C<Map::Metro::Plugin::Map::$city> into a L<Map::Tube> ready xml-file. T
 
 B<C<$from>>
 
-Mandatory. The starting station, can be either a station id (integer), or a station name (string). Must be of the same type as B<C<$to>>. Use single quotes if the name contains spaces.
+Mandatory. The starting station, can be either a station id (integer), or a station name (string). Must be of the same type as B<C<$to>>. Use quotes if the name contains spaces.
 
 B<C<$to>>
 
-Mandatory. The finishing station, can be either a station id (integer), or a station name (string). Must be of the same type as B<C<$from>>. Use single quotes if the name contains spaces.
+Mandatory. The finishing station, can be either a station id (integer), or a station name (string). Must be of the same type as B<C<$from>>. Use quotes if the name contains spaces.
 
 Searches for routes in the C<Map::Metro::Plugin::Map::$city> between C<$from> and C<$to>.
-
-Consider using C<serealize>/C<deserealize>.
-
-
-=head2 map-metro.pl serealize $city
-
-Uses L<Sereal> to serialize a map. Use C<deserealize> to use that file to search for routes. This is generally much faster than C<route>.
-
-=head2 map-metro.pl deserealize $city $from $to
-
-Reads a file created with C<serealize> and searches for routes.
-
-
 
 
 =head2 map-metro.pl stations $city
