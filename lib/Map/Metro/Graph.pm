@@ -194,7 +194,6 @@ class Map::Metro::Graph using Moose {
     method parse {
         $self->build_network;
         $self->construct_connections;
-        $self->calculate_shortest_paths;
 
         return $self;
     }
