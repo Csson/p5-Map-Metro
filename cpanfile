@@ -31,7 +31,7 @@ requires 'XML::Writer';
 
 recommends 'GraphViz2';
 
-on 'develop' => sub {
+on 'build' => sub {
 	requires 'Dist::Zilla::PluginBundle::Author::CSSON', '0.1102';
 };
 

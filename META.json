@@ -24,14 +24,14 @@
       ]
    },
    "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Dist::Zilla::PluginBundle::Author::CSSON" : "0.1102"
+         }
+      },
       "configure" : {
          "requires" : {
             "Module::Build::Tiny" : "0.039"
-         }
-      },
-      "develop" : {
-         "requires" : {
-            "Dist::Zilla::PluginBundle::Author::CSSON" : "0.1102"
          }
       },
       "runtime" : {
