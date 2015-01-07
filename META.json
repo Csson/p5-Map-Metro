@@ -31,6 +31,7 @@
       },
       "develop" : {
          "requires" : {
+            "Test::EOF" : "0",
             "Test::EOL" : "0",
             "Test::More" : "0",
             "Test::NoTabs" : "0",
@@ -39,9 +40,7 @@
       },
       "runtime" : {
          "recommends" : {
-            "GraphViz2" : "0",
-            "Sereal::Decoder" : "0",
-            "Sereal::Encoder" : "0"
+            "GraphViz2" : "0"
          },
          "requires" : {
             "Data::Dump::Streamer" : "0",
@@ -80,13 +79,13 @@
       "bugtracker" : {
          "web" : "https://github.com/Csson/p5-Map-Metro/issues"
       },
-      "homepage" : "https://github.com/Csson/p5-Map-Metro",
+      "homepage" : "https://metacpan.org/release/Map-Metro",
       "repository" : {
          "type" : "git",
          "url" : "https://github.com/Csson/p5-Map-Metro.git",
          "web" : "https://github.com/Csson/p5-Map-Metro"
       }
    },
-   "version" : "0.2101"
+   "version" : "0.2200"
 }
 

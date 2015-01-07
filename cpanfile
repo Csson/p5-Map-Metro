@@ -22,8 +22,6 @@ requires 'Throwable::X';
 requires 'Types::Path::Tiny';
 requires 'XML::Writer';
 
-recommends 'Sereal::Encoder';
-recommends 'Sereal::Decoder';
 recommends 'GraphViz2';
 
 on 'test' => sub {
