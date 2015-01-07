@@ -103,7 +103,6 @@ package Map::Metro {
         my $self = shift;
         my %args = @_;
 
-        return $self->get_mapclass(0)->deserealized if $self->get_mapclass(0)->has_serealfile && defined $self->get_mapclass(0)->serealfile && !$self->hook_count;
         return Map::Metro::Graph->new(filepath => $self->get_mapclass(0)->maplocation,
                                       do_undiacritic => $self->get_mapclass(0)->do_undiacritic,
                                       wanted_hook_plugins => [$self->all_hooks],
