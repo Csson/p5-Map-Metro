@@ -1,5 +1,8 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Cmd::MetroToTube
+
 class Map::Metro::Cmd::MetroToTube extends Map::Metro::Cmd using Moose {
 
     use MooseX::App::Command;

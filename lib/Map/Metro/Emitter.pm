@@ -1,5 +1,7 @@
 use Map::Metro::Standard;
 
+# VERSION
+
 package Map::Metro::Emitter {
 
     use Moose;

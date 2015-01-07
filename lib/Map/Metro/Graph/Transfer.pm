@@ -1,5 +1,9 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Graph::Transfer
+# ABSTRACT: What is a transfer?
+
 class Map::Metro::Graph::Transfer using Moose {
 
     has origin_station => (
@@ -22,11 +26,7 @@ class Map::Metro::Graph::Transfer using Moose {
 
 __END__
 
-=encoding utf-8
-
-=head1 NAME
-
-Map::Metro::Graph::Transfer - What is a transfer?
+=pod
 
 =head1 DESCRIPTION
 
@@ -49,19 +49,5 @@ names for different types of transport.
 =back
 
 =back
-
-
-=head1 AUTHOR
-
-Erik Carlsson E<lt>info@code301.comE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014 - Erik Carlsson
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut

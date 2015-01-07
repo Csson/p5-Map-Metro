@@ -1,5 +1,7 @@
 use 5.20.0;
 
+# VERSION
+
 package Map::Metro::Standard::Moops {
 
     use base 'Moops';

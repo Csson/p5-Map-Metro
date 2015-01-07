@@ -1,5 +1,8 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Cmd::Graphviz
+
 class Map::Metro::Cmd::Graphviz extends Map::Metro::Cmd using Moose {
 
     use MooseX::App::Command;

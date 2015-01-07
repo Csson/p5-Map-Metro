@@ -1,5 +1,9 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Graph::Routing
+# ABSTRACT: What is a routing?
+
 class Map::Metro::Graph::Routing using Moose {
 
     has origin_station => (
@@ -51,11 +55,7 @@ class Map::Metro::Graph::Routing using Moose {
 
 __END__
 
-=encoding utf-8
-
-=head1 NAME
-
-Map::Metro::Graph::Routing - What is a routing?
+=pod
 
 =head1 DESCRIPTION
 
@@ -78,18 +78,5 @@ Returns an array of all L<LineStation|Map::Metro::Graph::LineStations> possible 
 =head2 routes()
 
 Returns an array of all L<Route|Map::Metro::Graph::Routes> in the routing.
-
-=head1 AUTHOR
-
-Erik Carlsson E<lt>info@code301.comE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014 - Erik Carlsson
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut

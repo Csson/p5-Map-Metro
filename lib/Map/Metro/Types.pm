@@ -1,6 +1,9 @@
 use feature ':5.20';
 use Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Types
+
 library  Map::Metro::Types
 
 extends  Types::Standard,

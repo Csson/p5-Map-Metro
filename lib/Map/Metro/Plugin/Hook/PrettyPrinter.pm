@@ -1,5 +1,8 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Plugin::Hook::PrettyPrinter
+
 class Map::Metro::Plugin::Hook::PrettyPrinter using Moose {
 
     method register {

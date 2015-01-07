@@ -1,5 +1,9 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Graph::Segment
+# ABSTRACT: What is a segment?
+
 class Map::Metro::Graph::Segment using Moose {
 
     has line_ids => (
@@ -32,28 +36,11 @@ class Map::Metro::Graph::Segment using Moose {
 
 __END__
 
-=encoding utf-8
-
-=head1 NAME
-
-Map::Metro::Graph::Segment - What is a segment?
+=pod
 
 =head1 DESCRIPTION
 
 Segments are used during the graph building phase. Its purpose is to describe the combination of two L<Stations|Map::Metro::Graph::Station>
 and all L<Lines|Map::Metro::Graph::Line> that go between them.
-
-=head1 AUTHOR
-
-Erik Carlsson E<lt>info@code301.comE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014 - Erik Carlsson
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut

@@ -1,5 +1,8 @@
 use Map::Metro::Standard;
 
+# VERSION
+# ABSTRACT: The command line interface
+
 package Map::Metro::Cmd  {
 
 use MooseX::App qw/Config Color/;
@@ -20,11 +23,7 @@ use MooseX::App qw/Config Color/;
 
 __END__
 
-=encoding utf-8
-
-=head1 NAME
-
-Map::Metro::Cmd - The command line interface
+=pod
 
 =head1 SYNOPSIS
 
@@ -93,19 +92,5 @@ Lists all stations in the  C<Map::Metro::Plugin::Map::$city> map. This displays 
 =head2 map-metro.pl help
 
 It's there if you need it...
-
-
-=head1 AUTHOR
-
-Erik Carlsson E<lt>info@code301.comE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014 - Erik Carlsson
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut

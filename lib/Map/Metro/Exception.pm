@@ -1,6 +1,9 @@
 use 5.20.0;
 use warnings;
 
+# VERSION
+# PODNAME: Map::Metro::Exception
+
 # Insired by Throwable::X
 package Map::Metro::Exception {
 

@@ -1,5 +1,9 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Graph::Route
+# ABSTRACT: What is a route?
+
 class Map::Metro::Graph::Route using Moose {
 
     has steps => (
@@ -57,11 +61,7 @@ class Map::Metro::Graph::Route using Moose {
 
 __END__
 
-=encoding utf-8
-
-=head1 NAME
-
-Map::Metro::Graph::Route - What is a route?
+=pod
 
 =head1 DESCRIPTION
 
@@ -77,19 +77,5 @@ Returns an array of the L<Steps|Map::Metro::Graph::Step> in the route, in the or
 =head2 weight()
 
 Returns an integer representing the total 'cost' of all L<Connections|Map::Metro::Graph::Connection> on this route.
-
-
-=head1 AUTHOR
-
-Erik Carlsson E<lt>info@code301.comE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014 - Erik Carlsson
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut

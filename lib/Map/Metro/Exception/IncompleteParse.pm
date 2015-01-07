@@ -1,5 +1,8 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Exception::IncompleteParse
+
 class Map::Metro::Exception::IncompleteParse with Map::Metro::Exception using Moose {
 
     use Map::Metro::Exception -all;

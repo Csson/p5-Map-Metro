@@ -1,5 +1,8 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Exception::LineIdDoesNotExistInLineList
+
 class Map::Metro::Exception::LineIdDoesNotExistInLineList with Map::Metro::Exception using Moose {
 
     use Map::Metro::Exception -all;

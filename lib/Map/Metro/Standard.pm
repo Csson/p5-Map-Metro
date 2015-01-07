@@ -1,6 +1,9 @@
 use 5.20.0;
 use warnings;
 
+# VERSION
+# PODNAME: Map::Metro::Standard
+
 package Map::Metro::Standard {
 
     use Syntax::Collector q/

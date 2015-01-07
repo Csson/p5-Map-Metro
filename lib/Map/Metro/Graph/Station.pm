@@ -1,5 +1,9 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Graph::Station
+# ABSTRACT: What is a station?
+
 class Map::Metro::Graph::Station using Moose {
 
     use Text::Undiacritic 'undiacritic';
@@ -143,11 +147,7 @@ class Map::Metro::Graph::Station using Moose {
 
 __END__
 
-=encoding utf-8
-
-=head1 NAME
-
-Map::Metro::Graph::Station - What is a station?
+=pod
 
 =head1 DESCRIPTION
 
@@ -172,18 +172,5 @@ Returns an array of all L<Lines|Map::Metro::Graph::Line> passing through the sta
 =head2 connecting_stations()
 
 Returns an array of all L<Stations|Map::Metro::Graph::Station> directly (on at least one line) connected to this station.
-
-=head1 AUTHOR
-
-Erik Carlsson E<lt>info@code301.comE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014 - Erik Carlsson
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut

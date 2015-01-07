@@ -1,6 +1,9 @@
 use 5.20.0;
 use Map::Metro::Standard;
 
+# VERSION
+# ABSTRACT: Public transport graphing
+
 package Map::Metro {
 
     use Moose;
@@ -118,13 +121,7 @@ package Map::Metro {
 
 __END__
 
-=encoding utf-8
-
-=head1 NAME
-
-Map::Metro - Public transport graphing
-
-=for html <p><a style="float: left;" href="https://travis-ci.org/Csson/p5-Map-Metro"><img src="https://travis-ci.org/Csson/p5-Map-Metro.svg?branch=master">&nbsp;</a>
+=pod
 
 =head1 SYNOPSIS
 
@@ -262,7 +259,7 @@ All L<Routes|Map::Metro::Graph::Route> between the two L<Stations|Map::Metro::Gr
 
 =head1 PERFORMANCE
 
-Since 0.2100 performance is less than an issue than it used to be, but it can still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see L<asps|Map::Metro::Graph/"asps()">.
+Since 0.2200 performance is less than an issue than it used to be, but it can still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see L<asps|Map::Metro::Graph/"asps()">.
 
 =head1 STATUS
 
@@ -298,18 +295,5 @@ L<Map::Tube> is the main alternative to C<Map::Metro>. They both have their stro
 =head1 SEE ALSO
 
 L<Map::Tube>
-
-=head1 AUTHOR
-
-Erik Carlsson E<lt>info@code301.comE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014 - Erik Carlsson
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut

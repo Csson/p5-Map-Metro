@@ -1,5 +1,9 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Graph::LineStation
+# ABSTRACT: What is a line station?
+
 class Map::Metro::Graph::LineStation using Moose {
 
     has line_station_id => (
@@ -33,11 +37,7 @@ class Map::Metro::Graph::LineStation using Moose {
 
 __END__
 
-=encoding utf-8
-
-=head1 NAME
-
-Map::Metro::Graph::LineStation - What is a line station?
+=pod
 
 =head1 DESCRIPTION
 
@@ -57,20 +57,6 @@ Returns the L<Station|Map::Metro::Graph::Station> object.
 
 =head2 line()
 
-eturns the L<Line|Map::Metro::Graph::Line> object.
-
-
-=head1 AUTHOR
-
-Erik Carlsson E<lt>info@code301.comE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014 - Erik Carlsson
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+Returns the L<Line|Map::Metro::Graph::Line> object.
 
 =cut

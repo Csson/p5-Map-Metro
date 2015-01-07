@@ -1,5 +1,7 @@
 use feature ':5.20';
 
+# VERSION
+
 package Map::Metro::Plugin::Hook::StreamStations {
 
     use Moose;

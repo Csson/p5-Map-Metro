@@ -1,5 +1,9 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Shim
+# ABSTRACT: Easily load a map file
+
 class Map::Metro::Shim using Moose  {
 
     use Map::Metro::Graph;
@@ -48,12 +52,9 @@ class Map::Metro::Shim using Moose  {
     }
 }
 
+__END__
 
-=encoding utf-8
-
-=head1 NAME
-
-Map::Metro::Shim - Easily load a map file
+=pod
 
 =head1 SYNOPSIS
 
@@ -75,17 +76,8 @@ The path to the map file.
 
 Apart from that this module works just like L<Map::Metro>.
 
-=head1 AUTHOR
+=head1 SEE ALSO
 
-Erik Carlsson E<lt>info@code301.comE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014 - Erik Carlsson
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+L<Map::Metro>
 
 =cut

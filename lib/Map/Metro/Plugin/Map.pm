@@ -1,5 +1,8 @@
 use 5.14.0;
 
+# VERSION
+# ABSTRACT: How to make your own map
+
 package Map::Metro::Plugin::Map;
 
 use Moose::Role;
@@ -52,11 +55,9 @@ sub version {
 
 1;
 
-=encoding utf-8
+__END__
 
-=head1 NAME
-
-Map::Metro::Plugin::Map - How to make your own map
+=pod
 
 =head1 SYNOPSIS
 
@@ -237,18 +238,5 @@ By default, station names with diacritics get their un-diacritic form added as a
     has '+do_undiacritic' => (
         default => 0,
     );
-
-=head1 AUTHOR
-
-Erik Carlsson E<lt>info@code301.comE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014 - Erik Carlsson
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut

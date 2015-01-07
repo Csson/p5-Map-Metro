@@ -1,5 +1,8 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Cmd::Available
+
 class Map::Metro::Cmd::Available extends Map::Metro::Cmd using Moose {
 
     use MooseX::App::Command;

@@ -1,5 +1,9 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Graph
+# ABSTRACT: An entire graph
+
 class Map::Metro::Graph using Moose {
 
     use Graph;
@@ -634,11 +638,7 @@ class Map::Metro::Graph using Moose {
 
 __END__
 
-=encoding utf-8
-
-=head1 NAME
-
-Map::Metro::Graph - An entire graph
+=pod
 
 =head1 SYNOPSIS
 
@@ -700,19 +700,4 @@ Call this method after creation if you prefer long startup times but faster sear
 
 This returns the complete L<Graph> object created from parsing the map.
 
-=head1 AUTHOR
-
-Erik Carlsson E<lt>info@code301.comE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014 - Erik Carlsson
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
-
 =cut
-
-

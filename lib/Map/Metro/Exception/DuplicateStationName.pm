@@ -1,5 +1,8 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Exception::DuplicateStationName
+
 class Map::Metro::Exception::DuplicateStationName with Map::Metro::Exception using Moose {
 
     use Map::Metro::Exception -all;

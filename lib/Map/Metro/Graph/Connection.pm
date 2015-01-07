@@ -1,5 +1,9 @@
 use Map::Metro::Standard::Moops;
 
+# VERSION
+# PODNAME: Map::Metro::Graph::Connection
+# ABSTRACT: What is a line?
+
 class Map::Metro::Graph::Connection using Moose {
 
     has origin_line_station => (
@@ -32,11 +36,7 @@ class Map::Metro::Graph::Connection using Moose {
 
 __END__
 
-=encoding utf-8
-
-=head1 NAME
-
-Map::Metro::Graph::Connection - What is a connection?
+=pod
 
 =head1 DESCRIPTION
 
@@ -44,18 +44,5 @@ Connections represent the combination of two specific L<LineStations|Map::Metro:
 travelling between them.
 
 In L<Graph> terms, a connection is a weighted edge.
-
-=head1 AUTHOR
-
-Erik Carlsson E<lt>info@code301.comE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014 - Erik Carlsson
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
 
 =cut
