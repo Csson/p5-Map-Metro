@@ -31,8 +31,6 @@
       },
       "develop" : {
          "requires" : {
-            "Dist::Zilla::PluginBundle::Author::CSSON" : "0.1102",
-            "Pod::Weaver::PluginBundle::Author::CSSON" : "0",
             "Test::Pod" : "1.41"
          }
       },
@@ -74,8 +72,7 @@
       },
       "test" : {
          "requires" : {
-            "Syntax::Collector" : "0",
-            "Test::NoTabs" : "0"
+            "Syntax::Collector" : "0"
          }
       }
    },

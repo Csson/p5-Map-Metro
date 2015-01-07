@@ -31,12 +31,6 @@ requires 'XML::Writer';
 
 recommends 'GraphViz2';
 
-on 'develop' => sub {
-	requires 'Dist::Zilla::PluginBundle::Author::CSSON', '0.1102';
-	requires 'Pod::Weaver::PluginBundle::Author::CSSON';
-};
-
 on 'test' => sub {
-    requires 'Test::NoTabs';
     requires 'Syntax::Collector';
 };
