@@ -29,6 +29,11 @@
             "Module::Build::Tiny" : "0.039"
          }
       },
+      "develop" : {
+         "requires" : {
+            "Dist::Zilla::PluginBundle::Author::CSSON" : "0.1102"
+         }
+      },
       "runtime" : {
          "recommends" : {
             "GraphViz2" : "0"
