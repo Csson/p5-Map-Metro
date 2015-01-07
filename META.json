@@ -31,6 +31,9 @@
       },
       "develop" : {
          "requires" : {
+            "Test::EOF" : "0",
+            "Test::EOL" : "0",
+            "Test::More" : "0",
             "Test::Pod" : "1.41"
          }
       },

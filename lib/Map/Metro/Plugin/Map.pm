@@ -59,6 +59,8 @@ __END__
 
 =pod
 
+=encoding utf-8
+
 =head1 SYNOPSIS
 
     # This is a modified part of the map from Map::Metro::Plugin::Map::Stockholm
