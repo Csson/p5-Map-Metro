@@ -2,9 +2,9 @@
 
 Map::Metro - Public transport graphing
 
-<div>
-    <p><a style="float: left;" href="https://travis-ci.org/Csson/p5-Map-Metro"><img src="https://travis-ci.org/Csson/p5-Map-Metro.svg?branch=master">&nbsp;</a>
-</div>
+# VERSION
+
+Version 0.2200, released 2015-01-07.
 
 # SYNOPSIS
 
@@ -138,7 +138,7 @@ All [Routes](https://metacpan.org/pod/Map::Metro::Graph::Route) between the two 
 
 # PERFORMANCE
 
-Since 0.2100 performance is less than an issue than it used to be, but it can still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see [asps](https://metacpan.org/pod/Map::Metro::Graph#asps).
+Since 0.2200 performance is less than an issue than it used to be, but it can still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see [asps](https://metacpan.org/pod/Map::Metro::Graph#asps).
 
 # STATUS
 
@@ -175,15 +175,21 @@ Currently only Perl 5.20+ is supported.
 
 [Map::Tube](https://metacpan.org/pod/Map::Tube)
 
+# SOURCE
+
+[https://github.com/Csson/p5-Map-Metro](https://github.com/Csson/p5-Map-Metro)
+
+# HOMEPAGE
+
+[https://metacpan.org/release/Map-Metro](https://metacpan.org/release/Map-Metro)
+
 # AUTHOR
 
 Erik Carlsson <info@code301.com>
 
-# COPYRIGHT
+# COPYRIGHT AND LICENSE
 
-Copyright 2014 - Erik Carlsson
+This software is copyright (c) 2015 by Erik Carlsson.
 
-# LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
