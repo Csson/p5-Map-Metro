@@ -8,8 +8,11 @@ Revision history for Map-Metro
  [Documentation]
 
  [Enhancements]
+ - 0.2101 might have not been as fast as advertised. This should be fixed now.
+ - Since the dump/hoist and serealize/deserealize commands now are slower than the route command, those four commands have been removed (and all code related to them in other classes).
 
  [Meta]
+ - Adapted to DZP::OurPkgVersion and new Podweaver settings.
 
  [New Features]
 
