@@ -32,7 +32,8 @@
       "develop" : {
          "requires" : {
             "Dist::Zilla::PluginBundle::Author::CSSON" : "0.1102",
-            "Pod::Weaver::PluginBundle::Author::CSSON" : "0"
+            "Pod::Weaver::PluginBundle::Author::CSSON" : "0",
+            "Test::Pod" : "1.41"
          }
       },
       "runtime" : {
