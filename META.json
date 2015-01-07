@@ -31,7 +31,6 @@
       },
       "develop" : {
          "requires" : {
-            "Test::EOF" : "0",
             "Test::EOL" : "0",
             "Test::More" : "0",
             "Test::NoTabs" : "0",
@@ -48,6 +47,7 @@
             "File::ShareDir" : "0",
             "Graph" : "0",
             "IO::Interactive" : "0",
+            "Kavorka" : "0",
             "List::AllUtils" : "0",
             "List::Compare" : "0",
             "Module::Pluggable" : "0",
@@ -56,15 +56,21 @@
             "MooseX::App" : "0",
             "MooseX::AttributeShortcuts" : "0",
             "MooseX::SetOnce" : "0",
+            "Path::Tiny" : "0",
             "String::Trim" : "0",
+            "Sub::Exporter" : "0",
             "Syntax::Collector" : "0",
             "Term::Size::Any" : "0",
             "Text::Undiacritic" : "0",
             "Throwable::X" : "0",
+            "Type::Tiny::Enum" : "0",
             "Types::Path::Tiny" : "0",
+            "Types::Standard" : "0",
             "XML::Writer" : "0",
             "experimental" : "0",
-            "perl" : "5.020000"
+            "namespace::clean" : "0",
+            "perl" : "5.020000",
+            "true" : "0"
          }
       },
       "test" : {
@@ -86,6 +92,6 @@
          "web" : "https://github.com/Csson/p5-Map-Metro"
       }
    },
-   "version" : "0.2200"
+   "version" : "0.2102"
 }
 
