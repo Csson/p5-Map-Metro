@@ -8,7 +8,6 @@ use File::ShareDir 'dist_dir';
 use Path::Tiny;
 use Types::Standard -types;
 use Types::Path::Tiny -types;
-use Map::Metro::Exception::NeedSereal;
 
 has mapfile => (
     is => 'ro',
@@ -21,13 +20,6 @@ has do_undiacritic => (
     isa => Bool,
     default => 1,
 );
-has serealfile => (
-    is => 'rw',
-    isa => Maybe[AbsPath],
-    lazy => 1,
-    builder => 1,
-    predicate => 1,
-);
 has hooks => (
     is => 'ro',
     isa => ArrayRef[ Str ],
@@ -37,11 +29,7 @@ has hooks => (
         all_hooks => 'elements',
     },
 );
-sub BUILD {
-    my $self = shift;
-    $self->serealfile;
-    return $self;
-}
+
 sub mapdir {
     my $self = shift;
     return $self->mapfile->parent if $self->mapfile->is_absolute; # work with old api
@@ -55,30 +43,6 @@ sub maplocation {
     return $self->mapdir->child($self->mapfile);
 }
 
-
-sub serealfilename {
-    my $self = shift;
-    my $version = $self->version;
-    $version =~ s{[^\d.]}{}g;
-
-    my $mapname = $self->maplocation->basename;
-    return $self->mapdir->child("$mapname.$version.sereal")->absolute;
-}
-
-sub _build_serealfile {
-    my $self = shift;
-    return $self->serealfilename->absolute if $self->serealfilename->exists;
-}
-sub deserealized {
-    my $self = shift;
-
-    eval "use Sereal::Decoder qw/sereal_decode_with_object/";
-    die $@ if $@;
-    my $contents = $self->serealfile->slurp;
-    my $serealizer = Sereal::Decoder->new;
-    my $graph = sereal_decode_with_object($serealizer, $contents);
-    return $graph;
-}
 sub version {
     my $self = shift;
     return 0 if $self->mapfile->is_absolute; # work with old api when we had no map_version()
