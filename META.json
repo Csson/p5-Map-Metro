@@ -29,14 +29,6 @@
             "Module::Build::Tiny" : "0.039"
          }
       },
-      "develop" : {
-         "requires" : {
-            "Test::EOL" : "0",
-            "Test::More" : "0",
-            "Test::NoTabs" : "0",
-            "Test::Pod" : "1.41"
-         }
-      },
       "runtime" : {
          "recommends" : {
             "GraphViz2" : "0"

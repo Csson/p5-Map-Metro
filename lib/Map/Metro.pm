@@ -191,7 +191,6 @@ Returns a L<Map::Metro::Graph> object containing the entire graph.
 Returns an array reference containing the names of all Map::Metro maps installed on the system.
 
 
-
 =head2 What is a unique path?
 
 The following rules are a guideline:
