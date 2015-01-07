@@ -26,7 +26,8 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "Dist::Zilla::PluginBundle::Author::CSSON" : "0.1102"
+            "Dist::Zilla::PluginBundle::Author::CSSON" : "0.1102",
+            "Pod::Weaver::PluginBundle::Author::CSSON" : "0"
          }
       },
       "configure" : {

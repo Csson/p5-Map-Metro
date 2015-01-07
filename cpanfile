@@ -33,6 +33,7 @@ recommends 'GraphViz2';
 
 on 'build' => sub {
 	requires 'Dist::Zilla::PluginBundle::Author::CSSON', '0.1102';
+	requires 'Pod::Weaver::PluginBundle::Author::CSSON';
 };
 
 on 'test' => sub {
