@@ -1,3 +1,11 @@
+# NAME
+
+Map::Metro - Public transport graphing
+
+# VERSION
+
+Version 0.2102, released 2015-01-08.
+
 # SYNOPSIS
 
     # Install a map
@@ -166,3 +174,22 @@ Currently only Perl 5.20+ is supported.
 # SEE ALSO
 
 [Map::Tube](https://metacpan.org/pod/Map::Tube)
+
+# SOURCE
+
+[https://github.com/Csson/p5-Map-Metro](https://github.com/Csson/p5-Map-Metro)
+
+# HOMEPAGE
+
+[https://metacpan.org/release/Map-Metro](https://metacpan.org/release/Map-Metro)
+
+# AUTHOR
+
+Erik Carlsson <info@code301.com>
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2015 by Erik Carlsson.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
