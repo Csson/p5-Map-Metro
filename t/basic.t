@@ -1,4 +1,4 @@
-use 5.20.0;
+use 5.16.0;
 use Test::More;
 use Path::Tiny;
 use Map::Metro::Shim;

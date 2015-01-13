@@ -70,7 +70,7 @@
             "Types::Standard" : "0",
             "XML::Writer" : "0",
             "namespace::clean" : "0",
-            "perl" : "5.020000",
+            "perl" : "5.016000",
             "true" : "0"
          }
       },
