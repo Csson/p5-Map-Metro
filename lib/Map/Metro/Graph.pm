@@ -259,7 +259,7 @@ class Map::Metro::Graph using Moose {
 
         my $transfer = Map::Metro::Graph::Transfer->new(origin_station => $origin_station,
                                                         destination_station => $destination_station,
-                                                        $options->%*);
+                                                        %$options);
 
         $self->$next($transfer);
     }
@@ -398,7 +398,7 @@ class Map::Metro::Graph using Moose {
         foreach my $option (@options) {
             my($key, $value) = split /:/ => $option;
 
-            next OPTION if scalar $keys->@* && (none { $key eq $_ } $keys->@*);
+            next OPTION if scalar @$keys && (none { $key eq $_ } @$keys);
             $options->{ $key } = $value;
         }
         return $options;
@@ -576,7 +576,7 @@ class Map::Metro::Graph using Moose {
                 my($prev_step, $prev_conn, $next_step, $next_conn);
 
                 LINE_STATION:
-                foreach my $index (0 .. scalar $graphroute->@* - 2) {
+                foreach my $index (0 .. scalar @$graphroute - 2) {
                     my $this_line_station_id = $graphroute->[ $index ];
                     my $next_line_station_id = $graphroute->[ $index + 1 ];
                     my $next_next_line_station_id = $graphroute->[ $index + 2 ] // undef;
@@ -586,7 +586,7 @@ class Map::Metro::Graph using Moose {
                     my $conn = $self->get_connection_by_line_station_ids($this_line_station_id, $next_line_station_id);
 
                     #* Don't continue beyond this route, even it connections exist.
-                    if($index + 2 < scalar $graphroute->@*) {
+                    if($index + 2 < scalar @$graphroute) {
                         $next_conn = defined $next_next_line_station_id ? $self->get_connection_by_line_station_ids($this_line_station_id, $next_line_station_id) : undef;
                         $next_step = Map::Metro::Graph::Step->new(from_connection => $next_conn) if defined $next_conn;
                     }
@@ -607,7 +607,7 @@ class Map::Metro::Graph using Moose {
                 }
 
                 LINE_STATION:
-                foreach my $index (0 .. scalar $graphroute->@* - 1) {
+                foreach my $index (0 .. scalar @$graphroute - 1) {
                     my $line_station = $self->get_line_station_by_id($graphroute->[$index]);
 
                     $route->add_line_station($line_station);
@@ -636,7 +636,7 @@ class Map::Metro::Graph using Moose {
 
             OTHER_STATION:
             foreach my $other_station (@other_stations) {
-                push $routings->@* => $self->routing_for($station, $other_station);
+                push @$routings => $self->routing_for($station, $other_station);
             }
         }
         return $routings;

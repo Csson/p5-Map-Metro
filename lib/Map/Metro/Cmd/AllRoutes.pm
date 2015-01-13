@@ -6,7 +6,6 @@ use Map::Metro::Standard::Moops;
 class Map::Metro::Cmd::AllRoutes extends Map::Metro::Cmd using Moose {
 
     use MooseX::App::Command;
-    use experimental 'postderef';
 
     parameter cityname => (
         is => 'rw',

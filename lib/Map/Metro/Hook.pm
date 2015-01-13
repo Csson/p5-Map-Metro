@@ -97,7 +97,7 @@ Two things are necessary for a hook class. It must...
 
 The C<StreamStations> hook mentioned in the synopsis, and included in this distribution, looks like this:
 
-    use feature ':5.20';
+    use feature ':5.16';
 
     package Map::Metro::Plugin::Hook::StreamStations {
 

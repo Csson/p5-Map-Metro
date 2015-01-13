@@ -7,7 +7,6 @@ class Map::Metro::Cmd::Lines extends Map::Metro::Cmd using Moose {
 
     use MooseX::App::Command;
     use List::AllUtils 'all';
-    use experimental 'postderef';
 
     parameter cityname => (
         is => 'rw',

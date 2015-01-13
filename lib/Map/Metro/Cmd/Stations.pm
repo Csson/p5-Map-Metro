@@ -7,7 +7,6 @@ class Map::Metro::Cmd::Stations extends Map::Metro::Cmd using Moose {
 
     use MooseX::App::Command;
     use Term::Size::Any 'chars';
-    use experimental 'postderef';
 
     parameter cityname => (
         is => 'rw',
@@ -37,18 +36,18 @@ class Map::Metro::Cmd::Stations extends Map::Metro::Cmd using Moose {
 
         foreach (1..$column_count) {
             my $column = [];
-            while(scalar $column->@* < $max_per_column && scalar @station_texts) {
+            while(scalar @$column < $max_per_column && scalar @station_texts) {
                 my $text = shift @station_texts;
                 my $padding = ' ' x ($column_width - length $text);
 
-                push $column->@* => $text . $padding;
+                push @$column => $text . $padding;
             }
-            push $columns->@* => $column;
+            push @$columns => $column;
         }
 
         say join "\n" => '', $intro_text, '';
-        foreach my $row (0..scalar $columns->[0]->@* - 1) {
-            foreach my $column ($columns->@*) {
+        foreach my $row (0..scalar @{ $columns->[0] } - 1) {
+            foreach my $column (@$columns) {
                 print $column->[$row] if $column->[$row];
             }
             say '';

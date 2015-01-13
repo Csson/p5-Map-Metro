@@ -1,4 +1,4 @@
-use feature ':5.20';
+use feature ':5.16';
 use Moops;
 
 # VERSION

@@ -1,4 +1,4 @@
-use 5.20.0;
+use 5.16.0;
 
 # VERSION
 
@@ -7,7 +7,6 @@ package #
 
     use base 'Moops';
     use List::AllUtils();
-    use experimental();
     use Map::Metro::Types();
     use Eponymous::Hash();
     use List::Compare();
@@ -22,8 +21,7 @@ package #
             'List::AllUtils'    => [qw/any none sum uniq/],
             'Eponymous::Hash'   => ['eh'],
             'String::Trim'      => ['trim'],
-            'feature'           => [qw/:5.20/],
-            'experimental'      => [qw/postderef/],
+            'feature'           => [qw/:5.16/],
             'Map::Metro::Types' => [{ replace => 1 }, '-types'],
             'List::Compare'     => [],
             'MooseX::SetOnce'   => [],
