@@ -274,7 +274,7 @@ For all maps in the Map::Metro::Plugin::Map namespace (unless noted):
 
 =head1 COMPATIBILITY
 
-Currently only Perl 5.20+ is supported.
+Currently requires Perl 5.16.
 
 =head1 Map::Metro or Map::Tube?
 
