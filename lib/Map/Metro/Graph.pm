@@ -512,28 +512,36 @@ class Map::Metro::Graph using Moose {
 
         }
     }
-    multi method routing_for(Int $origin_id, Int $destination_id) {
-        my $origin = $self->get_station_by_id($origin_id);
-        my $dest = $self->get_station_by_id($destination_id);
 
-        return $self->routing_for($origin->name, $dest->name);
-    }
+    method ensure_station(Int|Str|Station $place
+                      --> Station but assumed
+    ) {
 
-    multi method routing_for(Str $origin_name, Str $destination_name) {
-        my($origin_station, $destination_station);
+        return $place if Station->check($place);
+
         try {
-            $origin_station = $self->get_station_by_name($origin_name);
-            $destination_station = $self->get_station_by_name($destination_name);
+            if(Int->check($place)) {
+                $place = $self->get_station_by_id($place);
+            }
+            else {
+                $place = $self->get_station_by_name($place);
+            }
         }
         catch {
             my $error = $_;
             $error->does('Map::Metro::Exception') ? $error->throw : die $error;
         };
-
-        return $self->routing_for($origin_station, $destination_station);
+        return $place;
     }
 
-    multi method routing_for(Station $origin_station, Station $destination_station) {
+    method routing_for(Int|Str|Station $origin!      does doc('The first station. Station id, name or object.'),
+                       Int|Str|Station $destination! does doc('The final station. Station id, name or object.')
+                   --> Routing but assumed
+    ) {
+
+        my $origin_station = $self->ensure_station($origin);
+        my $destination_station = $self->ensure_station($destination);
+
         my @origin_line_station_ids = map { $_->line_station_id } $self->get_line_stations_by_station($origin_station);
         my @destination_line_station_ids = map { $_->line_station_id } $self->get_line_stations_by_station($destination_station);
 
@@ -640,6 +648,8 @@ __END__
 
 =pod
 
+:splint classname Map::Metro::Graph
+
 =head1 SYNOPSIS
 
     my $graph = Map::Metro->new('Stockholm')->parse;
@@ -668,7 +678,9 @@ __END__
 This class is at the core of L<Map::Metro>. After a map has been parsed the returned instance of this class contains
 the entire network (graph) in a hierarchy of objects.
 
-=head2 Methods
+=head1 Methods
+
+:splint method routing_for
 
 =head3 routing_for($from, $to)
 
