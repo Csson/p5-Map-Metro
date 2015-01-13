@@ -6,17 +6,23 @@ Revision history for Map-Metro
  [Bug Fixes]
 
  [Documentation]
- - Testing a new layout.
+ - Layout fix.
 
  [Enhancements]
- - Lowered Perl requirement to 5.16.
- - Made routing_for one method, instead of multiple.
 
  [Meta]
 
  [New Features]
 
  [Revision]
+
+0.2202 2015-01-13T03:39:35Z CET
+ [Documentation]
+ - Testing a new layout.
+
+ [Enhancements]
+ - Lowered Perl requirement to 5.16.
+ - Made routing_for one method, instead of multiple.
 
 0.2201 2015-01-09T23:19:28Z CET
  [Bug Fixes]
