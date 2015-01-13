@@ -4,7 +4,6 @@ Revision history for Map-Metro
  [API Changes]
 
  [Bug Fixes]
- - Fixed a problem with version.
 
  [Documentation]
 
@@ -15,6 +14,10 @@ Revision history for Map-Metro
  [New Features]
 
  [Revision]
+
+0.2201 2015-01-09T23:19:28Z CET
+ [Bug Fixes]
+ - Fixed a problem with version.
 
 0.2200 2015-01-08T01:10:28Z CET
  [Enhancements]

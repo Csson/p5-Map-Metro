@@ -4,7 +4,7 @@ Map::Metro - Public transport graphing
 
 # VERSION
 
-Version 0.2201, released 2015-01-09.
+Version 0.2202, released 2015-01-13.
 
 # SYNOPSIS
 
