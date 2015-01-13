@@ -2,17 +2,18 @@ requires 'perl', '5.020000';
 
 requires 'Data::Dump::Streamer';
 requires 'Eponymous::Hash';
-requires 'experimental';
 requires 'File::ShareDir';
 requires 'Graph';
 requires 'IO::Interactive';
 requires 'Kavorka';
+requires 'Kavorka::TraitFor::Parameter::doc';
 requires 'List::AllUtils';
 requires 'List::Compare';
 requires 'Module::Pluggable';
 requires 'Moose';
 requires 'MooseX::App';
 requires 'MooseX::AttributeShortcuts';
+requires 'MooseX::AttributeDocumented';
 requires 'MooseX::SetOnce',
 requires 'Moops';
 requires 'namespace::clean';

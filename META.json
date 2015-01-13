@@ -21,6 +21,9 @@
          "share",
          "eg",
          "examples"
+      ],
+      "namespace" : [
+         "Map::Metro::Standard"
       ]
    },
    "prereqs" : {
@@ -45,12 +48,14 @@
             "Graph" : "0",
             "IO::Interactive" : "0",
             "Kavorka" : "0",
+            "Kavorka::TraitFor::Parameter::doc" : "0",
             "List::AllUtils" : "0",
             "List::Compare" : "0",
             "Module::Pluggable" : "0",
             "Moops" : "0",
             "Moose" : "0",
             "MooseX::App" : "0",
+            "MooseX::AttributeDocumented" : "0",
             "MooseX::AttributeShortcuts" : "0",
             "MooseX::SetOnce" : "0",
             "Path::Tiny" : "0",
@@ -64,7 +69,6 @@
             "Types::Path::Tiny" : "0",
             "Types::Standard" : "0",
             "XML::Writer" : "0",
-            "experimental" : "0",
             "namespace::clean" : "0",
             "perl" : "5.020000",
             "true" : "0"
@@ -88,6 +92,6 @@
          "web" : "https://github.com/Csson/p5-Map-Metro"
       }
    },
-   "version" : "0.2201"
+   "version" : "0.2202"
 }
 
