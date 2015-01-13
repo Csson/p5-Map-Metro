@@ -2,7 +2,8 @@ use 5.20.0;
 
 # VERSION
 
-package Map::Metro::Standard::Moops {
+package #
+    Map::Metro::Standard::Moops {
 
     use base 'Moops';
     use List::AllUtils();
@@ -11,6 +12,7 @@ package Map::Metro::Standard::Moops {
     use Eponymous::Hash();
     use List::Compare();
     use MooseX::SetOnce();
+    use MooseX::AttributeDocumented();
 
     sub import {
         my $class = shift;
@@ -25,6 +27,7 @@ package Map::Metro::Standard::Moops {
             'Map::Metro::Types' => [{ replace => 1 }, '-types'],
             'List::Compare'     => [],
             'MooseX::SetOnce'   => [],
+            'MooseX::AttributeDocumented' => [],
         );
 
         $class->SUPER::import(%opts);
