@@ -644,6 +644,8 @@ class Map::Metro::Graph using Moose {
 
 }
 
+1;
+
 __END__
 
 =pod

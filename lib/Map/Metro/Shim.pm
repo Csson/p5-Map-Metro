@@ -52,6 +52,8 @@ class Map::Metro::Shim using Moose  {
     }
 }
 
+1;
+
 __END__
 
 =pod
