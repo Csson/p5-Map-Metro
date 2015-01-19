@@ -20,3 +20,5 @@ class Map::Metro::Exception::StationNameDoesNotExistInStationList with Map::Metr
     );
 
 }
+
+1;

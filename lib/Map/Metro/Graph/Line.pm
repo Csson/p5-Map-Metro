@@ -40,6 +40,8 @@ class Map::Metro::Graph::Line using Moose {
     }
 }
 
+1;
+
 __END__
 
 =pod
