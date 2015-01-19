@@ -1,6 +1,7 @@
 use 5.16.0;
 use Test::More;
 use Path::Tiny;
+use Map::Metro; #compilation test
 use Map::Metro::Shim;
 
 my $metro = Map::Metro::Shim->new('t/share/test-map.metro');

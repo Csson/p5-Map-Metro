@@ -20,3 +20,5 @@ class Map::Metro::Exception::LineIdDoesNotExistInLineList with Map::Metro::Excep
     );
 
 }
+
+1;
