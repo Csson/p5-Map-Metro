@@ -4,17 +4,21 @@ Revision history for Map-Metro
  [API Changes]
 
  [Bug Fixes]
- - Add 1; to a couple of classes (had some test failures).
 
  [Documentation]
 
  [Enhancements]
 
  [Meta]
+ - Add 1; to some more classes (pr:6)
 
  [New Features]
 
  [Revision]
+
+0.2204 2015-01-17T17:32:23Z CET
+ [Bug Fixes]
+ - Add 1; to a couple of classes (had some test failures).
 
 0.2203 2015-01-13T03:44:34Z CET
  [Documentation]
