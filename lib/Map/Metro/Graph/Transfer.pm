@@ -24,6 +24,8 @@ class Map::Metro::Graph::Transfer using Moose {
 
 }
 
+1;
+
 __END__
 
 =pod

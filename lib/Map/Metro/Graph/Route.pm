@@ -59,6 +59,8 @@ class Map::Metro::Graph::Route using Moose {
 
 }
 
+1;
+
 __END__
 
 =pod

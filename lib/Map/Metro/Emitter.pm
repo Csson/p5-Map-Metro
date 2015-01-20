@@ -81,3 +81,5 @@ package Map::Metro::Emitter {
         }
     }
 }
+
+1;

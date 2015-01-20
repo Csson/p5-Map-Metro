@@ -118,6 +118,8 @@ package Map::Metro {
     }
 }
 
+1;
+
 __END__
 
 =pod

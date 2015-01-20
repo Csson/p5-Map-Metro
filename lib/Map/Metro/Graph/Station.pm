@@ -145,6 +145,8 @@ class Map::Metro::Graph::Station using Moose {
     }
 }
 
+1;
+
 __END__
 
 =pod

@@ -15,3 +15,5 @@ class Map::Metro::Exception::IllegalConstructorArguments with Map::Metro::Except
     );
 
 }
+
+1;

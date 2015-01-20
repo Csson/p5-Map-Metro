@@ -34,6 +34,8 @@ class Map::Metro::Graph::Segment using Moose {
 
 }
 
+1;
+
 __END__
 
 =pod

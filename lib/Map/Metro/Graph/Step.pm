@@ -68,6 +68,7 @@ class Map::Metro::Graph::Step using Moose {
     }
 }
 
+1;
 
 __END__
 
