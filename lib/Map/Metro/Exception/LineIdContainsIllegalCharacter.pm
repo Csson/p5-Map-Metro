@@ -24,3 +24,5 @@ class Map::Metro::Exception::LineIdContainsIllegalCharacter with Map::Metro::Exc
         default => q{Line id [%{line_id}s] contains illegal character [%{illegal_character}s]},
     );
 }
+
+1;

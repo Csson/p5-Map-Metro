@@ -15,3 +15,5 @@ class Map::Metro::Exception::IncompleteParse with Map::Metro::Exception using Mo
     );
 
 }
+
+1;

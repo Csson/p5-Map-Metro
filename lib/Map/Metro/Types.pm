@@ -30,3 +30,5 @@ declares Connection,
     class_type Step         => { class => 'Map::Metro::Graph::Step' };
     class_type Transfer     => { class => 'Map::Metro::Graph::Transfer' };
 }
+
+1;

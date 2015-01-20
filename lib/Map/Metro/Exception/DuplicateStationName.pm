@@ -19,3 +19,5 @@ class Map::Metro::Exception::DuplicateStationName with Map::Metro::Exception usi
         default => q{Station name [%{name}s] already exist in station list.},
     );
 }
+
+1;

@@ -52,6 +52,7 @@ class Map::Metro::Graph::Routing using Moose {
     }
 }
 
+1;
 
 __END__
 

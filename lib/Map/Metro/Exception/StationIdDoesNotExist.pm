@@ -20,3 +20,5 @@ class Map::Metro::Exception::StationIdDoesNotExist with Map::Metro::Exception us
     );
 
 }
+
+1;

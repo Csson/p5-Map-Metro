@@ -35,6 +35,8 @@ class Map::Metro::Graph::LineStation using Moose {
     }
 }
 
+1;
+
 __END__
 
 =pod
