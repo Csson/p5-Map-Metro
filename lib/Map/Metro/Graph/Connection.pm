@@ -2,7 +2,7 @@ use Map::Metro::Standard::Moops;
 
 # VERSION
 # PODNAME: Map::Metro::Graph::Connection
-# ABSTRACT: What is a line?
+# ABSTRACT: What is a connection?
 
 class Map::Metro::Graph::Connection using Moose {
 
