@@ -1,4 +1,6 @@
 use Map::Metro::Standard;
+use strict;
+use warnings;
 
 # VERSION
 

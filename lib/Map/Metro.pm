@@ -1,6 +1,7 @@
 use 5.16.0;
 use Map::Metro::Standard;
-
+use strict;
+use warnings;
 
 package Map::Metro {
 

@@ -1,4 +1,6 @@
 use 5.14.0;
+use strict;
+use warnings;
 
 # VERSION
 # ABSTRACT: How to make your own map

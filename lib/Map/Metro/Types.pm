@@ -1,5 +1,7 @@
 use feature ':5.16';
 use Moops;
+use strict;
+use warnings;
 
 # VERSION
 # PODNAME: Map::Metro::Types

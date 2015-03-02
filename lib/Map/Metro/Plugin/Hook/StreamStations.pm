@@ -1,4 +1,6 @@
 use feature ':5.16';
+use strict;
+use warnings;
 
 # VERSION
 

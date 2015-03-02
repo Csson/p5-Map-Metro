@@ -1,4 +1,6 @@
 use Map::Metro::Standard::Moops;
+use strict;
+use warnings;
 
 # VERSION
 # PODNAME: Map::Metro::Graph::Connection

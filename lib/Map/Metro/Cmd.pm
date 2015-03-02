@@ -1,11 +1,13 @@
 use Map::Metro::Standard;
+use strict;
+use warnings;
 
 # VERSION
 # ABSTRACT: The command line interface
 
 package Map::Metro::Cmd  {
 
-use MooseX::App qw/Config Color/;
+    use MooseX::App qw/Config Color/;
 
     use MooseX::AttributeShortcuts;
     use Types::Standard -types;
