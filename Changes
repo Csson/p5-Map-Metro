@@ -6,14 +6,23 @@ Revision history for Map-Metro
  [Bug Fixes]
 
  [Documentation]
+ - Fixed an abstract typo, fixes #8 (MANWAR++)
 
  [Enhancements]
 
  [Meta]
+ - iller.yaml replaces iller.ini.
+ - cpanfile removed, now sets prereqs in iller.yaml/dist.ini.
 
  [New Features]
 
+ [Requirements]
+ - Removed Data::Dump::Streamer as a prereq (unused since MM::Cmd::Dump was removed).
+ - Listed dist/weaver.ini plugins as develop prereqs (and also added one or two).
+ - Added strict and warnings to all (most ofc already had them via Moops).
+
  [Revision]
+
 
 0.2206 2015-01-20T13:55:44Z CET
  [Meta]

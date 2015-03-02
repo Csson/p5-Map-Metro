@@ -4,7 +4,7 @@ Map::Metro - Public transport graphing
 
 # VERSION
 
-Version 0.2206, released 2015-01-20.
+Version 0.2207, released 2015-03-02.
 
 # SYNOPSIS
 
@@ -189,7 +189,7 @@ Erik Carlsson <info@code301.com>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2015 by Erik Carlsson.
+This software is copyright (c) 2015 by Erik Carlsson <info@code301.com>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
