@@ -4,7 +4,7 @@
       "Erik Carlsson <info@code301.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.029, CPAN::Meta::Converter version 2.143240",
+   "generated_by" : "Dist::Zilla version 5.031, CPAN::Meta::Converter version 2.143240",
    "license" : [
       "perl_5"
    ],
@@ -34,7 +34,61 @@
       },
       "develop" : {
          "requires" : {
-            "Test::Pod" : "1.41"
+            "Dist::Zilla::Plugin::CheckChangesHasContent" : "0",
+            "Dist::Zilla::Plugin::CheckExtraTests" : "0",
+            "Dist::Zilla::Plugin::ConfirmRelease" : "0",
+            "Dist::Zilla::Plugin::ContributorsFromGit" : "0",
+            "Dist::Zilla::Plugin::CopyFilesFromBuild" : "0",
+            "Dist::Zilla::Plugin::ExecDir" : "0",
+            "Dist::Zilla::Plugin::Git::Check" : "0",
+            "Dist::Zilla::Plugin::Git::GatherDir" : "0",
+            "Dist::Zilla::Plugin::Git::Push" : "0",
+            "Dist::Zilla::Plugin::Git::Tag" : "0",
+            "Dist::Zilla::Plugin::GithubMeta" : "0",
+            "Dist::Zilla::Plugin::License" : "0",
+            "Dist::Zilla::Plugin::Manifest" : "0",
+            "Dist::Zilla::Plugin::ManifestSkip" : "0",
+            "Dist::Zilla::Plugin::MetaJSON" : "0",
+            "Dist::Zilla::Plugin::MetaNoIndex" : "0",
+            "Dist::Zilla::Plugin::MetaProvides::Class" : "0",
+            "Dist::Zilla::Plugin::MetaProvides::Package" : "0",
+            "Dist::Zilla::Plugin::MetaYAML" : "0",
+            "Dist::Zilla::Plugin::ModuleBuildTiny" : "0",
+            "Dist::Zilla::Plugin::NextRelease" : "0",
+            "Dist::Zilla::Plugin::NextVersion::Semantic" : "0",
+            "Dist::Zilla::Plugin::OurPkgVersion" : "0",
+            "Dist::Zilla::Plugin::PodSyntaxTests" : "0",
+            "Dist::Zilla::Plugin::PodWeaver" : "0",
+            "Dist::Zilla::Plugin::PodnameFromClassname" : "0",
+            "Dist::Zilla::Plugin::Prereqs" : "0",
+            "Dist::Zilla::Plugin::Prereqs::Plugins" : "0",
+            "Dist::Zilla::Plugin::PreviousVersion::Changelog" : "0",
+            "Dist::Zilla::Plugin::Readme" : "0",
+            "Dist::Zilla::Plugin::ReadmeAnyFromPod" : "0",
+            "Dist::Zilla::Plugin::ReversionOnRelease" : "0",
+            "Dist::Zilla::Plugin::RunExtraTests" : "0",
+            "Dist::Zilla::Plugin::ShareDir" : "0",
+            "Dist::Zilla::Plugin::Test::ReportPrereqs" : "0",
+            "Dist::Zilla::Plugin::TestRelease" : "0",
+            "Dist::Zilla::Plugin::TravisYML" : "0",
+            "Dist::Zilla::Plugin::UploadToCPAN" : "0",
+            "Pod::Elemental::Transformer::List" : "0",
+            "Pod::Elemental::Transformer::Splint" : "0",
+            "Pod::Weaver::Plugin::SingleEncoding" : "0",
+            "Pod::Weaver::Plugin::Transformer" : "0",
+            "Pod::Weaver::PluginBundle::CorePrep" : "0",
+            "Pod::Weaver::Section::Authors" : "0",
+            "Pod::Weaver::Section::Collect" : "0",
+            "Pod::Weaver::Section::Generic" : "0",
+            "Pod::Weaver::Section::Homepage::DefaultCPAN" : "0",
+            "Pod::Weaver::Section::Leftovers" : "0",
+            "Pod::Weaver::Section::Legal" : "0",
+            "Pod::Weaver::Section::Name" : "0",
+            "Pod::Weaver::Section::Region" : "0",
+            "Pod::Weaver::Section::Source::DefaultGitHub" : "0",
+            "Pod::Weaver::Section::Version" : "0",
+            "Test::Pod" : "1.41",
+            "Test::Warnings" : "0"
          }
       },
       "runtime" : {
@@ -42,7 +96,6 @@
             "GraphViz2" : "0"
          },
          "requires" : {
-            "Data::Dump::Streamer" : "0",
             "Eponymous::Hash" : "0",
             "File::ShareDir" : "0",
             "Graph" : "0",
@@ -75,143 +128,148 @@
          }
       },
       "test" : {
+         "recommends" : {
+            "CPAN::Meta" : "2.120900"
+         },
          "requires" : {
-            "Syntax::Collector" : "0"
+            "ExtUtils::MakeMaker" : "0",
+            "File::Spec" : "0",
+            "Test::More" : "0.96"
          }
       }
    },
    "provides" : {
       "Map::Metro" : {
          "file" : "lib/Map/Metro.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Cmd" : {
          "file" : "lib/Map/Metro/Cmd.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Cmd::AllRoutes" : {
          "file" : "lib/Map/Metro/Cmd/AllRoutes.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Cmd::Available" : {
          "file" : "lib/Map/Metro/Cmd/Available.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Cmd::Graphviz" : {
          "file" : "lib/Map/Metro/Cmd/Graphviz.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Cmd::Lines" : {
          "file" : "lib/Map/Metro/Cmd/Lines.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Cmd::MetroToTube" : {
          "file" : "lib/Map/Metro/Cmd/MetroToTube.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Cmd::Route" : {
          "file" : "lib/Map/Metro/Cmd/Route.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Cmd::Stations" : {
          "file" : "lib/Map/Metro/Cmd/Stations.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Emitter" : {
          "file" : "lib/Map/Metro/Emitter.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Exception" : {
          "file" : "lib/Map/Metro/Exception.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Exception::DuplicateStationName" : {
          "file" : "lib/Map/Metro/Exception/DuplicateStationName.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Exception::IllegalConstructorArguments" : {
          "file" : "lib/Map/Metro/Exception/IllegalConstructorArguments.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Exception::IncompleteParse" : {
          "file" : "lib/Map/Metro/Exception/IncompleteParse.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Exception::LineIdContainsIllegalCharacter" : {
          "file" : "lib/Map/Metro/Exception/LineIdContainsIllegalCharacter.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Exception::LineIdDoesNotExistInLineList" : {
          "file" : "lib/Map/Metro/Exception/LineIdDoesNotExistInLineList.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Exception::StationIdDoesNotExist" : {
          "file" : "lib/Map/Metro/Exception/StationIdDoesNotExist.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Exception::StationNameDoesNotExistInStationList" : {
          "file" : "lib/Map/Metro/Exception/StationNameDoesNotExistInStationList.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Graph" : {
          "file" : "lib/Map/Metro/Graph.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Graph::Connection" : {
          "file" : "lib/Map/Metro/Graph/Connection.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Graph::Line" : {
          "file" : "lib/Map/Metro/Graph/Line.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Graph::LineStation" : {
          "file" : "lib/Map/Metro/Graph/LineStation.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Graph::Route" : {
          "file" : "lib/Map/Metro/Graph/Route.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Graph::Routing" : {
          "file" : "lib/Map/Metro/Graph/Routing.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Graph::Segment" : {
          "file" : "lib/Map/Metro/Graph/Segment.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Graph::Station" : {
          "file" : "lib/Map/Metro/Graph/Station.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Graph::Step" : {
          "file" : "lib/Map/Metro/Graph/Step.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Graph::Transfer" : {
          "file" : "lib/Map/Metro/Graph/Transfer.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Hook" : {
          "file" : "lib/Map/Metro/Hook.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Plugin::Hook::PrettyPrinter" : {
          "file" : "lib/Map/Metro/Plugin/Hook/PrettyPrinter.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Plugin::Hook::StreamStations" : {
          "file" : "lib/Map/Metro/Plugin/Hook/StreamStations.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Plugin::Map" : {
          "file" : "lib/Map/Metro/Plugin/Map.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       },
       "Map::Metro::Shim" : {
          "file" : "lib/Map/Metro/Shim.pm",
-         "version" : "0.2206"
+         "version" : "0.2207"
       }
    },
    "release_status" : "stable",
@@ -226,7 +284,7 @@
          "web" : "https://github.com/Csson/p5-Map-Metro"
       }
    },
-   "version" : "0.2206",
+   "version" : "0.2207",
    "x_contributors" : [
       "Alexandr Ciornii <alexchorny@gmail.com>"
    ]
