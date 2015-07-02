@@ -16,7 +16,7 @@ prereqs:
      - IO::Interactive
      - Kavorka
      - Kavorka::TraitFor::Parameter::doc
-     - List::AllUtils
+     - List::Util: 1.33
      - List::Compare
      - Module::Pluggable
      - Moose
