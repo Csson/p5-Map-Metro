@@ -8,7 +8,7 @@ package Map::Metro::Emitter {
 
     use Moose;
     use Kavorka;
-    use List::AllUtils 'none';
+    use List::Util 1.33 'none';
     use Types::Standard -types;
     use Map::Metro::Hook;
 

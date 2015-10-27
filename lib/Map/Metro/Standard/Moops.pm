@@ -8,7 +8,7 @@ package #
     Map::Metro::Standard::Moops {
 
     use base 'Moops';
-    use List::AllUtils();
+    use List::Util 1.33 ();
     use Map::Metro::Types();
     use Eponymous::Hash();
     use List::Compare();
@@ -20,7 +20,7 @@ package #
         my %opts = @_;
 
         push @{ $opts{'imports'} ||= [] } => (
-            'List::AllUtils'    => [qw/any none sum uniq/],
+            'List::Util'        => [qw/any none sum/],
             'Eponymous::Hash'   => ['eh'],
             'String::Trim'      => ['trim'],
             'feature'           => [qw/:5.16/],

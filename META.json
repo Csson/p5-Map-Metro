@@ -102,7 +102,7 @@
             "IO::Interactive" : "0",
             "Kavorka" : "0",
             "Kavorka::TraitFor::Parameter::doc" : "0",
-            "List::AllUtils" : "0",
+            "List::Util" : "1.33",
             "List::Compare" : "0",
             "Module::Pluggable" : "0",
             "Moops" : "0",

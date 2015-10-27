@@ -12,7 +12,7 @@ package Map::Metro {
     use MooseX::AttributeShortcuts;
     use Types::Standard -types;
     use Types::Path::Tiny -types;
-    use List::AllUtils 'any';
+    use List::Util 1.33 'any';
 
     use Map::Metro::Graph;
 
