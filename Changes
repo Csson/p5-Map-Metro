@@ -14,7 +14,7 @@ Revision history for Map-Metro
  [New Features]
 
  [Requirements]
- - switched from List::AllUtils to List::Util ( http://is.gd/lmu_cac_debacle )
+ - Switched from List::AllUtils to List::Util (ETHER++)
 
  [Revision]
 

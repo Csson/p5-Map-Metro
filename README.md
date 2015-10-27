@@ -2,9 +2,11 @@
 
 Map::Metro - Public transport graphing
 
+![Requires Perl 5.16](https://img.shields.io/badge/perl-5.16-brightgreen.svg) [![Travis status](https://api.travis-ci.org/Csson/p5-Map-Metro.svg?branch=master)](https://travis-ci.org/Csson/p5-Map-Metro)
+
 # VERSION
 
-Version 0.2207, released 2015-03-03.
+Version 0.2208, released 2015-10-27.
 
 # SYNOPSIS
 

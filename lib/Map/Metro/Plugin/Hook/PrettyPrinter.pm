@@ -47,11 +47,16 @@ class Map::Metro::Plugin::Hook::PrettyPrinter using Moose {
                 push @rows => '';
             }
 
-            my @lines_in_routing = uniq sort { $a->name cmp $b->name } map { $_->origin_line_station->line } map { $_->all_steps } $routing->all_routes;
+            my @lines_in_routing = sort { $a->name cmp $b->name } map { $_->origin_line_station->line } map { $_->all_steps } $routing->all_routes;
 
-            LINE:
-            foreach my $line (@lines_in_routing) {
-                push @rows => sprintf "%-${longest_length}s  %s", $line->name, $line->description;
+            {
+                my %seen_lines = ();
+                LINE:
+                foreach my $line (@lines_in_routing) {
+                    next LINE if exists $seen_lines{ $line };
+                    $seen_lines{ $line } = 1;
+                    push @rows => sprintf "%-${longest_length}s  %s", $line->name, $line->description;
+                }
             }
 
             push @rows => '', '*: Transfer to other line', '+: Transfer to other station', '';
@@ -60,7 +65,6 @@ class Map::Metro::Plugin::Hook::PrettyPrinter using Moose {
 
         };
     }
-
 }
 
 1;
