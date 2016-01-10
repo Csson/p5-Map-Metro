@@ -9,9 +9,6 @@ use warnings;
 
 library  Map::Metro::Types
 
-extends  Types::Standard,
-         Types::Path::Tiny
-
 declares Connection,
          Line,
          LineStation,

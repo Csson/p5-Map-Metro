@@ -11,6 +11,8 @@ package #
     use base 'MoopsX::UsingMoose';
     use List::Util 1.33 ();
     use Map::Metro::Types();
+    use Types::Standard();
+    use Types::Path::Tiny();
     use Eponymous::Hash();
     use List::Compare();
     use MooseX::SetOnce();
@@ -25,6 +27,8 @@ package #
             'Eponymous::Hash'   => ['eh'],
             'String::Trim'      => ['trim'],
             'feature'           => [qw/:5.16/],
+            'Types::Standard'   => [{ replace => 1 }, '-types'],
+            'Types::Path::Tiny' => [{ replace => 1 }, '-types'],
             'Map::Metro::Types' => [{ replace => 1 }, '-types'],
             'List::Compare'     => [],
             'MooseX::SetOnce'   => [],
