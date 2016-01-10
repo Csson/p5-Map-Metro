@@ -6,7 +6,7 @@ use warnings;
 # PODCLASSNAME
 # ABSTRACT: Easily load a map file
 
-class Map::Metro::Shim using Moose  {
+class Map::Metro::Shim {
 
     use Map::Metro::Graph;
 

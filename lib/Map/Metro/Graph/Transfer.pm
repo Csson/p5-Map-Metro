@@ -6,7 +6,7 @@ use warnings;
 # PODCLASSNAME
 # ABSTRACT: Moving between two stations without a connection between them
 
-class Map::Metro::Graph::Transfer using Moose {
+class Map::Metro::Graph::Transfer {
 
     has origin_station => (
         is => 'ro',

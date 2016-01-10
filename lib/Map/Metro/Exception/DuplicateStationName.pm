@@ -6,7 +6,7 @@ use warnings;
 # ABSTRACT: DuplicateStationName
 # PODCLASSNAME
 
-class Map::Metro::Exception::DuplicateStationName with Map::Metro::Exception using Moose {
+class Map::Metro::Exception::DuplicateStationName with Map::Metro::Exception {
 
     use Map::Metro::Exception -all;
 

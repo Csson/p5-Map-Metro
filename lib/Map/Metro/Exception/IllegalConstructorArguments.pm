@@ -6,7 +6,7 @@ use warnings;
 # ABSTRACT: IllegalConstructorArguments
 # PODCLASSNAME
 
-class Map::Metro::Exception::IllegalConstructorArguments with Map::Metro::Exception using Moose {
+class Map::Metro::Exception::IllegalConstructorArguments with Map::Metro::Exception {
 
     use Map::Metro::Exception -all;
 

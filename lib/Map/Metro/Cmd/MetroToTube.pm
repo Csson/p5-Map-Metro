@@ -5,7 +5,7 @@ use warnings;
 # VERSION
 # PODNAME: Map::Metro::Cmd::MetroToTube
 
-class Map::Metro::Cmd::MetroToTube extends Map::Metro::Cmd using Moose {
+class Map::Metro::Cmd::MetroToTube extends Map::Metro::Cmd {
 
     use MooseX::App::Command;
     use IO::File;

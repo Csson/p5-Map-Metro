@@ -6,7 +6,7 @@ use warnings;
 # PODCLASSNAME
 # ABSTRACT: A collection of routes between two stations
 
-class Map::Metro::Graph::Routing using Moose {
+class Map::Metro::Graph::Routing {
 
     has origin_station => (
         is => 'ro',

@@ -6,7 +6,7 @@ use warnings;
 # ABSTRACT: StationIdDoesNotExist
 # PODCLASSNAME
 
-class Map::Metro::Exception::StationIdDoesNotExist with Map::Metro::Exception using Moose  {
+class Map::Metro::Exception::StationIdDoesNotExist with Map::Metro::Exception {
 
     use Map::Metro::Exception -all;
 

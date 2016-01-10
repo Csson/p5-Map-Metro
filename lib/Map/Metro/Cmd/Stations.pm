@@ -5,7 +5,7 @@ use warnings;
 # VERSION
 # PODNAME: Map::Metro::Cmd::Stations
 
-class Map::Metro::Cmd::Stations extends Map::Metro::Cmd using Moose {
+class Map::Metro::Cmd::Stations extends Map::Metro::Cmd {
 
     use MooseX::App::Command;
     use Term::Size::Any 'chars';

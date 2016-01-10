@@ -6,7 +6,7 @@ use warnings;
 # PODCLASSNAME
 # ABSTRACT: All lines between two neighboring stations
 
-class Map::Metro::Graph::Segment using Moose {
+class Map::Metro::Graph::Segment {
 
     has line_ids => (
         is => 'ro',

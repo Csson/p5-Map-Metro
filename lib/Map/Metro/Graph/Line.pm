@@ -6,7 +6,7 @@ use warnings;
 # PODCLASSNAME
 # ABSTRACT: Meta information about a line
 
-class Map::Metro::Graph::Line using Moose {
+class Map::Metro::Graph::Line {
 
     has id => (
         is => 'ro',

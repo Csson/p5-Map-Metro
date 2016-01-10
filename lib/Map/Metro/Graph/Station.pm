@@ -6,7 +6,7 @@ use warnings;
 # PODCLASSNAME
 # ABSTRACT: Information about a station
 
-class Map::Metro::Graph::Station using Moose {
+class Map::Metro::Graph::Station {
 
     use Text::Undiacritic 'undiacritic';
 

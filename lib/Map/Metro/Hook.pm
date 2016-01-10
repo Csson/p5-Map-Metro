@@ -6,7 +6,7 @@ use warnings;
 # PODCLASSNAME
 # ABSTRACT: Hook into Map::Metro
 
-class Map::Metro::Hook using Moose {
+class Map::Metro::Hook {
 
     use Type::Tiny::Enum;
 

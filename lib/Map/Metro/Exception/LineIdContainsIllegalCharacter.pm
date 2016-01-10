@@ -6,7 +6,7 @@ use warnings;
 # ABSTRACT: LineIdContainsIllegalCharacter
 # PODCLASSNAME
 
-class Map::Metro::Exception::LineIdContainsIllegalCharacter with Map::Metro::Exception using Moose {
+class Map::Metro::Exception::LineIdContainsIllegalCharacter with Map::Metro::Exception {
 
     use Map::Metro::Exception -all;
 

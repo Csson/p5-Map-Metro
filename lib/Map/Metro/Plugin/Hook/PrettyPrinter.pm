@@ -6,7 +6,7 @@ use warnings;
 # PODCLASSNAME
 # ABSTRACT: Prints a routing
 
-class Map::Metro::Plugin::Hook::PrettyPrinter using Moose {
+class Map::Metro::Plugin::Hook::PrettyPrinter {
 
     method register {
         before_add_routing => sub {

@@ -6,7 +6,7 @@ use warnings;
 # PODCLASSNAME
 # ABSTRACT: A sequence of line stations
 
-class Map::Metro::Graph::Route using Moose {
+class Map::Metro::Graph::Route {
 
     has steps => (
         is => 'ro',

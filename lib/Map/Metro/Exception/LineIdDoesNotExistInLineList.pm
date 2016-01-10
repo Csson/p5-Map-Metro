@@ -6,7 +6,7 @@ use warnings;
 # ABSTRACT: LineIdDoesNotExistInLineList
 # PODCLASSNAME
 
-class Map::Metro::Exception::LineIdDoesNotExistInLineList with Map::Metro::Exception using Moose {
+class Map::Metro::Exception::LineIdDoesNotExistInLineList with Map::Metro::Exception {
 
     use Map::Metro::Exception -all;
 

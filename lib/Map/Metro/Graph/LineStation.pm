@@ -6,7 +6,7 @@ use warnings;
 # PODCLASSNAME
 # ABSTRACT: A station on a specific line
 
-class Map::Metro::Graph::LineStation using Moose {
+class Map::Metro::Graph::LineStation {
 
     has line_station_id => (
         is => 'ro',

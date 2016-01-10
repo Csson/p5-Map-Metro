@@ -5,7 +5,7 @@ use warnings;
 # VERSION
 # PODNAME: Map::Metro::Cmd::Graphviz
 
-class Map::Metro::Cmd::Graphviz extends Map::Metro::Cmd using Moose {
+class Map::Metro::Cmd::Graphviz extends Map::Metro::Cmd {
 
     use MooseX::App::Command;
     use Path::Tiny;

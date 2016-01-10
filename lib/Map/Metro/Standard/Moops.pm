@@ -8,7 +8,7 @@ use warnings;
 package #
     Map::Metro::Standard::Moops {
 
-    use base 'Moops';
+    use base 'MoopsX::UsingMoose';
     use List::Util 1.33 ();
     use Map::Metro::Types();
     use Eponymous::Hash();

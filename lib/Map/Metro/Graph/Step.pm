@@ -6,7 +6,7 @@ use warnings;
 # PODCLASSNAME
 # ABSTRACT: The movement from one station to the next in a route
 
-class Map::Metro::Graph::Step using Moose {
+class Map::Metro::Graph::Step {
 
     has origin_line_station => (
         is => 'ro',

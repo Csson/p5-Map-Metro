@@ -6,7 +6,7 @@ use warnings;
 # PODCLASSNAME
 # ABSTRACT: Connects two stations on a line
 
-class Map::Metro::Graph::Connection using Moose {
+class Map::Metro::Graph::Connection {
 
     has origin_line_station => (
         is => 'ro',

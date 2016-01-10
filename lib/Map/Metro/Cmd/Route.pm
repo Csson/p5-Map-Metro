@@ -5,7 +5,7 @@ use warnings;
 # VERSION
 # PODNAME: Map::Metro::Cmd::Route
 
-class Map::Metro::Cmd::Route extends Map::Metro::Cmd using Moose {
+class Map::Metro::Cmd::Route extends Map::Metro::Cmd {
 
     use MooseX::App::Command;
 

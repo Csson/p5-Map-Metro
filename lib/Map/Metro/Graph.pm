@@ -6,7 +6,7 @@ use warnings;
 # PODCLASSNAME
 # ABSTRACT: An entire graph
 
-class Map::Metro::Graph using Moose {
+class Map::Metro::Graph {
 
     use Graph;
 

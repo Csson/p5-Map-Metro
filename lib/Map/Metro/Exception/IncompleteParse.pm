@@ -6,7 +6,7 @@ use warnings;
 # ABSTRACT: IncompleteParse
 # PODCLASSNAME
 
-class Map::Metro::Exception::IncompleteParse with Map::Metro::Exception using Moose {
+class Map::Metro::Exception::IncompleteParse with Map::Metro::Exception {
 
     use Map::Metro::Exception -all;
 
