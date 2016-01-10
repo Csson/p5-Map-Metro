@@ -3,8 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Graph::Line
-# ABSTRACT: What is a line?
+# PODCLASSNAME
+# ABSTRACT: Meta information about a line
 
 class Map::Metro::Graph::Line using Moose {
 

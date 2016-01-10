@@ -3,7 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Exception::DuplicateStationName
+# ABSTRACT: DuplicateStationName
+# PODCLASSNAME
 
 class Map::Metro::Exception::DuplicateStationName with Map::Metro::Exception using Moose {
 

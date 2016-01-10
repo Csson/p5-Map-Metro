@@ -3,8 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Graph::Segment
-# ABSTRACT: What is a segment?
+# PODCLASSNAME
+# ABSTRACT: All lines between two neighboring stations
 
 class Map::Metro::Graph::Segment using Moose {
 

@@ -7,6 +7,7 @@ package Map::Metro {
 
     # VERSION
     # ABSTRACT: Public transport graphing
+
     use Moose;
     use Module::Pluggable search_path => ['Map::Metro::Plugin::Map'], require => 1, sub_name => 'system_maps';
     use MooseX::AttributeShortcuts;

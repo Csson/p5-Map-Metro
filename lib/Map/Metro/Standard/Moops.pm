@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 # VERSION
+# ABSTRACT: Extends Moops
 
 package #
     Map::Metro::Standard::Moops {

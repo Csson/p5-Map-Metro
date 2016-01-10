@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 # VERSION
+# PODCLASSNAME
 # ABSTRACT: How to make your own map
 
 package Map::Metro::Plugin::Map;

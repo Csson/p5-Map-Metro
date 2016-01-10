@@ -3,8 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Graph::Step
-# ABSTRACT: What is a step?
+# PODCLASSNAME
+# ABSTRACT: The movement from one station to the next in a route
 
 class Map::Metro::Graph::Step using Moose {
 

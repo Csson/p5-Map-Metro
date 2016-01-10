@@ -3,7 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Exception::IncompleteParse
+# ABSTRACT: IncompleteParse
+# PODCLASSNAME
 
 class Map::Metro::Exception::IncompleteParse with Map::Metro::Exception using Moose {
 

@@ -3,7 +3,6 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Standard
 
 package Map::Metro::Standard {
 

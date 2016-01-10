@@ -3,7 +3,6 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Exception
 
 # Insired by Throwable::X
 package Map::Metro::Exception {

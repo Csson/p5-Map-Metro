@@ -3,8 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Graph::Connection
-# ABSTRACT: What is a connection?
+# PODCLASSNAME
+# ABSTRACT: Connects two stations on a line
 
 class Map::Metro::Graph::Connection using Moose {
 

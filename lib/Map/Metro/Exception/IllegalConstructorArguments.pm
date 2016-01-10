@@ -3,7 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Exception::IllegalConstructorArguments
+# ABSTRACT: IllegalConstructorArguments
+# PODCLASSNAME
 
 class Map::Metro::Exception::IllegalConstructorArguments with Map::Metro::Exception using Moose {
 

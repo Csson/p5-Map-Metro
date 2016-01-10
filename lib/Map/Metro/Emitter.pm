@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 # VERSION
+# ABSTRACT: Event emitter for hooks
 
 package Map::Metro::Emitter {
 

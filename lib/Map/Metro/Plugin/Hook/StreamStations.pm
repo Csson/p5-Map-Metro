@@ -3,6 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
+# PODCLASSNAME
+# ABSTRACT: Prints stations as they are parsed
 
 package Map::Metro::Plugin::Hook::StreamStations {
 

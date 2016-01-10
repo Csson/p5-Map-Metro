@@ -3,7 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Exception::LineIdContainsIllegalCharacter
+# ABSTRACT: LineIdContainsIllegalCharacter
+# PODCLASSNAME
 
 class Map::Metro::Exception::LineIdContainsIllegalCharacter with Map::Metro::Exception using Moose {
 

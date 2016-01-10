@@ -3,8 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Graph::Transfer
-# ABSTRACT: What is a transfer?
+# PODCLASSNAME
+# ABSTRACT: Moving between two stations without a connection between them
 
 class Map::Metro::Graph::Transfer using Moose {
 

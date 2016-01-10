@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Graph
+# PODCLASSNAME
 # ABSTRACT: An entire graph
 
 class Map::Metro::Graph using Moose {

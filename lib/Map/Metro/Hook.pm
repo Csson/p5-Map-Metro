@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Hook
+# PODCLASSNAME
 # ABSTRACT: Hook into Map::Metro
 
 class Map::Metro::Hook using Moose {

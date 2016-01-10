@@ -4,7 +4,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Types
+# PODCLASSNAME
+# ABSTRACT: Type library for Map::Metro
 
 library  Map::Metro::Types
 

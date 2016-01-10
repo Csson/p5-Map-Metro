@@ -3,7 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Exception::LineIdDoesNotExistInLineList
+# ABSTRACT: LineIdDoesNotExistInLineList
+# PODCLASSNAME
 
 class Map::Metro::Exception::LineIdDoesNotExistInLineList with Map::Metro::Exception using Moose {
 

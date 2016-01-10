@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Shim
+# PODCLASSNAME
 # ABSTRACT: Easily load a map file
 
 class Map::Metro::Shim using Moose  {

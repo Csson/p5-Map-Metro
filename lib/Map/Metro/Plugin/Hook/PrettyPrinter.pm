@@ -3,7 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Plugin::Hook::PrettyPrinter
+# PODCLASSNAME
+# ABSTRACT: Prints a routing
 
 class Map::Metro::Plugin::Hook::PrettyPrinter using Moose {
 

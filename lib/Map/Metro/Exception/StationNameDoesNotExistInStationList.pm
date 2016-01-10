@@ -3,7 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Exception::StationNameDoesNotExistInStationList
+# ABSTRACT: StationNameDoesNotExistInStationList
+# PODCLASSNAME
 
 class Map::Metro::Exception::StationNameDoesNotExistInStationList with Map::Metro::Exception using Moose  {
 

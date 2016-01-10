@@ -3,8 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Graph::Route
-# ABSTRACT: What is a route?
+# PODCLASSNAME
+# ABSTRACT: A sequence of line stations
 
 class Map::Metro::Graph::Route using Moose {
 

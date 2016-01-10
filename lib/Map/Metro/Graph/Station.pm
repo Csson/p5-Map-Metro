@@ -3,8 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Graph::Station
-# ABSTRACT: What is a station?
+# PODCLASSNAME
+# ABSTRACT: Information about a station
 
 class Map::Metro::Graph::Station using Moose {
 
