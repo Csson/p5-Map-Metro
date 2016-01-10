@@ -3,7 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Cmd::Stations
+# PODCLASSNAME
+# ABSTRACT: Show all stations in a map
 
 class Map::Metro::Cmd::Stations extends Map::Metro::Cmd {
 

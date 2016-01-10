@@ -3,7 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Cmd::Lines
+# PODCLASSNAME
+# ABSTRACT: Display lines in the map
 
 class Map::Metro::Cmd::Lines extends Map::Metro::Cmd {
 

@@ -3,7 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Cmd::Graphviz
+# PODCLASSNAME
+# ABSTRACT: Make a visualization using GraphViz2
 
 class Map::Metro::Cmd::Graphviz extends Map::Metro::Cmd {
 

@@ -3,7 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Cmd::Available
+# PODCLASSNAME
+# ABSTRACT: Display installed maps
 
 class Map::Metro::Cmd::Available extends Map::Metro::Cmd {
 

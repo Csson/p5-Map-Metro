@@ -3,7 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Cmd::Route
+# PODCLASSNAME
+# ABSTRACT: Search in a map
 
 class Map::Metro::Cmd::Route extends Map::Metro::Cmd {
 

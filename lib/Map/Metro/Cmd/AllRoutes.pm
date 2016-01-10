@@ -3,7 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Cmd::AllRoutes
+# PODCLASSNAME
+# ABSTRACT: Display routes for all pairs of stations
 
 class Map::Metro::Cmd::AllRoutes extends Map::Metro::Cmd {
 

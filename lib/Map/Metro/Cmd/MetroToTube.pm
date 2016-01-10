@@ -3,7 +3,8 @@ use strict;
 use warnings;
 
 # VERSION
-# PODNAME: Map::Metro::Cmd::MetroToTube
+# PODCLASSNAME
+# ABSTRACT: Convert a Map::Metro map into a Map::Tube map
 
 class Map::Metro::Cmd::MetroToTube extends Map::Metro::Cmd {
 
