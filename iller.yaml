@@ -25,6 +25,7 @@ prereqs:
      - MooseX::AttributeDocumented
      - MooseX::SetOnce
      - Moops
+     - MoopsX::UsingMoose
      - namespace::clean
      - Path::Tiny
      - String::Trim
@@ -47,14 +48,17 @@ plugins:
   - +extend_plugin: MetaNoIndex
     namespace: Map::Metro::Standard
 
-  - +add_plugin: TravisYML
-    +before: Git::Tag
-    perl_version: 5.16
+  - +extend_plugin: TravisYML
     post_before_install: cpanm File::Slurp --verbose --force && sudo apt-get update -qq && sudo apt-get install -y graphviz
     pre_install: cpanm GraphViz2
+    perl_version: 5.16 5.18 5.20 5.22
 
 ---
 doctype: weaver
 
 plugins:
   - +config: Author::CSSON
+    splint: 1
+
+  - +extend_plugin: Splint
+    type_libraries: Map::Metro::Types=Station Types::Standard=Int,Str
