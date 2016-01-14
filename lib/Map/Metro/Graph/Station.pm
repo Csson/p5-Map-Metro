@@ -14,16 +14,19 @@ class Map::Metro::Graph::Station {
         is => 'ro',
         isa => Int,
         required => 1,
+        documentation => 'Internal identification',
     );
 
     has name => (
         is => 'rw',
         isa => Str,
         required => 1,
+        documentation => q{The station's name, with any diacritics removed.},
     );
     has original_name => (
         is => 'ro',
         isa => Maybe[Str],
+        documentation => q{The station's name as given in the map file.},
     );
     has search_names => (
         is => 'rw',
@@ -33,7 +36,8 @@ class Map::Metro::Graph::Station {
         handles => {
             add_search_name => 'push',
             all_search_names => 'elements',
-        }
+        },
+        documentation => q{All search names for the station given in the map file.},
     );
     has alternative_names => (
         is => 'rw',
@@ -43,7 +47,8 @@ class Map::Metro::Graph::Station {
         handles => {
             add_alternative_name => 'push',
             all_alternative_names => 'elements',
-        }
+        },
+        documentation => q{All alternative names for the station given in the map file.},
     );
 
     has lines => (
@@ -58,6 +63,7 @@ class Map::Metro::Graph::Station {
             find_line => 'first',
             filter_lines => 'grep',
         },
+        documentation => q{All lines passing through this station.},
     );
     has connecting_stations => (
         is => 'ro',
@@ -70,11 +76,16 @@ class Map::Metro::Graph::Station {
             all_connecting_stations => 'elements',
             find_connecting_station => 'first',
         },
+        documentation => q{All stations one can travel to from this station without passing another station.},
     );
     has do_undiacritic => (
         is => 'rw',
         isa => Bool,
         default => 1,
+        documentation_alts => {
+            0 => q{Do not remove diacritics from station name.},
+            1 => q{Do remove diacritics from station name.},
+        },
     );
 
     around BUILDARGS($orig: $class, %args) {
@@ -153,9 +164,15 @@ __END__
 
 =pod
 
+:splint classname Map::Metro::Graph::Station
+
 =head1 DESCRIPTION
 
 Stations represents actual stations, and are used both during the graph building phase and the navigational phase.
+
+=head1 ATTRIBUTES
+
+:splint attributes
 
 =head1 METHODS
 
