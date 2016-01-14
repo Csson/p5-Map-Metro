@@ -9,16 +9,29 @@ Revision history for Map-Metro
 
  [Enhancements]
 
- [Meta]
-
  [New Features]
 
- [Requirements]
- - Switched from List::AllUtils to List::Util (ETHER++)
+ [Other Changes]
 
- [Revision]
+ [Requirements]
 
  [Testing]
+
+0.2300 2016-01-14T23:43:08Z UTC
+ [Documentation]
+ - Set abstract for more classes.
+ - Specify type libraries for [Splint] in weaver.ini so that they are
+   correctly linked.
+
+ [Enhancements]
+ - Make Map::Metro::Standard::Moops inherit from MoopsX::UsingMoose (and
+   remove 'using Moose' from every class).
+ - Don't inherit other type libraries in Map::Metro::Types, import them in
+   Map::Metro::Standard::Moops.
+
+0.2208 2015-10-27T11:51:53Z UTC
+ [Requirements]
+ - Switched from List::AllUtils to List::Util (ETHER++)
 
 0.2207 2015-03-03T11:03:16Z CET
  [Documentation]
