@@ -56,6 +56,7 @@ class Map::Metro::Graph {
     );
     has emit => (
         is => 'ro',
+        isa => Object,
         init_arg => undef,
         lazy => 1,
         default => sub { Map::Metro::Emitter->new(wanted_hook_plugins => [shift->all_wanted_hook_plugins]) },
@@ -627,7 +628,7 @@ class Map::Metro::Graph {
         return $routing;
     }
 
-    method all_pairs {
+    method all_pairs(--> ArrayRef[Routing] but assumed does doc('Routings between every pair of Stations')) {
 
         my $routings = [];
         $self->calculate_shortest_paths;
@@ -682,29 +683,17 @@ __END__
 This class is at the core of L<Map::Metro>. After a map has been parsed the returned instance of this class contains
 the entire network (graph) in a hierarchy of objects.
 
-=head1 Methods
+=head1 ATTRIBUTES
+
+:splint attributes
+
+=head1 METHODS
 
 :splint method routing_for
 
-=head3 routing_for($from, $to)
+:splint method all_pairs
 
-B<C<$from>>
-
-Mandatory. The starting station; can be either a station id (integer), or a station name (string, case insensitive). Must be of the same type as B<C<$to>>.
-
-B<C<$to>>
-
-Mandatory. The finishing station; can be either a station id (integer), or a station name (string, case insensitive). Must be of the same type as B<C<$from>>.
-
-Returns a L<Map::Metro::Graph::Routing> object.
-
-
-=head3 all_routes()
-
-Returns an array reference of L<Map::Metro::Graph::Routing> objects containing every unique route in the network.
-
-
-=head3 asps()
+=head2 asps
 
 This class uses L<Graph> under the hood. This method returns the L<Graph/"All-Pairs Shortest Paths (APSP)"> object returned
 by the APSP_Floyd_Warshall() method. If you prefer to traverse the graph via this object, observe that the vertices is identified
@@ -712,7 +701,7 @@ by their C<line_station_id> in L<Map::Metro::Graph::LineStation>.
 
 Call this method after creation if you prefer long startup times but faster searches.
 
-=head3 full_graph()
+=head2 full_graph
 
 This returns the complete L<Graph> object created from parsing the map.
 
