@@ -49,8 +49,13 @@ plugins:
     namespace: Map::Metro::Standard
 
   - +extend_plugin: TravisYML
-    post_before_install: cpanm File::Slurp --verbose --force && sudo apt-get update -qq && sudo apt-get install -y graphviz
-    pre_install: cpanm GraphViz2
+    post_before_install:
+     - cpanm Test::Stream --verbose
+     - cpanm File::Slurp --verbose --force
+     - sudo apt-get update -qq
+     - sudo apt-get install -y graphviz
+    pre_install: 
+     - cpanm GraphViz2
     perl_version: 5.16 5.18 5.20 5.22
 
 ---
