@@ -37,16 +37,11 @@ prereqs:
 plugins:
   - +config: Author::CSSON
 
-  - +remove_plugin: Test::Version
-  
-  - +extend_plugin: MetaNoIndex
-    namespace: Map::Metro::Standard
-
-  - +extend_plugin: TravisYML
-    pre_install:
-     - "dzil listdeps   --author  | grep -vP '[^\\w:]'"
-     - cpanm Graph -v
-
+#  - +extend_plugin: TravisYML
+#    pre_install:
+#     - "dzil listdeps   --author  | grep -vP '[^\\w:]'"
+#     - cpanm Graph -v
+#
   - +plugin: Test::CleanNamespaces
     skip:
      - ^Map::Metro$
