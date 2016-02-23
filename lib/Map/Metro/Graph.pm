@@ -321,7 +321,7 @@ around add_segment => sub {
     $text = trim $text;
     my($linestring, $start, $end, $option_string) = split /\|/ => $text;
     my @line_ids_with_dir = split m/,/ => $linestring;
-    my @clean_line_ids = map { my $clean = $_ =~ s{[^a-z0-9]}{}gir; $clean } @line_ids_with_dir;
+    my @clean_line_ids = map { (my $clean = $_) =~ s{[^a-z0-9]}{}gi; $clean } @line_ids_with_dir;
 
     my $options = defined $option_string ? $self->make_options($option_string, keys => [qw/dir/]) : {};
 
