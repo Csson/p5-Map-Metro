@@ -138,7 +138,7 @@
             "Types::Standard" : "1.000005",
             "XML::Writer" : "0",
             "namespace::autoclean" : "0.22",
-            "perl" : "5.016000"
+            "perl" : "5.010000"
          },
          "suggests" : {
             "GraphViz2" : "0"

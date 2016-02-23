@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use 5.016000;
+use 5.010000;
 
 use ExtUtils::MakeMaker;
 
@@ -14,7 +14,7 @@ my %WriteMakefileArgs = (
   },
   "DISTNAME" => "Map-Metro",
   "LICENSE" => "perl",
-  "MIN_PERL_VERSION" => "5.016000",
+  "MIN_PERL_VERSION" => "5.010000",
   "NAME" => "Map::Metro",
   "PREREQ_PM" => {
     "Eponymous::Hash" => 0,

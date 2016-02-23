@@ -8,7 +8,6 @@ Map::Metro - Public transport graphing
     <a href="https://travis-ci.org/Csson/p5-Map-Metro"><img src="https://api.travis-ci.org/Csson/p5-Map-Metro.svg?branch=master" alt="Travis status" /></a>
     <a href="http://cpants.cpanauthors.org/dist/Map-Metro-0.2400"><img src="https://badgedepot.code301.com/badge/kwalitee/Map-Metro/0.2400" alt="Distribution kwalitee" /></a>
     <a href="http://matrix.cpantesters.org/?dist=Map-Metro%200.2400"><img src="https://badgedepot.code301.com/badge/cpantesters/Map-Metro/0.2400" alt="CPAN Testers result" /></a>
-    <img src="https://img.shields.io/badge/coverage-61.6%-red.svg" alt="coverage 61.6%" />
     </p>
 </div>
 
