@@ -50,7 +50,7 @@ plugins:
      - sudo apt-get update -qq
      - sudo apt-get install -y graphviz
     pre_install: 
-     - cpanm GraphViz2
+     - cpanm GraphViz2 -v
 
   - +plugin: Test::CleanNamespaces
     skip:
