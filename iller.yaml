@@ -43,6 +43,7 @@ plugins:
     namespace: Map::Metro::Standard
 
   - +extend_plugin: TravisYML
+    sudo: 1
     post_before_install:
      - cpanm Test::Stream --verbose --force
      - cpanm File::Slurp --verbose --force
