@@ -49,7 +49,7 @@ sub BUILD {
 
     PLUGIN:
     foreach my $pluginname ($self->found_plugins) {
-        my $actual = $pluginname =~ s{^Map::Metro::Plugin::Hook::}{}r;
+        (my $actual = $pluginname) =~ s{^Map::Metro::Plugin::Hook::}{};
         next PLUGIN if none { $_ eq $actual } $self->all_wanted_hook_plugins;
 
         my $plugin = $pluginname->new;

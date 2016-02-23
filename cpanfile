@@ -1,9 +1,9 @@
-# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-23 13:58:21 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-23 19:08:19 UTC.
 
 on runtime => sub {
     requires 'Eponymous::Hash' => '0';
     requires 'File::ShareDir' => '1.102';
-    requires 'Graph' => '0';
+    requires 'Graph' => '0.9704';
     requires 'IO::Interactive' => '0';
     requires 'List::Compare' => '0';
     requires 'List::Util' => '1.42';
@@ -14,18 +14,17 @@ on runtime => sub {
     requires 'MooseX::AttributeShortcuts' => '0.028';
     requires 'MooseX::SetOnce' => '0';
     requires 'Path::Tiny' => '0.072';
+    requires 'Safe::Isa' => '1.000005';
     requires 'String::Trim' => '0';
     requires 'Term::Size::Any' => '0';
     requires 'Text::Undiacritic' => '0';
     requires 'Throwable::SugarFactory' => '0';
+    requires 'Try::Tiny' => '0.24';
     requires 'Types::Path::Tiny' => '0.005';
     requires 'Types::Standard' => '1.000005';
     requires 'XML::Writer' => '0';
     requires 'namespace::autoclean' => '0.22';
-    requires 'perl' => '5.016000';
-};
-on runtime => sub {
-    recommends 'GraphViz2' => '0';
+    requires 'perl' => '5.010000';
 };
 on test => sub {
     requires 'ExtUtils::MakeMaker' => '0';
@@ -118,6 +117,6 @@ on develop => sub {
     requires 'Test::Warnings' => '0.026';
 };
 on develop => sub {
-    suggests 'Dist::Iller' => '0.1407';
+    suggests 'Dist::Iller' => '0.1408';
     suggests 'Dist::Iller::Config::Author::CSSON' => '0.0309';
 };

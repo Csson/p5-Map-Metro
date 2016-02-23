@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use 5.016000;
+use 5.010000;
 
 use ExtUtils::MakeMaker;
 
@@ -14,12 +14,12 @@ my %WriteMakefileArgs = (
   },
   "DISTNAME" => "Map-Metro",
   "LICENSE" => "perl",
-  "MIN_PERL_VERSION" => "5.016000",
+  "MIN_PERL_VERSION" => "5.010000",
   "NAME" => "Map::Metro",
   "PREREQ_PM" => {
     "Eponymous::Hash" => 0,
     "File::ShareDir" => "1.102",
-    "Graph" => 0,
+    "Graph" => "0.9704",
     "IO::Interactive" => 0,
     "List::Compare" => 0,
     "List::Util" => "1.42",
@@ -30,10 +30,12 @@ my %WriteMakefileArgs = (
     "MooseX::AttributeShortcuts" => "0.028",
     "MooseX::SetOnce" => 0,
     "Path::Tiny" => "0.072",
+    "Safe::Isa" => "1.000005",
     "String::Trim" => 0,
     "Term::Size::Any" => 0,
     "Text::Undiacritic" => 0,
     "Throwable::SugarFactory" => 0,
+    "Try::Tiny" => "0.24",
     "Types::Path::Tiny" => "0.005",
     "Types::Standard" => "1.000005",
     "XML::Writer" => 0,
@@ -58,7 +60,7 @@ my %FallbackPrereqs = (
   "ExtUtils::MakeMaker" => 0,
   "File::ShareDir" => "1.102",
   "File::Spec" => 0,
-  "Graph" => 0,
+  "Graph" => "0.9704",
   "IO::Handle" => 0,
   "IO::Interactive" => 0,
   "IPC::Open3" => 0,
@@ -71,11 +73,13 @@ my %FallbackPrereqs = (
   "MooseX::AttributeShortcuts" => "0.028",
   "MooseX::SetOnce" => 0,
   "Path::Tiny" => "0.072",
+  "Safe::Isa" => "1.000005",
   "String::Trim" => 0,
   "Term::Size::Any" => 0,
   "Test::More" => "0.96",
   "Text::Undiacritic" => 0,
   "Throwable::SugarFactory" => 0,
+  "Try::Tiny" => "0.24",
   "Types::Path::Tiny" => "0.005",
   "Types::Standard" => "1.000005",
   "XML::Writer" => 0,

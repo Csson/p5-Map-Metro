@@ -8,9 +8,7 @@ package Map::Metro::Graph;
 # AUTHORITY
 our $VERSION = '0.2301';
 
-BEGIN {
-    *HAS_FC = ($] >= 5.016 ? sub() { 1 } : sub() { 0 });
-}
+use if $] >= 5.016000, feature => 'fc';
 
 use Map::Metro::Elk;
 use Types::Standard qw/ArrayRef Bool Int Maybe Object Str/;
@@ -211,7 +209,13 @@ sub calculate_shortest_paths { shift->full_graph->APSP_Floyd_Warshall }
 
 sub nocase {
     my $text = shift;
-    return HAS_FC ? CORE::fc $text : lc $text;
+    if($] >= 5.016000) {
+        $text = fc $text;
+    }
+    else {
+        $text = lc $text;
+    }
+    return $text;
 }
 
 sub parse {
@@ -317,7 +321,7 @@ around add_segment => sub {
     $text = trim $text;
     my($linestring, $start, $end, $option_string) = split /\|/ => $text;
     my @line_ids_with_dir = split m/,/ => $linestring;
-    my @clean_line_ids = map { my $clean = $_ =~ s{[^a-z0-9]}{}gir; $clean } @line_ids_with_dir;
+    my @clean_line_ids = map { (my $clean = $_) =~ s{[^a-z0-9]}{}gi; $clean } @line_ids_with_dir;
 
     my $options = defined $option_string ? $self->make_options($option_string, keys => [qw/dir/]) : {};
 

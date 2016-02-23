@@ -4,7 +4,7 @@
       "Erik Carlsson <info@code301.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.043, Dist::Iller version 0.1407, CPAN::Meta::Converter version 2.143240",
+   "generated_by" : "Dist::Zilla version 5.043, Dist::Iller version 0.1408, CPAN::Meta::Converter version 2.143240",
    "license" : [
       "perl_5"
    ],
@@ -21,9 +21,6 @@
          "share",
          "t",
          "xt"
-      ],
-      "namespace" : [
-         "Map::Metro::Standard"
       ]
    },
    "prereqs" : {
@@ -111,18 +108,15 @@
             "Test::Warnings" : "0.026"
          },
          "suggests" : {
-            "Dist::Iller" : "0.1407",
+            "Dist::Iller" : "0.1408",
             "Dist::Iller::Config::Author::CSSON" : "0.0309"
          }
       },
       "runtime" : {
-         "recommends" : {
-            "GraphViz2" : "0"
-         },
          "requires" : {
             "Eponymous::Hash" : "0",
             "File::ShareDir" : "1.102",
-            "Graph" : "0",
+            "Graph" : "0.9704",
             "IO::Interactive" : "0",
             "List::Compare" : "0",
             "List::Util" : "1.42",
@@ -133,15 +127,17 @@
             "MooseX::AttributeShortcuts" : "0.028",
             "MooseX::SetOnce" : "0",
             "Path::Tiny" : "0.072",
+            "Safe::Isa" : "1.000005",
             "String::Trim" : "0",
             "Term::Size::Any" : "0",
             "Text::Undiacritic" : "0",
             "Throwable::SugarFactory" : "0",
+            "Try::Tiny" : "0.24",
             "Types::Path::Tiny" : "0.005",
             "Types::Standard" : "1.000005",
             "XML::Writer" : "0",
             "namespace::autoclean" : "0.22",
-            "perl" : "5.016000"
+            "perl" : "5.010000"
          }
       },
       "test" : {

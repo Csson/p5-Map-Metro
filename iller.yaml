@@ -4,17 +4,15 @@ doctype: dist
 header:
   name: Map-Metro
 
+add_prereqs_as_authordeps: 1
+
 prereqs:
   runtime:
-    suggests:
-     - perl: 5.016000
-    recommends:
-     - GraphViz2
     requires:
      - perl: 5.010000
      - Eponymous::Hash
      - File::ShareDir
-     - Graph
+     - Graph: 0.9704
      - IO::Interactive
      - List::Util
      - List::Compare
@@ -26,10 +24,12 @@ prereqs:
      - MooseX::SetOnce
      - namespace::autoclean
      - Path::Tiny
+     - Safe::Isa
      - String::Trim
      - Term::Size::Any
      - Text::Undiacritic
      - Throwable::SugarFactory
+     - Try::Tiny
      - Types::Path::Tiny
      - Types::Standard
      - XML::Writer
@@ -37,19 +37,12 @@ prereqs:
 plugins:
   - +config: Author::CSSON
 
+#  - +extend_plugin: TravisYML
+#    pre_install:
+#     - "dzil listdeps   --author  | grep -vP '[^\\w:]'"
+#     - cpanm Graph -v
+#
   - +remove_plugin: Test::Version
-  
-  - +extend_plugin: MetaNoIndex
-    namespace: Map::Metro::Standard
-
-  - +extend_plugin: TravisYML
-    post_before_install:
-     - cpanm Test::Stream --verbose --force
-     - cpanm File::Slurp --verbose --force
-     - sudo apt-get update -qq
-     - sudo apt-get install -y graphviz
-    pre_install: 
-     - cpanm GraphViz2
 
   - +plugin: Test::CleanNamespaces
     skip:
