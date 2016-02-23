@@ -4,6 +4,8 @@ doctype: dist
 header:
   name: Map-Metro
 
+add_prereqs_as_authordeps: 1
+
 prereqs:
   runtime:
     requires:

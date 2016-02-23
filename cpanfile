@@ -1,4 +1,4 @@
-# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-23 17:15:52 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-23 19:08:19 UTC.
 
 on runtime => sub {
     requires 'Eponymous::Hash' => '0';
@@ -117,6 +117,6 @@ on develop => sub {
     requires 'Test::Warnings' => '0.026';
 };
 on develop => sub {
-    suggests 'Dist::Iller' => '0.1407';
+    suggests 'Dist::Iller' => '0.1408';
     suggests 'Dist::Iller::Config::Author::CSSON' => '0.0309';
 };
