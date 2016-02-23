@@ -1,4 +1,4 @@
-# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-23 16:48:19 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-23 17:15:52 UTC.
 
 on runtime => sub {
     requires 'Eponymous::Hash' => '0';
@@ -90,7 +90,6 @@ on develop => sub {
     requires 'Dist::Zilla::Plugin::Test::Kwalitee::Extra' => 'v0.2.1';
     requires 'Dist::Zilla::Plugin::Test::NoTabs' => '0.15';
     requires 'Dist::Zilla::Plugin::Test::ReportPrereqs' => '0.021';
-    requires 'Dist::Zilla::Plugin::Test::Version' => '1.05';
     requires 'Dist::Zilla::Plugin::TestRelease' => '0';
     requires 'Dist::Zilla::Plugin::TravisYML' => '1.15';
     requires 'Dist::Zilla::Plugin::UploadToCPAN' => '0';
@@ -115,7 +114,6 @@ on develop => sub {
     requires 'Test::More' => '0.88';
     requires 'Test::NoTabs' => '1.4';
     requires 'Test::Pod' => '1.41';
-    requires 'Test::Version' => '1';
     requires 'Test::Warnings' => '0.026';
 };
 on develop => sub {

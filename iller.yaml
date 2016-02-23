@@ -40,6 +40,8 @@ plugins:
 #     - "dzil listdeps   --author  | grep -vP '[^\\w:]'"
 #     - cpanm Graph -v
 #
+  - +remove_plugin: Test::Version
+
   - +plugin: Test::CleanNamespaces
     skip:
      - ^Map::Metro$
