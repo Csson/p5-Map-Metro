@@ -6,17 +6,17 @@ header:
 
 prereqs:
   runtime:
+    suggests:
+     - perl: 5.016000
     recommends:
      - GraphViz2
     requires:
-     - perl: 5.016000
+     - perl: 5.010000
      - Eponymous::Hash
      - File::ShareDir
      - Graph
      - IO::Interactive
-     - Kavorka
-     - Kavorka::TraitFor::Parameter::doc
-     - List::Util: 1.33
+     - List::Util
      - List::Compare
      - Module::Pluggable
      - Moose
@@ -24,18 +24,12 @@ prereqs:
      - MooseX::AttributeShortcuts
      - MooseX::AttributeDocumented
      - MooseX::SetOnce
-     - Moops
-     - MoopsX::UsingMoose
-     - namespace::clean
+     - namespace::autoclean
      - Path::Tiny
      - String::Trim
-     - Sub::Exporter
-     - Syntax::Collector
      - Term::Size::Any
      - Text::Undiacritic
-     - Throwable::X
-     - true
-     - Type::Tiny::Enum
+     - Throwable::SugarFactory
      - Types::Path::Tiny
      - Types::Standard
      - XML::Writer
@@ -58,6 +52,13 @@ plugins:
      - cpanm GraphViz2
     perl_version: 5.16 5.18 5.20 5.22
 
+  - +plugin: Test::CleanNamespaces
+    skip:
+     - ^Map::Metro$
+     - ^Map::Metro::Cmd$
+     - ^Map::Metro::Emitter$
+     - ^Map::Metro::Exceptions$
+
 ---
 doctype: weaver
 
@@ -67,3 +68,12 @@ plugins:
 
   - +extend_plugin: Splint
     type_libraries: Map::Metro::Types=Station Types::Standard=Int,Str
+
+---
+doctype: cpanfile
+
+---
+doctype: gitignore
+config: Author::CSSON
+always:
+ - /Map-Metro-*
