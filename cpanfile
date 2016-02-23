@@ -1,9 +1,9 @@
-# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-23 13:58:21 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-23 14:24:11 UTC.
 
 on runtime => sub {
     requires 'Eponymous::Hash' => '0';
     requires 'File::ShareDir' => '1.102';
-    requires 'Graph' => '0';
+    requires 'Graph' => '0.9704';
     requires 'IO::Interactive' => '0';
     requires 'List::Compare' => '0';
     requires 'List::Util' => '1.42';

@@ -14,7 +14,7 @@ prereqs:
      - perl: 5.010000
      - Eponymous::Hash
      - File::ShareDir
-     - Graph
+     - Graph: 0.9704
      - IO::Interactive
      - List::Util
      - List::Compare
