@@ -207,10 +207,10 @@ sub calculate_shortest_paths { shift->full_graph->APSP_Floyd_Warshall }
 
 sub nocase {
     my $text = shift;
-    try {
-        $text = CORE::fc $text;
+    if($] >= 5.016000) {
+        $text = CORE::fc($text);
     }
-    catch {
+    else {
         $text = lc $text;
     }
     return $text;
