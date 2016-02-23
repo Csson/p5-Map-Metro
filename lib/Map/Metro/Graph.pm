@@ -8,7 +8,7 @@ package Map::Metro::Graph;
 # AUTHORITY
 our $VERSION = '0.2301';
 
-use feature ':5.16' if $] >= 5.016000;
+use if $] >= 5.016000, feature => 'fc';
 
 use Map::Metro::Elk;
 use Types::Standard qw/ArrayRef Bool Int Maybe Object Str/;
