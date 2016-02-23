@@ -1,4 +1,4 @@
-# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-23 14:24:11 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-23 14:55:18 UTC.
 
 on runtime => sub {
     requires 'Eponymous::Hash' => '0';
@@ -25,7 +25,7 @@ on runtime => sub {
     requires 'perl' => '5.016000';
 };
 on runtime => sub {
-    recommends 'GraphViz2' => '0';
+    suggests 'GraphViz2' => '0';
 };
 on test => sub {
     requires 'ExtUtils::MakeMaker' => '0';

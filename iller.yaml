@@ -8,7 +8,6 @@ prereqs:
   runtime:
     suggests:
      - perl: 5.016000
-    recommends:
      - GraphViz2
     requires:
      - perl: 5.010000

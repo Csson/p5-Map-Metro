@@ -116,9 +116,6 @@
          }
       },
       "runtime" : {
-         "recommends" : {
-            "GraphViz2" : "0"
-         },
          "requires" : {
             "Eponymous::Hash" : "0",
             "File::ShareDir" : "1.102",
@@ -142,6 +139,9 @@
             "XML::Writer" : "0",
             "namespace::autoclean" : "0.22",
             "perl" : "5.016000"
+         },
+         "suggests" : {
+            "GraphViz2" : "0"
          }
       },
       "test" : {
