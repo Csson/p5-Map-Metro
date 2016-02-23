@@ -41,15 +41,9 @@ plugins:
   - +extend_plugin: MetaNoIndex
     namespace: Map::Metro::Standard
 
-#  - +extend_plugin: TravisYML
-#    sudo: 1
-#    post_before_install:
-#     - cpanm Test::Stream --verbose --force
-#     - cpanm File::Slurp --verbose --force
-#     - sudo apt-get update -qq
-#     - sudo apt-get install -y graphviz
-#    #pre_install: 
-#    # - cpanm GraphViz2 -v
+  - +extend_plugin: TravisYML
+    pre_install:
+     - cpanm Graph -v
 
   - +plugin: Test::CleanNamespaces
     skip:
