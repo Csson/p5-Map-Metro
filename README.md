@@ -2,11 +2,19 @@
 
 Map::Metro - Public transport graphing
 
-![Requires Perl 5.16+](https://img.shields.io/badge/perl-5.16+-brightgreen.svg) [![Travis status](https://api.travis-ci.org/Csson/p5-Map-Metro.svg?branch=master)](https://travis-ci.org/Csson/p5-Map-Metro)
+<div>
+    <p>
+    <img src="https://img.shields.io/badge/perl-5.16+-blue.svg" alt="Requires Perl 5.16+" />
+    <a href="https://travis-ci.org/Csson/p5-Map-Metro"><img src="https://api.travis-ci.org/Csson/p5-Map-Metro.svg?branch=master" alt="Travis status" /></a>
+    <a href="http://cpants.cpanauthors.org/dist/Map-Metro-0.2301"><img src="https://badgedepot.code301.com/badge/kwalitee/Map-Metro/0.2301" alt="Distribution kwalitee" /></a>
+    <a href="http://matrix.cpantesters.org/?dist=Map-Metro%200.2301"><img src="https://badgedepot.code301.com/badge/cpantesters/Map-Metro/0.2301" alt="CPAN Testers result" /></a>
+    <img src="https://img.shields.io/badge/coverage-61.6%-red.svg" alt="coverage 61.6%" />
+    </p>
+</div>
 
 # VERSION
 
-Version 0.2300, released 2016-01-14.
+Version 0.2301, released 2016-02-23.
 
 # SYNOPSIS
 
@@ -140,7 +148,9 @@ All [Routes](https://metacpan.org/pod/Map::Metro::Graph::Route) between the two 
 
 # PERFORMANCE
 
-Since 0.2200 performance is less than an issue than it used to be, but it can still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see [asps](https://metacpan.org/pod/Map::Metro::Graph#asps).
+Since 0.2200 performance is less than an issue than it used to be, but it could still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see [asps](https://metacpan.org/pod/Map::Metro::Graph#asps).
+
+It is also possible to run the backend to some commands in a server, see [App::Map::Metro](https://metacpan.org/pod/App::Map::Metro).
 
 # STATUS
 
@@ -155,7 +165,8 @@ For all maps in the Map::Metro::Plugin::Map namespace (unless noted):
 
 # COMPATIBILITY
 
-Currently requires Perl 5.16.
+Until version 0.2300, Map::Metro required Perl 5.16. Currently, if it is running under 5.16 or greater, it will use `fc` (instead of `lc`) for some string comparisons. Depending on the map definition
+this could lead to maps not working properly on pre-5.16 Perls.
 
 # Map::Metro or Map::Tube?
 
