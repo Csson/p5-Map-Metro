@@ -8,10 +8,6 @@ package Map::Metro::Graph;
 # AUTHORITY
 our $VERSION = '0.2301';
 
-BEGIN {
-    *HAS_FC = ($] >= 5.016 ? sub() { 1 } : sub() { 0 });
-}
-
 use Map::Metro::Elk;
 use Types::Standard qw/ArrayRef Bool Int Maybe Object Str/;
 use Map::Metro::Types qw/Connection Line LineStation Routing Segment Station Step Transfer/;
@@ -211,7 +207,13 @@ sub calculate_shortest_paths { shift->full_graph->APSP_Floyd_Warshall }
 
 sub nocase {
     my $text = shift;
-    return HAS_FC ? CORE::fc $text : lc $text;
+    try {
+        $text = CORE::fc $text;
+    }
+    catch {
+        $text = lc $text;
+    }
+    return $text;
 }
 
 sub parse {
