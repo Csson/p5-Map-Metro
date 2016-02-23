@@ -24,10 +24,12 @@ prereqs:
      - MooseX::SetOnce
      - namespace::autoclean
      - Path::Tiny
+     - Safe::Isa
      - String::Trim
      - Term::Size::Any
      - Text::Undiacritic
      - Throwable::SugarFactory
+     - Try::Tiny
      - Types::Path::Tiny
      - Types::Standard
      - XML::Writer
@@ -42,7 +44,7 @@ plugins:
 
   - +extend_plugin: TravisYML
     pre_install:
-     - "dzil authordeps          --missing | grep -vP '[^\\w:]'"
+     - "dzil listdeps   --author --missing | grep -vP '[^\\w:]'"
      - cpanm Graph -v
 
   - +plugin: Test::CleanNamespaces
