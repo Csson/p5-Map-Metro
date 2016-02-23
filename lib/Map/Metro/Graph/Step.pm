@@ -1,74 +1,91 @@
-use Map::Metro::Standard::Moops;
+use 5.10.0;
 use strict;
 use warnings;
 
-# VERSION
-# PODCLASSNAME
+package Map::Metro::Graph::Step;
+
 # ABSTRACT: The movement from one station to the next in a route
+# AUTHORITY
+our $VERSION = '0.2301';
 
-class Map::Metro::Graph::Step {
+use Map::Metro::Elk;
+use Types::Standard qw/Maybe Int/;
+use Map::Metro::Types qw/LineStation Step/;
 
-    has origin_line_station => (
-        is => 'ro',
-        isa => LineStation,
-        required => 1,
+has origin_line_station => (
+    is => 'ro',
+    isa => LineStation,
+    required => 1,
+);
+has destination_line_station => (
+    is => 'ro',
+    isa => LineStation,
+    required => 1,
+);
+has previous_step => (
+    is => 'rw',
+    isa => Maybe[ Step ],
+    predicate => 1,
+);
+has next_step => (
+    is => 'rw',
+    isa => Maybe[ Step ],
+    predicate => 1,
+);
+has weight => (
+    is => 'ro',
+    isa => Int,
+    required => 1,
+    default => 1,
+);
+
+around BUILDARGS => sub {
+    my $orig = shift;
+    my $class = shift;
+    my %args = @_;
+
+    return $class->$orig(%args) if !exists $args{'from_connection'};
+
+    my $conn = $args{'from_connection'};
+    return if !defined $conn;
+
+    return $class->$orig(
+        origin_line_station => $conn->origin_line_station,
+        destination_line_station => $conn->destination_line_station,
+        weight => $conn->weight,
     );
-    has destination_line_station => (
-        is => 'ro',
-        isa => LineStation,
-        required => 1,
-    );
-    has previous_step => (
-        is => 'rw',
-        isa => Maybe[ Step ],
-        predicate => 1,
-    );
-    has next_step => (
-        is => 'rw',
-        isa => Maybe[ Step ],
-        predicate => 1,
-    );
-    has weight => (
-        is => 'ro',
-        isa => Int,
-        required => 1,
-        default => 1,
-    );
+};
 
-    around BUILDARGS($orig: $class, %args) {
-        return $class->$orig(%args) if !exists $args{'from_connection'};
+sub is_line_transfer {
+    my $self = shift;
 
-        my $conn = $args{'from_connection'};
-        return if !defined $conn;
-
-        return $class->$orig(
-            origin_line_station => $conn->origin_line_station,
-            destination_line_station => $conn->destination_line_station,
-            weight => $conn->weight,
-        );
-    }
-
-    method is_line_transfer {
-        return $self->origin_line_station->station->id == $self->destination_line_station->station->id;
-        return $self->origin_line_station->line->id ne $self->destination_line_station->line->id;
-    }
-    method is_station_transfer {
-        my $origin_station_line_ids = [ map { $_->id } $self->origin_line_station->station->all_lines ];
-        my $destination_station_line_ids = [ map { $_->id } $self->destination_line_station->station->all_lines ];
-
-        my $are_on_same_line = List::Compare->new($origin_station_line_ids, $destination_station_line_ids)->get_intersection;
-
-        return !$are_on_same_line;
-    }
-    method was_line_transfer {
-        return if !$self->has_previous_step;
-        return $self->previous_step->is_line_transfer;
-    }
-    method was_station_transfer {
-        return if !$self->has_previous_step;
-        return $self->previous_step->is_station_transfer;
-    }
+    return $self->origin_line_station->station->id == $self->destination_line_station->station->id;
+    return $self->origin_line_station->line->id ne $self->destination_line_station->line->id;
 }
+sub is_station_transfer {
+    my $self = shift;
+
+    my $origin_station_line_ids = [ map { $_->id } $self->origin_line_station->station->all_lines ];
+    my $destination_station_line_ids = [ map { $_->id } $self->destination_line_station->station->all_lines ];
+
+    my $are_on_same_line = List::Compare->new($origin_station_line_ids, $destination_station_line_ids)->get_intersection;
+
+    return !$are_on_same_line;
+}
+sub was_line_transfer {
+    my $self = shift;
+
+    return if !$self->has_previous_step;
+    return $self->previous_step->is_line_transfer;
+}
+sub was_station_transfer {
+    my $self = shift;
+
+    return if !$self->has_previous_step;
+    return $self->previous_step->is_station_transfer;
+}
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

@@ -1,46 +1,55 @@
-use Map::Metro::Standard::Moops;
+use 5.10.0;
 use strict;
 use warnings;
 
-# VERSION
-# PODCLASSNAME
+package Map::Metro::Graph::Line;
+
 # ABSTRACT: Meta information about a line
+# AUTHORITY
+our $VERSION = '0.2301';
 
-class Map::Metro::Graph::Line {
+use Map::Metro::Elk;
+use Types::Standard qw/Str Int/;
+use Map::Metro::Exceptions;
 
-    has id => (
-        is => 'ro',
-        isa => Str,
-        required => 1,
-    );
-    has name => (
-        is => 'ro',
-        isa => Str,
-        required => 1,
-    );
-    has description => (
-        is => 'ro',
-        isa => Str,
-        required => 1,
-    );
-    has color => (
-        is => 'rw',
-        isa => Str,
-        default => '#333333',
-    );
-    has width => (
-        is => 'rw',
-        isa => Int,
-        default => 3,
-    );
+has id => (
+    is => 'ro',
+    isa => Str,
+    required => 1,
+);
+has name => (
+    is => 'ro',
+    isa => Str,
+    required => 1,
+);
+has description => (
+    is => 'ro',
+    isa => Str,
+    required => 1,
+);
+has color => (
+    is => 'rw',
+    isa => Str,
+    default => '#333333',
+);
+has width => (
+    is => 'rw',
+    isa => Int,
+    default => 3,
+);
 
-    around BUILDARGS($orig: $self, %args) {
-        if($args{'id'} =~ m{([^a-z0-9])}i)  {
-            Map::Metro::Exception::LineIdContainsIllegalCharacter::LineIdContainsIllegalCharacter->throw(line_id => $args{'id'}, illegal_character => $_, ident => 'parser: line_id');
-        }
-        $self->$orig(%args);
+around BUILDARGS => sub {
+    my $orig = shift;
+    my $self = shift;
+    my %args = @_;
+
+    if($args{'id'} =~ m{([^a-z0-9])}i)  {
+        die lineid_contains_illegal_character line_id => $args{'id'}, illegal_character => $_;
     }
-}
+    $self->$orig(%args);
+};
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

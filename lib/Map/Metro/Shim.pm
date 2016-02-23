@@ -1,57 +1,67 @@
-use Map::Metro::Standard::Moops;
+use 5.10.0;
 use strict;
 use warnings;
 
-# VERSION
-# PODCLASSNAME
+package Map::Metro::Shim;
+
 # ABSTRACT: Easily load a map file
+# AUTHORITY
+our $VERSION = '0.2301';
 
-class Map::Metro::Shim {
+use Map::Metro::Elk;
+use Types::Standard qw/ArrayRef/;
+use Types::Path::Tiny qw/AbsFile/;
+use Map::Metro::Graph;
 
-    use Map::Metro::Graph;
-
-    has filepath => (
-        is => 'rw',
-        isa => AbsFile,
-        required => 1,
-        coerce => 1,
-    );
-    has hooks => (
-        is => 'ro',
-        isa => ArrayRef,
-        traits => ['Array'],
-        default => sub { [] },
-        handles => {
-            all_hooks => 'elements',
-        }
-    );
-
-    around BUILDARGS($orig: $class, @args) {
-        return $class->$orig(@args) if scalar @args == 2;
-        return $class->$orig(filepath => shift @args) if scalar @args == 1;
-
-        my %args;
-        if(scalar @args % 2 != 0) {
-            my $filepath = shift @args;
-            %args = @args;
-            $args{'filepath'} = $filepath;
-        }
-        else {
-            %args = @args;
-        }
-        if(exists $args{'hooks'} && !ArrayRef->check($args{'hooks'})) {
-            $args{'hooks'} = [$args{'hooks'}];
-        }
-
-        return $class->$orig(%args);
-    };
-
-    method parse(:$override_line_change_weight) {
-        return Map::Metro::Graph->new(filepath => $self->filepath,
-                                      wanted_hook_plugins => [$self->all_hooks],
-                                      defined $override_line_change_weight ? (override_line_change_weight => $override_line_change_weight) : (),
-                               )->parse;
+has filepath => (
+    is => 'rw',
+    isa => AbsFile,
+    required => 1,
+    coerce => 1,
+);
+has hooks => (
+    is => 'ro',
+    isa => ArrayRef,
+    traits => ['Array'],
+    default => sub { [] },
+    handles => {
+        all_hooks => 'elements',
     }
+);
+
+around BUILDARGS => sub {
+    my $orig = shift;
+    my $class = shift;
+    my @args = @_;
+
+    return $class->$orig(@args) if scalar @args == 2;
+    return $class->$orig(filepath => shift @args) if scalar @args == 1;
+
+    my %args;
+    if(scalar @args % 2 != 0) {
+        my $filepath = shift @args;
+        %args = @args;
+        $args{'filepath'} = $filepath;
+    }
+    else {
+        %args = @args;
+    }
+    if(exists $args{'hooks'} && !ArrayRef->check($args{'hooks'})) {
+        $args{'hooks'} = [$args{'hooks'}];
+    }
+
+    return $class->$orig(%args);
+};
+
+sub parse {
+    my $self = shift;
+    my %args = @_;
+    my $override_line_change_weight = exists $args{'override_line_change_weight'} ? $args{'override_line_change_weight'} : 0;
+
+    return Map::Metro::Graph->new(filepath => $self->filepath,
+                                  wanted_hook_plugins => [$self->all_hooks],
+                                  defined $override_line_change_weight ? (override_line_change_weight => $override_line_change_weight) : (),
+                           )->parse;
 }
 
 1;

@@ -1,30 +1,35 @@
-use Map::Metro::Standard::Moops;
+use 5.10.0;
 use strict;
 use warnings;
 
-# VERSION
-# PODCLASSNAME
+package Map::Metro::Cmd::AllRoutes;
+
 # ABSTRACT: Display routes for all pairs of stations
+# AUTHORITY
+our $VERSION = '0.2301';
 
-class Map::Metro::Cmd::AllRoutes extends Map::Metro::Cmd {
+use Map::Metro::Elk;
+use MooseX::App::Command;
+use Types::Standard qw/Str/;
+extends 'Map::Metro::Cmd';
 
-    use MooseX::App::Command;
+parameter cityname => (
+    is => 'rw',
+    isa => Str,
+    documentation => 'The name of the city',
+    required => 1,
+);
 
-    parameter cityname => (
-        is => 'rw',
-        isa => Str,
-        documentation => 'The name of the city',
-        required => 1,
-    );
+command_short_description 'Display routes for *all* pairs of stations (slow)';
 
-    command_short_description 'Display routes for *all* pairs of stations (slow)';
+sub run {
+    my $self = shift;
+    my %hooks = (hooks => ['PrettyPrinter']);
+    my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname, %hooks)->parse : Map::Metro::Shim->new($self->cityname, %hooks)->parse;
+    my $all = $graph->all_pairs;
 
-    method run {
-        my %hooks = (hooks => ['PrettyPrinter']);
-        my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname, %hooks)->parse : Map::Metro::Shim->new($self->cityname, %hooks)->parse;
-        my $all = $graph->all_pairs;
-
-    }
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;

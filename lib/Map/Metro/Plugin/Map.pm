@@ -1,19 +1,20 @@
-use 5.14.0;
+use 5.10.0;
 use strict;
 use warnings;
 
-# VERSION
-# PODCLASSNAME
-# ABSTRACT: How to make your own map
-
 package Map::Metro::Plugin::Map;
 
+# ABSTRACT: How to make your own map
+# AUTHORITY
+our $VERSION = '0.2301';
+
 use Moose::Role;
+use namespace::autoclean;
 use MooseX::AttributeShortcuts;
 use File::ShareDir 'dist_dir';
 use Path::Tiny;
-use Types::Standard -types;
-use Types::Path::Tiny -types;
+use Types::Standard qw/Bool ArrayRef Str/;
+use Types::Path::Tiny qw/Path/;
 
 has mapfile => (
     is => 'ro',
@@ -54,7 +55,6 @@ sub version {
     return 0 if $self->mapfile->is_absolute; # work with old api when we had no map_version()
     return $self->map_version;
 }
-
 
 1;
 

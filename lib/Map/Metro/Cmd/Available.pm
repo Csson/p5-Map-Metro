@@ -1,23 +1,28 @@
-use Map::Metro::Standard::Moops;
+use 5.10.0;
 use strict;
 use warnings;
 
-# VERSION
-# PODCLASSNAME
+package Map::Metro::Cmd::Available;
+
 # ABSTRACT: Display installed maps
+# AUTHORITY
+our $VERSION = '0.2301';
 
-class Map::Metro::Cmd::Available extends Map::Metro::Cmd {
+use Map::Metro::Elk;
+use MooseX::App::Command;
+extends 'Map::Metro::Cmd';
 
-    use MooseX::App::Command;
+command_short_description 'Display installed maps';
 
-    command_short_description 'Display installed maps';
+sub run {
+    my $self = shift;
 
-    method run {
-        my $map = Map::Metro->new;
+    my $map = Map::Metro->new;
 
-        say "The following maps are available:\n";
-        say join "\n" => map { s{^Map::Metro::Plugin::Map::}{ }; $_ } grep { !/^Map::Metro::Plugin::Map$/ } $map->available_maps;
-    }
+    say "The following maps are available:\n";
+    say join "\n" => map { s{^Map::Metro::Plugin::Map::}{ }; $_ } grep { !/::Lines$/ } grep { !/^Map::Metro::Plugin::Map$/ } $map->available_maps;
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;

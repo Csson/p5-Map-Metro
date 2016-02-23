@@ -1,35 +1,35 @@
-use Map::Metro::Standard::Moops;
+use 5.10.0;
 use strict;
 use warnings;
 
-# VERSION
-# PODCLASSNAME
+package Map::Metro::Hook;
+
 # ABSTRACT: Hook into Map::Metro
+# AUTHORITY
+our $VERSION = '0.2301';
 
-class Map::Metro::Hook {
+use Map::Metro::Elk;
+use Types::Standard qw/CodeRef Enum/;
 
-    use Type::Tiny::Enum;
+has event => (
+    is => 'ro',
+    isa => Enum[qw/
+        before_add_station
+        before_start_routing
+        before_add_routing
+    /],
+);
+has action => (
+    is => 'ro',
+    isa => CodeRef,
+);
+has plugin => (
+    is => 'ro',
+);
 
-    has event => (
-        is => 'ro',
-        isa => Type::Tiny::Enum->new(values => [qw/
-            before_add_station
-            before_start_routing
-            before_add_routing
-            /]),
-    );
-    has action => (
-        is => 'ro',
-        isa => CodeRef,
-    );
-    has plugin => (
-        is => 'ro',
-    );
-
-    method perform(@args) {
-        $self->action(@args);
-    }
-
+sub perform {
+    my $self = shift;
+    $self->action(@_);
 }
 
 1;
@@ -93,41 +93,39 @@ Two things are necessary for a hook class. It must...
 
 ...live in the C<Map::Metro::Plugin::Hook> namespace.
 
-...C<use Moops;>
-
 ...have a C<register> method, that returns a hash where the key is the hook type and the value the sub routine that should be executed when the event is fired. Since register returns a hash, one C<Plugin::Hook> class can hook into more than one event.
 
 =head3 Example
 
+Take a look at L<Map::Metro::Plugin::Hook::StreamStations>.
+
 The C<StreamStations> hook mentioned in the synopsis, and included in this distribution, looks like this:
 
-    use feature ':5.16';
+    package Map::Metro::Plugin::Hook::StreamStations;
 
-    package Map::Metro::Plugin::Hook::StreamStations {
+    use Moose;
+    use Types::Standard -types;
 
-        use Moose;
-        use Types::Standard -types;
+    has station_names => (
+        is => 'rw',
+        isa => ArrayRef,
+        traits => ['Array'],
+        handles => {
+            add_station_name => 'push',
+            all_station_names => 'elements',
+            get_station_name => 'get',
+        },
+    );
 
-        has station_names => (
-            is => 'rw',
-            isa => ArrayRef,
-            traits => ['Array'],
-            handles => {
-                add_station_name => 'push',
-                all_station_names => 'elements',
-                get_station_name => 'get',
-            },
-        );
+    sub register {
+        before_add_station => sub {
+            my $self = shift;
+            my $station = shift;
 
-        sub register {
-            before_add_station => sub {
-                my $self = shift;
-                my $station = shift;
-
-                say $station->name;
-                $self->add_station_name($station->name);
-            };
-        }
+            say $station->name;
+            $self->add_station_name($station->name);
+        };
+    }
     }
 
     1;

@@ -1,25 +1,24 @@
-use Map::Metro::Standard;
+use 5.10.0;
 use strict;
 use warnings;
 
-# VERSION
+package Map::Metro::Cmd;
+
 # ABSTRACT: The command line interface
+# AUTHORITY
+our $VERSION = '0.2301';
 
-package Map::Metro::Cmd  {
+use MooseX::App qw/Config Color/;
+use MooseX::AttributeShortcuts;
 
-    use MooseX::App qw/Config Color/;
+use Map::Metro;
+use Map::Metro::Shim;
 
-    use MooseX::AttributeShortcuts;
-    use Types::Standard -types;
+app_description 'Command line interface to Map::Metro';
 
-    use Map::Metro;
-    use Map::Metro::Shim;
+app_usage qq{map_metro.pl <command> [ <city> ]  [ <arguments> ]};
 
-    app_description 'Command line interface to Map::Metro';
-
-    app_usage qq{map_metro.pl <command> [ <city> ]  [ <arguments> ]};
-
-}
+__PACKAGE__->meta->make_immutable;
 
 1;
 
