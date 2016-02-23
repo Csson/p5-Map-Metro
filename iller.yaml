@@ -6,8 +6,6 @@ header:
 
 prereqs:
   runtime:
-    suggests:
-     - GraphViz2
     requires:
      - perl: 5.010000
      - Eponymous::Hash

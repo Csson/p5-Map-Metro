@@ -140,9 +140,6 @@
             "XML::Writer" : "0",
             "namespace::autoclean" : "0.22",
             "perl" : "5.010000"
-         },
-         "suggests" : {
-            "GraphViz2" : "0"
          }
       },
       "test" : {
