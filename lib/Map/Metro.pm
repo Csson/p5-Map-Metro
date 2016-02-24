@@ -6,7 +6,7 @@ package Map::Metro;
 
 # ABSTRACT: Public transport graphing
 # AUTHORITY
-our $VERSION = '0.2301';
+our $VERSION = '0.2401';
 
 use Map::Metro::Elk;
 use Module::Pluggable search_path => ['Map::Metro::Plugin::Map'], require => 1, sub_name => 'system_maps';

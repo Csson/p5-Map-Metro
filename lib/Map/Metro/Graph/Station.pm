@@ -6,7 +6,7 @@ package Map::Metro::Graph::Station;
 
 # ABSTRACT: Information about a station
 # AUTHORITY
-our $VERSION = '0.2301';
+our $VERSION = '0.2401';
 
 use Map::Metro::Elk;
 use Types::Standard qw/Int Str Maybe ArrayRef Bool/;

@@ -6,7 +6,7 @@ package Map::Metro::Cmd::Stations;
 
 # ABSTRACT: Show all stations in a map
 # AUTHORITY
-our $VERSION = '0.2301';
+our $VERSION = '0.2401';
 
 use Map::Metro::Elk;
 use MooseX::App::Command;

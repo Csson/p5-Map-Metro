@@ -6,7 +6,7 @@ package Map::Metro::Graph;
 
 # ABSTRACT: An entire graph
 # AUTHORITY
-our $VERSION = '0.2301';
+our $VERSION = '0.2401';
 
 use if $] >= 5.016000, feature => 'fc';
 

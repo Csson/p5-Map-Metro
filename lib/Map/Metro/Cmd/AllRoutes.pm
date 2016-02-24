@@ -6,7 +6,7 @@ package Map::Metro::Cmd::AllRoutes;
 
 # ABSTRACT: Display routes for all pairs of stations
 # AUTHORITY
-our $VERSION = '0.2301';
+our $VERSION = '0.2401';
 
 use Map::Metro::Elk;
 use MooseX::App::Command;

@@ -6,7 +6,7 @@ package Map::Metro::Graph::Line;
 
 # ABSTRACT: Meta information about a line
 # AUTHORITY
-our $VERSION = '0.2301';
+our $VERSION = '0.2401';
 
 use Map::Metro::Elk;
 use Types::Standard qw/Str Int/;
