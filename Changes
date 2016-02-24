@@ -4,14 +4,17 @@ Revision history for Map-Metro
  [API Changes]
 
  [Bug Fixes]
+  - The 'available' command no longer lists <map>::Lines as available map names.
 
  [Documentation]
 
  [Enhancements]
+  - Lowered required Perl to 5.10 (from 5.16). If Perl version is 5.16 or newer, 'fc' is used for string comparisons instead of 'lc'.
 
  [New Features]
 
  [Other Changes]
+  - Rewritten to no longer use Moops/Kavorka.
 
  [Requirements]
 

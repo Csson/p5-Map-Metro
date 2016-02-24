@@ -1,58 +1,69 @@
-use Map::Metro::Standard::Moops;
+use 5.10.0;
 use strict;
 use warnings;
 
-# VERSION
-# PODCLASSNAME
+package Map::Metro::Graph::Routing;
+
 # ABSTRACT: A collection of routes between two stations
+# AUTHORITY
+our $VERSION = '0.2301';
 
-class Map::Metro::Graph::Routing {
+use Map::Metro::Elk;
+use Types::Standard qw/ArrayRef/;
+use Map::Metro::Types qw/Station LineStation Route/;
 
-    has origin_station => (
-        is => 'ro',
-        isa => Station,
-        required => 1,
-    );
-    has destination_station => (
-        is => 'ro',
-        isa => Station,
-        required => 1,
-    );
-    has line_stations => (
-        is => 'ro',
-        isa => ArrayRef[ LineStation ],
-        traits => ['Array'],
-        default => sub {[]},
-        handles => {
-            add_line_station => 'push',
-            find_line_station => 'first',
-            all_line_stations => 'elements',
-        }
-    );
-    has routes => (
-        is => 'ro',
-        isa => ArrayRef[ Route ],
-        traits => ['Array'],
-        handles => {
-            get_route => 'get',
-            add_route => 'push',
-            all_routes => 'elements',
-            sort_routes => 'sort',
-            route_count => 'count',
-            find_route => 'first',
-        },
-    );
-
-    around add_line_station(LineStation $ls) {
-        my $exists = $self->find_line_station(sub { $ls->line_station_id == $_->line_station_id });
-        return if $exists;
-        $self->$next($ls);
+has origin_station => (
+    is => 'ro',
+    isa => Station,
+    required => 1,
+);
+has destination_station => (
+    is => 'ro',
+    isa => Station,
+    required => 1,
+);
+has line_stations => (
+    is => 'ro',
+    isa => ArrayRef[ LineStation ],
+    traits => ['Array'],
+    default => sub {[]},
+    handles => {
+        add_line_station => 'push',
+        find_line_station => 'first',
+        all_line_stations => 'elements',
     }
+);
+has routes => (
+    is => 'ro',
+    isa => ArrayRef[ Route ],
+    traits => ['Array'],
+    handles => {
+        get_route => 'get',
+        add_route => 'push',
+        all_routes => 'elements',
+        sort_routes => 'sort',
+        route_count => 'count',
+        find_route => 'first',
+    },
+);
 
-    method ordered_routes {
-        $self->sort_routes(sub { $_[0]->weight <=> $_[1]->weight });
-    }
+around add_line_station => sub {
+    my $next = shift;
+    my $self = shift;
+    my $ls = shift; # LineStation
+
+    my $exists = $self->find_line_station(sub { $ls->line_station_id == $_->line_station_id });
+    return if $exists;
+    $self->$next($ls);
+};
+
+sub ordered_routes {
+    my $self = shift;
+
+    $self->sort_routes(sub { $_[0]->weight <=> $_[1]->weight });
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

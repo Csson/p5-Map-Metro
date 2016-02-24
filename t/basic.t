@@ -1,16 +1,25 @@
-use 5.16.0;
+use strict;
+
 use Test::More;
 use Path::Tiny;
 
-BEGIN {
-    use_ok 'Map::Metro';
-    use_ok 'Map::Metro::Shim';
-}
+use if $ENV{'AUTHOR_TESTING'}, 'Test::Warnings';
 
-my $metro = Map::Metro::Shim->new('t/share/test-map.metro');
-my $graph = $metro->parse;
+use Map::Metro;
+use Map::Metro::Shim;
 
-is($graph->get_station(0)->name, 'Hjulsta', 'Correct first station');
+subtest standard => sub {
+    my $metro = Map::Metro::Shim->new('t/share/test-map.metro');
+    my $graph = $metro->parse;
 
+    is($graph->get_station(0)->name, 'Hjulsta', 'Correct first station');
+};
+
+subtest override => sub {
+    my $metro = Map::Metro::Shim->new('t/share/test-map.metro', override_line_change_weight => 10);
+    my $graph = $metro->parse;
+
+    is($graph->get_station(0)->name, 'Hjulsta', 'Correct first station');
+};
 done_testing;
 

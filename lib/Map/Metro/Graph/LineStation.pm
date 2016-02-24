@@ -1,41 +1,52 @@
-use Map::Metro::Standard::Moops;
+use 5.10.0;
 use strict;
 use warnings;
 
-# VERSION
-# PODCLASSNAME
+package Map::Metro::Graph::LineStation;
+
 # ABSTRACT: A station on a specific line
+# AUTHORITY
+our $VERSION = '0.2301';
 
-class Map::Metro::Graph::LineStation {
+use Map::Metro::Elk;
+use Types::Standard qw/Int/;
+use Map::Metro::Types qw/Station Line/;
 
-    has line_station_id => (
-        is => 'ro',
-        isa => Int,
-        required => 1,
-    );
-    has station => (
-        is => 'ro',
-        isa => Station,
-        required => 1,
-    );
-    has line => (
-        is => 'ro',
-        isa => Line,
-        required => 1,
-    );
+has line_station_id => (
+    is => 'ro',
+    isa => Int,
+    required => 1,
+);
+has station => (
+    is => 'ro',
+    isa => Station,
+    required => 1,
+);
+has line => (
+    is => 'ro',
+    isa => Line,
+    required => 1,
+);
 
-    method possible_on_same_line(LineStation $other) {
-        my $station_lines = [ map { $_->id } $self->station->all_lines ];
-        my $other_station_lines = [ map { $_->id } $other->station->all_lines ];
+sub possible_on_same_line {
+    my $self = shift;
+    my $other = shift; # LineStation
 
-        my $is_possible = !!List::Compare->new($station_lines, $other_station_lines)->get_intersection;
+    my $station_lines = [ map { $_->id } $self->station->all_lines ];
+    my $other_station_lines = [ map { $_->id } $other->station->all_lines ];
 
-        return $is_possible;
-    }
-    method on_same_line(LineStation $other) {
-        return $self->line->id eq $other->line->id;
-    }
+    my $is_possible = !!List::Compare->new($station_lines, $other_station_lines)->get_intersection;
+
+    return $is_possible;
 }
+sub on_same_line {
+    my $self = shift;
+    my $other = shift; # LineStation
+
+    return $self->line->id eq $other->line->id;
+}
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

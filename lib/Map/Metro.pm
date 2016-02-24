@@ -1,123 +1,125 @@
-use 5.16.0;
-use Map::Metro::Standard;
+use 5.10.0;
 use strict;
 use warnings;
 
-package Map::Metro {
+package Map::Metro;
 
-    # VERSION
-    # ABSTRACT: Public transport graphing
+# ABSTRACT: Public transport graphing
+# AUTHORITY
+our $VERSION = '0.2301';
 
-    use Moose;
-    use Module::Pluggable search_path => ['Map::Metro::Plugin::Map'], require => 1, sub_name => 'system_maps';
-    use MooseX::AttributeShortcuts;
-    use Types::Standard -types;
-    use Types::Path::Tiny -types;
-    use List::Util 1.33 'any';
+use Map::Metro::Elk;
+use Module::Pluggable search_path => ['Map::Metro::Plugin::Map'], require => 1, sub_name => 'system_maps';
+use Types::Standard qw/ArrayRef Str/;
+use Try::Tiny;
+use List::Util qw/any/;
 
-    use Map::Metro::Graph;
+use Map::Metro::Graph;
+use Map::Metro::Exceptions;
 
-    has map => (
-        is => 'ro',
-        traits => ['Array'],
-        isa => ArrayRef,
-        predicate => 1,
-        handles => {
-            get_map => 'get',
-        },
-    );
-    has mapclasses => (
-        is => 'ro',
-        traits => ['Array'],
-        isa => ArrayRef,
-        default => sub { [] },
-        handles => {
-            add_mapclass => 'push',
-            get_mapclass => 'get',
-        },
-    );
-    has hooks => (
-        is => 'ro',
-        isa => ArrayRef[ Str ],
-        traits => ['Array'],
-        default => sub { [] },
-        handles => {
-            all_hooks => 'elements',
-            hook_count => 'count',
-        },
-    );
-    has _plugin_ns => (
-        is => 'ro',
-        isa => Str,
-        default => 'Plugin::Map',
-        init_arg => undef,
-    );
+has map => (
+    is => 'ro',
+    traits => ['Array'],
+    isa => ArrayRef,
+    predicate => 1,
+    handles => {
+        get_map => 'get',
+    },
+);
+has mapclasses => (
+    is => 'ro',
+    traits => ['Array'],
+    isa => ArrayRef,
+    default => sub { [] },
+    handles => {
+        add_mapclass => 'push',
+        get_mapclass => 'get',
+    },
+);
+has hooks => (
+    is => 'ro',
+    isa => ArrayRef[ Str ],
+    traits => ['Array'],
+    default => sub { [] },
+    handles => {
+        all_hooks => 'elements',
+        hook_count => 'count',
+    },
+);
+has _plugin_ns => (
+    is => 'ro',
+    isa => Str,
+    default => 'Plugin::Map',
+    init_arg => undef,
+);
 
-    around BUILDARGS => sub {
-        my ($orig, $class, @args) = @_;
-        my %args;
-        if(scalar @args == 1) {
-            $args{'map'} = shift @args;
-        }
-        elsif(scalar @args % 2 != 0) {
-            my $map = shift @args;
-            %args = @args;
-            $args{'map'} = $map;
+around BUILDARGS => sub {
+    my ($orig, $class, @args) = @_;
+    my %args;
+    if(scalar @args == 1) {
+        $args{'map'} = shift @args;
+    }
+    elsif(scalar @args % 2 != 0) {
+        my $map = shift @args;
+        %args = @args;
+        $args{'map'} = $map;
+    }
+    else {
+        %args = @args;
+    }
+
+    if(exists $args{'map'} && !ArrayRef->check($args{'map'})) {
+        $args{'map'} = [$args{'map'}];
+    }
+    if(exists $args{'hooks'} && !ArrayRef->check($args{'hooks'})) {
+        $args{'hooks'} = [$args{'hooks'}];
+    }
+
+    return $class->$orig(%args);
+};
+
+sub BUILD {
+    my $self = shift;
+    my @args = @_;
+
+    if($self->has_map) {
+        my @system_maps = map { s{^Map::Metro::Plugin::Map::}{}; $_ } $self->system_maps;
+        if(any { $_ eq $self->get_map(0) } @system_maps) {
+            my $mapclass = 'Map::Metro::Plugin::Map::'.$self->get_map(0);
+            my $mapobj = $mapclass->new(hooks => $self->hooks);
+            $self->add_mapclass($mapobj);
         }
         else {
-            %args = @args;
-        }
-
-        if(exists $args{'map'} && !ArrayRef->check($args{'map'})) {
-            $args{'map'} = [$args{'map'}];
-        }
-        if(exists $args{'hooks'} && !ArrayRef->check($args{'hooks'})) {
-            $args{'hooks'} = [$args{'hooks'}];
-        }
-
-        return $class->$orig(%args);
-    };
-
-    sub BUILD {
-        my $self = shift;
-        my @args = @_;
-
-        if($self->has_map) {
-            my @system_maps = map { s{^Map::Metro::Plugin::Map::}{}; $_ } $self->system_maps;
-            if(any { $_ eq $self->get_map(0) } @system_maps) {
-                my $mapclass = 'Map::Metro::Plugin::Map::'.$self->get_map(0);
-                my $mapobj = $mapclass->new(hooks => $self->hooks);
-                $self->add_mapclass($mapobj);
-            }
+            try { die no_such_map mapname => $self->get_map(0) } catch { die $_->desc };
         }
     }
+}
 
-    # Borrowed from Mojo::Util
-    sub decamelize {
-        my $self = shift;
-        my $string = shift;
+# Borrowed from Mojo::Util
+sub decamelize {
+    my $self = shift;
+    my $string = shift;
 
-        return $string if $string !~ m{[A-Z]};
-        return join '_' => map {
-                                  join ('_' => map { lc } grep { length } split m{([A-Z]{1}[^A-Z]*)})
-                               } split '::' => $string;
-    }
+    return $string if $string !~ m{[A-Z]};
+    return join '_' => map {
+                              join ('_' => map { lc } grep { length } split m{([A-Z]{1}[^A-Z]*)})
+                           } split '::' => $string;
+}
 
-    sub parse {
-        my $self = shift;
-        my %args = @_;
+sub parse {
+    my $self = shift;
+    my %args = @_;
 
-        return Map::Metro::Graph->new(filepath => $self->get_mapclass(0)->maplocation,
-                                      do_undiacritic => $self->get_mapclass(0)->do_undiacritic,
-                                      wanted_hook_plugins => [$self->all_hooks],
-                                      exists $args{'override_line_change_weight'} ? (override_line_change_weight => $args{'override_line_change_weight'}) : (),
-                                )->parse;
-    }
+    return Map::Metro::Graph->new(filepath => $self->get_mapclass(0)->maplocation,
+                                  do_undiacritic => $self->get_mapclass(0)->do_undiacritic,
+                                  wanted_hook_plugins => [$self->all_hooks],
+                                  exists $args{'override_line_change_weight'} ? (override_line_change_weight => $args{'override_line_change_weight'}) : (),
+                            )->parse;
+}
 
-    sub available_maps {
-        my $self = shift;
-        return sort $self->system_maps;
-    }
+sub available_maps {
+    my $self = shift;
+    return sort $self->system_maps;
 }
 
 1;
@@ -263,7 +265,9 @@ All L<Routes|Map::Metro::Graph::Route> between the two L<Stations|Map::Metro::Gr
 
 =head1 PERFORMANCE
 
-Since 0.2200 performance is less than an issue than it used to be, but it can still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see L<asps|Map::Metro::Graph/"asps()">.
+Since 0.2200 performance is less than an issue than it used to be, but it could still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see L<asps|Map::Metro::Graph/"asps()">.
+
+It is also possible to run the backend to some commands in a server, see L<App::Map::Metro>.
 
 =head1 STATUS
 
@@ -278,7 +282,8 @@ For all maps in the Map::Metro::Plugin::Map namespace (unless noted):
 
 =head1 COMPATIBILITY
 
-Currently requires Perl 5.16.
+Until version 0.2300, Map::Metro required Perl 5.16. Currently, if it is running under 5.16 or greater, it will use C<fc> (instead of C<lc>) for some string comparisons. Depending on the map definition
+this could lead to maps not working properly on pre-5.16 Perls.
 
 =head1 Map::Metro or Map::Tube?
 

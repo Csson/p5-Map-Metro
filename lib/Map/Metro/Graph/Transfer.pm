@@ -1,30 +1,34 @@
-use Map::Metro::Standard::Moops;
+use 5.10.0;
 use strict;
 use warnings;
 
-# VERSION
-# PODCLASSNAME
+package Map::Metro::Graph::Transfer;
+
 # ABSTRACT: Moving between two stations without a connection between them
+# AUTHORITY
+our $VERSION = '0.2301';
 
-class Map::Metro::Graph::Transfer {
+use Map::Metro::Elk;
+use Types::Standard qw/Int/;
+use Map::Metro::Types qw/Station/;
 
-    has origin_station => (
-        is => 'ro',
-        isa => Station,
-        required => 1,
-    );
-    has destination_station => (
-        is => 'ro',
-        isa => Station,
-        required => 1,
-    );
-    has weight => (
-        is => 'ro',
-        isa => Int,
-        default => 5,
-    );
+has origin_station => (
+    is => 'ro',
+    isa => Station,
+    required => 1,
+);
+has destination_station => (
+    is => 'ro',
+    isa => Station,
+    required => 1,
+);
+has weight => (
+    is => 'ro',
+    isa => Int,
+    default => 5,
+);
 
-}
+__PACKAGE__->meta->make_immutable;
 
 1;
 

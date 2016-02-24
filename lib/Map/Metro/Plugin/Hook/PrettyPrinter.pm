@@ -1,71 +1,75 @@
-use Map::Metro::Standard::Moops;
+use 5.10.0;
 use strict;
 use warnings;
 
-# VERSION
-# PODCLASSNAME
+package Map::Metro::Plugin::Hook::PrettyPrinter;
+
 # ABSTRACT: Prints a routing
+# AUTHORITY
+our $VERSION = '0.2301';
 
-class Map::Metro::Plugin::Hook::PrettyPrinter {
+use Map::Metro::Elk;
 
-    method register {
-        before_add_routing => sub {
+sub register {
 
-            my $self = shift;
-            my $routing = shift;
+    before_add_routing => sub {
 
-            my $header = sprintf q{From %s to %s} => $routing->origin_station->name, $routing->destination_station->name;
+        my $self = shift;
+        my $routing = shift;
 
-            my @rows = ('', $header, '=' x length $header, '');
+        my $header = sprintf q{From %s to %s} => $routing->origin_station->name, $routing->destination_station->name;
 
-            my $route_count = 0;
-            my $longest_length = 0;
+        my @rows = ('', $header, '=' x length $header, '');
 
-            ROUTE:
-            foreach my $route ($routing->ordered_routes) {
+        my $route_count = 0;
+        my $longest_length = 0;
 
-                my $line_name_length = $route->longest_line_name_length;
-                $longest_length = $line_name_length if $line_name_length > $longest_length;
+        ROUTE:
+        foreach my $route ($routing->ordered_routes) {
 
-                push @rows => sprintf '-- Route %d (cost %s) ----------', ++$route_count, $route->weight;
+            my $line_name_length = $route->longest_line_name_length;
+            $longest_length = $line_name_length if $line_name_length > $longest_length;
 
-                STEP:
-                foreach my $step ($route->all_steps) {
-                    push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => ($step->was_line_transfer && !$step->was_station_transfer ? '*' : ''),
-                                                                                   $step->origin_line_station->line->name,
-                                                                                   join '/' => $step->origin_line_station->station->name_with_alternative;
-                    if($step->is_station_transfer) {
-                        push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => ($step->is_station_transfer ? '+' : ''),
-                                                                                   ' ' x length $step->origin_line_station->line->name,
-                                                                                   join '/' => $step->destination_line_station->station->name_with_alternative;
-                    }
-                    if(!$step->has_next_step) {
-                        push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => '',
-                                                                                 $step->destination_line_station->line->name,
-                                                                                 join '/' => $step->destination_line_station->station->name_with_alternative;
-                    }
+            push @rows => sprintf '-- Route %d (cost %s) ----------', ++$route_count, $route->weight;
+
+            STEP:
+            foreach my $step ($route->all_steps) {
+                push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => ($step->was_line_transfer && !$step->was_station_transfer ? '*' : ''),
+                                                                               $step->origin_line_station->line->name,
+                                                                               join '/' => $step->origin_line_station->station->name_with_alternative;
+                if($step->is_station_transfer) {
+                    push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => ($step->is_station_transfer ? '+' : ''),
+                                                                               ' ' x length $step->origin_line_station->line->name,
+                                                                               join '/' => $step->destination_line_station->station->name_with_alternative;
                 }
-                push @rows => '';
-            }
-
-            my @lines_in_routing = sort { $a->name cmp $b->name } map { $_->origin_line_station->line } map { $_->all_steps } $routing->all_routes;
-
-            {
-                my %seen_lines = ();
-                LINE:
-                foreach my $line (@lines_in_routing) {
-                    next LINE if exists $seen_lines{ $line };
-                    $seen_lines{ $line } = 1;
-                    push @rows => sprintf "%-${longest_length}s  %s", $line->name, $line->description;
+                if(!$step->has_next_step) {
+                    push @rows =>  sprintf "[ %1s %-${line_name_length}s ] %s" => '',
+                                                                             $step->destination_line_station->line->name,
+                                                                             join '/' => $step->destination_line_station->station->name_with_alternative;
                 }
             }
+            push @rows => '';
+        }
 
-            push @rows => '', '*: Transfer to other line', '+: Transfer to other station', '';
+        my @lines_in_routing = sort { $a->name cmp $b->name } map { $_->origin_line_station->line } map { $_->all_steps } $routing->all_routes;
 
-            say join "\n" => @rows;
+        {
+            my %seen_lines = ();
+            LINE:
+            foreach my $line (@lines_in_routing) {
+                next LINE if exists $seen_lines{ $line };
+                $seen_lines{ $line } = 1;
+                push @rows => sprintf "%-${longest_length}s  %s", $line->name, $line->description;
+            }
+        }
 
-        };
-    }
+        push @rows => '', '*: Transfer to other line', '+: Transfer to other station', '';
+
+        say join "\n" => @rows;
+
+    };
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;

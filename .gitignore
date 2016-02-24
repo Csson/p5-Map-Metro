@@ -1,9 +1,12 @@
-/Map-Metro-*
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-23 13:56:05 UTC.
+# The following configs were used:
+# * Dist::Iller::Config::Author::CSSON: 0.0309
+
 /.build
 /_build*
 /Build
 MYMETA.*
 !META.json
 /.prove
-/misc/
+/Map-Metro-*
 .coverhistory.json

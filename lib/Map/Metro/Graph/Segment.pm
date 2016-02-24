@@ -1,40 +1,44 @@
-use Map::Metro::Standard::Moops;
+use 5.10.0;
 use strict;
 use warnings;
 
-# VERSION
-# PODCLASSNAME
+package Map::Metro::Graph::Segment;
+
 # ABSTRACT: All lines between two neighboring stations
+# AUTHORITY
+our $VERSION = '0.2301';
 
-class Map::Metro::Graph::Segment {
+use Map::Metro::Elk;
+use Types::Standard qw/ArrayRef Str Bool/;
+use Map::Metro::Types qw/Station/;
 
-    has line_ids => (
-        is => 'ro',
-        isa => ArrayRef[Str],
-        traits => ['Array'],
-        required => 1,
-        default => sub { [] },
-        handles => {
-            all_line_ids => 'elements',
-        }
-    );
-    has origin_station => (
-        is => 'ro',
-        isa => Station,
-        required => 1,
-    );
-    has destination_station => (
-        is => 'ro',
-        isa => Station,
-        required => 1,
-    );
-    has is_one_way => (
-        is => 'ro',
-        isa => Bool,
-        default => 0,
-    );
+has line_ids => (
+    is => 'ro',
+    isa => ArrayRef[Str],
+    traits => ['Array'],
+    required => 1,
+    default => sub { [] },
+    handles => {
+        all_line_ids => 'elements',
+    }
+);
+has origin_station => (
+    is => 'ro',
+    isa => Station,
+    required => 1,
+);
+has destination_station => (
+    is => 'ro',
+    isa => Station,
+    required => 1,
+);
+has is_one_way => (
+    is => 'ro',
+    isa => Bool,
+    default => 0,
+);
 
-}
+__PACKAGE__->meta->make_immutable;
 
 1;
 

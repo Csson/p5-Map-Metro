@@ -1,50 +1,54 @@
-use Map::Metro::Standard::Moops;
+use 5.10.0;
 use strict;
 use warnings;
 
-# VERSION
-# PODCLASSNAME
+package Map::Metro::Cmd::MetroToTube;
+
 # ABSTRACT: Convert a Map::Metro map into a Map::Tube map
+# AUTHORITY
+our $VERSION = '0.2301';
 
-class Map::Metro::Cmd::MetroToTube extends Map::Metro::Cmd {
+use Map::Metro::Elk;
+use MooseX::App::Command;
+extends 'Map::Metro::Cmd';
+use IO::File;
+use XML::Writer;
+use Types::Standard qw/Str/;
 
-    use MooseX::App::Command;
-    use IO::File;
-    use XML::Writer;
+parameter cityname => (
+    is => 'rw',
+    isa => Str,
+    documentation => 'The name of the city',
+    required => 1,
+);
 
-    parameter cityname => (
-        is => 'rw',
-        isa => Str,
-        documentation => 'The name of the city',
-        required => 1,
-    );
+command_short_description 'Convert a Map::Metro map into a Map::Tube map';
 
-    command_short_description 'Convert a Map::Metro map into a Map::Tube map';
+sub run {
+    my $self = shift;
 
-    method run {
+    my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname)->parse : Map::Metro::Shim->new($self->cityname)->parse;
 
-        my $graph = $self->cityname !~ m{\.} ? Map::Metro->new($self->cityname)->parse : Map::Metro::Shim->new($self->cityname)->parse;
+    my $filename = sprintf 'map-%s-%s.xml', $self->cityname, time;
+    my $io = IO::File->new($filename, '>');
+    my $xml = XML::Writer->new(OUTPUT => $io, NEWLINES => 1, DATA_INDENT => 4, ENCODING => 'utf-8');
+    $xml->xmlDecl('utf-8');
+    $xml->startTag('tube', name => $self->cityname);
+    $xml->startTag('stations');
 
-
-        my $filename = sprintf 'map-%s-%s.xml', $self->cityname, time;
-        my $io = IO::File->new($filename, '>');
-        my $xml = XML::Writer->new(OUTPUT => $io, NEWLINES => 1, DATA_INDENT => 4, ENCODING => 'utf-8');
-        $xml->xmlDecl('utf-8');
-        $xml->startTag('tube', name => $self->cityname);
-        $xml->startTag('stations');
-
-        foreach my $station ($graph->all_stations) {
-            my $line_names = join ',' => map { $_->name } sort { $a->name cmp $b->name } $station->all_lines;
-            my $connecting_station_ids = join ',' => map { $_->id } $station->all_connecting_stations;
-            $xml->emptyTag('station', id => $station->id, name => $station->name, line => $line_names, link => $connecting_station_ids);
-        }
-        $xml->endTag;
-        $xml->endTag;
-        $xml->end;
-        $io->close;
-
-        say "Saved in $filename.";
+    foreach my $station ($graph->all_stations) {
+        my $line_names = join ',' => map { $_->name } sort { $a->name cmp $b->name } $station->all_lines;
+        my $connecting_station_ids = join ',' => map { $_->id } $station->all_connecting_stations;
+        $xml->emptyTag('station', id => $station->id, name => $station->name, line => $line_names, link => $connecting_station_ids);
     }
+    $xml->endTag;
+    $xml->endTag;
+    $xml->end;
+    $io->close;
+
+    say "Saved in $filename.";
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;
