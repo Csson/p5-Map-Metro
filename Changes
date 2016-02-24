@@ -9,13 +9,12 @@ Revision history for Map-Metro
  [Documentation]
 
  [Enhancements]
-  - Lowered required Perl to 5.10 (from 5.16). If Perl version is 5.16, 'fc' is used for string comparisons instead of 'lc'.
+  - Lowered required Perl to 5.10 (from 5.16). If Perl version is 5.16 or newer, 'fc' is used for string comparisons instead of 'lc'.
 
  [New Features]
 
  [Other Changes]
-  - No longer uses Moops/Kavorka.
-  - Replaced Throwable::X with Throwable::SugarFactory.
+  - Rewritten to no longer use Moops/Kavorka.
 
  [Requirements]
 

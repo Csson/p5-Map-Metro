@@ -772,13 +772,22 @@ the entire network (graph) in a hierarchy of objects.
 
 =head1 METHODS
 
-:splint method routing_for
+=head2 routing_for
 
-:splint method all_pairs
+    my $routing = $graph->routing_for($origin_station,  $destination_station);
+
+C<$origin_station> and C<$destination_station> can be either a station id, a station name or a L<Station|Map::Metro::Graph::Station> object. Both are required, but they can be of different types.
+
+Returns a L<Routing|Map::Metro::Graph::Routing>.
+
+=head2 all_pairs
+
+Takes no arguments. Returns an array reference of L<Routings|Map::Metro::Graph::Routing> between every combination of L<Stations|Map::Metro::Graph::Station>.
+
 
 =head2 asps
 
-This class uses L<Graph> under the hood. This method returns the L<Graph/"All-Pairs Shortest Paths (APSP)"> object returned
+L<Map::Metro> uses L<Graph> under the hood. This method returns the L<Graph/"All-Pairs Shortest Paths (APSP)"> object returned
 by the APSP_Floyd_Warshall() method. If you prefer to traverse the graph via this object, observe that the vertices is identified
 by their C<line_station_id> in L<Map::Metro::Graph::LineStation>.
 
