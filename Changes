@@ -6,20 +6,29 @@ Revision history for Map-Metro
  [Bug Fixes]
 
  [Documentation]
-  - Improved some documentation wording.
 
  [Enhancements]
 
  [New Features]
 
  [Other Changes]
-  - Removed no longer used dependency.
 
  [Requirements]
 
  [Stats & Dependency Changes]
 
  [Testing]
+
+0.2401 2016-02-25T00:35:45Z UTC
+ [Documentation]
+ - Improved some documentation wording.
+
+ [Other Changes]
+ - Removed no longer used dependency.
+
+ [Stats & Dependency Changes]
+ - 29 files changed, 43 insertions(+), 52 deletions(-)
+ - (run req) - MooseX::SetOnce
 
 0.2400 2016-02-24T18:56:43Z UTC
  [Bug Fixes]
