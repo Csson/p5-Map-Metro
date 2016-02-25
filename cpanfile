@@ -1,4 +1,4 @@
-# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-23 19:08:19 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-24 23:32:13 UTC.
 
 on runtime => sub {
     requires 'Eponymous::Hash' => '0';
@@ -12,7 +12,6 @@ on runtime => sub {
     requires 'MooseX::App' => '0';
     requires 'MooseX::AttributeDocumented' => '0.1003';
     requires 'MooseX::AttributeShortcuts' => '0.028';
-    requires 'MooseX::SetOnce' => '0';
     requires 'Path::Tiny' => '0.072';
     requires 'Safe::Isa' => '1.000005';
     requires 'String::Trim' => '0';

@@ -6,12 +6,14 @@ Revision history for Map-Metro
  [Bug Fixes]
 
  [Documentation]
+  - Improved some documentation wording.
 
  [Enhancements]
 
  [New Features]
 
  [Other Changes]
+  - Removed no longer used dependency.
 
  [Requirements]
 
