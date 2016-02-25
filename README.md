@@ -6,15 +6,15 @@ Map::Metro - Public transport graphing
     <p>
     <img src="https://img.shields.io/badge/perl-5.10+-blue.svg" alt="Requires Perl 5.10+" />
     <a href="https://travis-ci.org/Csson/p5-Map-Metro"><img src="https://api.travis-ci.org/Csson/p5-Map-Metro.svg?branch=master" alt="Travis status" /></a>
-    <a href="http://cpants.cpanauthors.org/dist/Map-Metro-0.2400"><img src="https://badgedepot.code301.com/badge/kwalitee/Map-Metro/0.2400" alt="Distribution kwalitee" /></a>
-    <a href="http://matrix.cpantesters.org/?dist=Map-Metro%200.2400"><img src="https://badgedepot.code301.com/badge/cpantesters/Map-Metro/0.2400" alt="CPAN Testers result" /></a>
+    <a href="http://cpants.cpanauthors.org/dist/Map-Metro-0.2401"><img src="https://badgedepot.code301.com/badge/kwalitee/Map-Metro/0.2401" alt="Distribution kwalitee" /></a>
+    <a href="http://matrix.cpantesters.org/?dist=Map-Metro%200.2401"><img src="https://badgedepot.code301.com/badge/cpantesters/Map-Metro/0.2401" alt="CPAN Testers result" /></a>
     <img src="https://img.shields.io/badge/coverage-61.6%-red.svg" alt="coverage 61.6%" />
     </p>
 </div>
 
 # VERSION
 
-Version 0.2400, released 2016-02-24.
+Version 0.2401, released 2016-02-25.
 
 # SYNOPSIS
 
@@ -88,13 +88,11 @@ The following rules are a guideline:
 
 If the starting station and finishing station...
 
-...is on the same line there will be no transfers to other lines.
+...are on the same line there will be no changes to other lines.
 
 ...shares multiple lines (e.g., both stations are on both line 2 and 4), each line constitutes a route.
 
-...are on different lines a transfer will take place at a shared station. No matter how many shared stations there are, there will only be one route returned (but which transfer station is used can differ between queries).
-
-...has no shared stations, the shortest route/routes will be returned.
+...are on different lines, line changes will take place at suitable station(s). There is no guarantee that the same stations will be chosen for line changes between searches, if there are more than one suitable station to make a change at.
 
 # MORE INFORMATION
 
@@ -128,8 +126,8 @@ If the starting station and finishing station...
 
 The following is a conceptual overview of the various parts of a graph:
 
-At first, the map file is parsed. The four types of blocks (stations, transfers, lines and segments) are translated
-into their respective object.
+At first, the map file is parsed. The four types of information (stations, transfers, lines and segments) are translated
+into their respective objects.
 
 Next, lines and stations are put together into [LineStations](https://metacpan.org/pod/Map::Metro::Graph::LineStation). Every two adjacent LineStations
 are put into two [Connections](https://metacpan.org/pod/Map::Metro::Graph::Connection) (one for each direction).
@@ -148,45 +146,42 @@ All [Routes](https://metacpan.org/pod/Map::Metro::Graph::Route) between the two 
 
 # PERFORMANCE
 
-Since 0.2200 performance is less than an issue than it used to be, but it could still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see [asps](https://metacpan.org/pod/Map::Metro::Graph#asps).
+Since 0.2200 performance is less of an issue than it used to be, but it could still be improved. Prior to that version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see [asps](https://metacpan.org/pod/Map::Metro::Graph#asps).
 
 It is also possible to run the backend to some commands in a server, see [App::Map::Metro](https://metacpan.org/pod/App::Map::Metro).
 
 # STATUS
 
 This is somewhat experimental. I don't expect that the map file format will _break_, but it might be
-extended. Only the documented api should be relied on, though breaking changes might occur.
+extended. Only the documented api should be used, though breaking changes might occur.
 
 For all maps in the Map::Metro::Plugin::Map namespace (unless noted):
 
-\* These maps are not an official source. Use accordingly.
-
-\* There should be a note regarding what routes the map covers.
+- These maps are not an official source. Use accordingly.
+- There should be a note regarding what routes the map covers.
 
 # COMPATIBILITY
 
-Until version 0.2300, Map::Metro required Perl 5.16. Currently, if it is running under 5.16 or greater, it will use `fc` (instead of `lc`) for some string comparisons. Depending on the map definition
-this could lead to maps not working properly on pre-5.16 Perls.
+Under Perl 5.16 or greater, `fc` will be used instead of `lc` for some string comparisons. Depending on the map definition
+this might lead to some maps not working properly on pre-5.16 Perls.
+
+Prior to version 0.2400, `Map::Metro` required at least Perl 5.16.
 
 # Map::Metro or Map::Tube?
 
 [Map::Tube](https://metacpan.org/pod/Map::Tube) is the main alternative to `Map::Metro`. They both have their strong and weak points.
 
-\* Map::Tube is faster.
-
-\* Map::Tube is more stable: It has been on Cpan for a long time, and is under active development.
-
-\* Map::Metro has (in my opinion) a better map format.
-
-\* Map::Metro supports eg. transfers between stations.
-
-\* See [Task::MapMetro::Maps](https://metacpan.org/pod/Task::MapMetro::Maps) and [Task::Map::Tube](https://metacpan.org/pod/Task::Map::Tube) for available maps.
-
-\* It is possible to convert Map::Metro maps into Map::Tube maps using [map-metro.pl](https://metacpan.org/pod/Map::Metro::Cmd#map-metro.pl-metro_to_tube-city).
+- Map::Tube is faster.
+- Map::Tube is more stable: It has been on Cpan for a long time, and is under active development.
+- Map::Metro has (in my opinion) a better map format.
+- Map::Metro supports eg. transfers between stations.
+- See [Task::MapMetro::Maps](https://metacpan.org/pod/Task::MapMetro::Maps) and [Task::Map::Tube](https://metacpan.org/pod/Task::Map::Tube) for available maps.
+- It is possible to convert Map::Metro maps into Map::Tube maps using [map-metro.pl](https://metacpan.org/pod/Map::Metro::Cmd#map-metro.pl-metro_to_tube-city).
 
 # SEE ALSO
 
-[Map::Tube](https://metacpan.org/pod/Map::Tube)
+- [Task::MapMetro::Maps](https://metacpan.org/pod/Task::MapMetro::Maps) - Available maps
+- [Map::Tube](https://metacpan.org/pod/Map::Tube) - An alternative
 
 # SOURCE
 

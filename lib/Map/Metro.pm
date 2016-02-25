@@ -204,14 +204,11 @@ The following rules are a guideline:
 
 If the starting station and finishing station...
 
-...is on the same line there will be no transfers to other lines.
+...are on the same line there will be no changes to other lines.
 
 ...shares multiple lines (e.g., both stations are on both line 2 and 4), each line constitutes a route.
 
-...are on different lines a transfer will take place at a shared station. No matter how many shared stations there are, there will only be one route returned (but which transfer station is used can differ between queries).
-
-...has no shared stations, the shortest route/routes will be returned.
-
+...are on different lines, line changes will take place at suitable station(s). There is no guarantee that the same stations will be chosen for line changes between searches, if there are more than one suitable station to make a change at.
 
 =head1 MORE INFORMATION
 
@@ -245,8 +242,8 @@ L<Map::Metro::Graph::Transfer> - Defines a MMG::Transfer.
 
 The following is a conceptual overview of the various parts of a graph:
 
-At first, the map file is parsed. The four types of blocks (stations, transfers, lines and segments) are translated
-into their respective object.
+At first, the map file is parsed. The four types of information (stations, transfers, lines and segments) are translated
+into their respective objects.
 
 Next, lines and stations are put together into L<LineStations|Map::Metro::Graph::LineStation>. Every two adjacent LineStations
 are put into two L<Connections|Map::Metro::Graph::Connection> (one for each direction).
@@ -265,44 +262,44 @@ All L<Routes|Map::Metro::Graph::Route> between the two L<Stations|Map::Metro::Gr
 
 =head1 PERFORMANCE
 
-Since 0.2200 performance is less than an issue than it used to be, but it could still be improved. Prior to this version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see L<asps|Map::Metro::Graph/"asps()">.
+Since 0.2200 performance is less of an issue than it used to be, but it could still be improved. Prior to that version the entire network was analyzed up-front. This is unnecessary when searching one (or a few) routes. For long-running applications it is still possible to pre-calculate all paths, see L<asps|Map::Metro::Graph/"asps()">.
 
 It is also possible to run the backend to some commands in a server, see L<App::Map::Metro>.
 
 =head1 STATUS
 
 This is somewhat experimental. I don't expect that the map file format will I<break>, but it might be
-extended. Only the documented api should be relied on, though breaking changes might occur.
+extended. Only the documented api should be used, though breaking changes might occur.
 
 For all maps in the Map::Metro::Plugin::Map namespace (unless noted):
 
+=for :list
 * These maps are not an official source. Use accordingly.
-
 * There should be a note regarding what routes the map covers.
 
 =head1 COMPATIBILITY
 
-Until version 0.2300, Map::Metro required Perl 5.16. Currently, if it is running under 5.16 or greater, it will use C<fc> (instead of C<lc>) for some string comparisons. Depending on the map definition
-this could lead to maps not working properly on pre-5.16 Perls.
+Under Perl 5.16 or greater, C<fc> will be used instead of C<lc> for some string comparisons. Depending on the map definition
+this might lead to some maps not working properly on pre-5.16 Perls.
+
+Prior to version 0.2400, C<Map::Metro> required at least Perl 5.16.
 
 =head1 Map::Metro or Map::Tube?
 
 L<Map::Tube> is the main alternative to C<Map::Metro>. They both have their strong and weak points.
 
+=for :list
 * Map::Tube is faster.
-
 * Map::Tube is more stable: It has been on Cpan for a long time, and is under active development.
-
 * Map::Metro has (in my opinion) a better map format.
-
 * Map::Metro supports eg. transfers between stations.
-
 * See L<Task::MapMetro::Maps> and L<Task::Map::Tube> for available maps.
-
 * It is possible to convert Map::Metro maps into Map::Tube maps using L<map-metro.pl|Map::Metro::Cmd/"map-metro.pl metro_to_tube $city">.
 
 =head1 SEE ALSO
 
-L<Map::Tube>
+=for :list
+* L<Task::MapMetro::Maps> - Available maps
+* L<Map::Tube> - An alternative
 
 =cut

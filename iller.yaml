@@ -21,7 +21,6 @@ prereqs:
      - MooseX::App
      - MooseX::AttributeShortcuts
      - MooseX::AttributeDocumented
-     - MooseX::SetOnce
      - namespace::autoclean
      - Path::Tiny
      - Safe::Isa
@@ -37,11 +36,6 @@ prereqs:
 plugins:
   - +config: Author::CSSON
 
-#  - +extend_plugin: TravisYML
-#    pre_install:
-#     - "dzil listdeps   --author  | grep -vP '[^\\w:]'"
-#     - cpanm Graph -v
-#
   - +remove_plugin: Test::Version
 
   - +plugin: Test::CleanNamespaces
