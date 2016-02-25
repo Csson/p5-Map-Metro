@@ -6,7 +6,7 @@ package Map::Metro::Graph::Step;
 
 # ABSTRACT: The movement from one station to the next in a route
 # AUTHORITY
-our $VERSION = '0.2401';
+our $VERSION = '0.2402';
 
 use Map::Metro::Elk;
 use Types::Standard qw/Maybe Int/;

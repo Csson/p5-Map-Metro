@@ -6,7 +6,7 @@ package Map::Metro::Graph::Route;
 
 # ABSTRACT: A sequence of line stations
 # AUTHORITY
-our $VERSION = '0.2401';
+our $VERSION = '0.2402';
 
 use Map::Metro::Elk;
 use Types::Standard qw/ArrayRef Str/;

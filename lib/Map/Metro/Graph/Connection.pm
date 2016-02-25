@@ -6,7 +6,7 @@ package Map::Metro::Graph::Connection;
 
 # ABSTRACT: Connects two stations on a line
 # AUTHORITY
-our $VERSION = '0.2401';
+our $VERSION = '0.2402';
 
 use Map::Metro::Elk;
 use Types::Standard qw/Maybe Int/;

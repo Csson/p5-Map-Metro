@@ -6,7 +6,7 @@ package Map::Metro::Cmd;
 
 # ABSTRACT: The command line interface
 # AUTHORITY
-our $VERSION = '0.2401';
+our $VERSION = '0.2402';
 
 use MooseX::App qw/Config Color/;
 use MooseX::AttributeShortcuts;

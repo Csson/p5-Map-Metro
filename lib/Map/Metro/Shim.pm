@@ -6,7 +6,7 @@ package Map::Metro::Shim;
 
 # ABSTRACT: Easily load a map file
 # AUTHORITY
-our $VERSION = '0.2401';
+our $VERSION = '0.2402';
 
 use Map::Metro::Elk;
 use Types::Standard qw/ArrayRef/;
