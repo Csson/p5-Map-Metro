@@ -18,7 +18,7 @@ prereqs:
      - List::Compare
      - Module::Pluggable
      - Moose
-     - MooseX::App
+     - MooseX::App: 1.29
      - MooseX::AttributeShortcuts
      - MooseX::AttributeDocumented
      - namespace::autoclean
