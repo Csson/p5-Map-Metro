@@ -6,7 +6,7 @@ package Map::Metro::Graph::Segment;
 
 # ABSTRACT: All lines between two neighboring stations
 # AUTHORITY
-our $VERSION = '0.2402';
+our $VERSION = '0.2403';
 
 use Map::Metro::Elk;
 use Types::Standard qw/ArrayRef Str Bool/;

@@ -6,7 +6,7 @@ package Map::Metro::Plugin::Hook::PrettyPrinter;
 
 # ABSTRACT: Prints a routing
 # AUTHORITY
-our $VERSION = '0.2402';
+our $VERSION = '0.2403';
 
 use Map::Metro::Elk;
 

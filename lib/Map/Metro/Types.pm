@@ -6,7 +6,7 @@ package Map::Metro::Types;
 
 # ABSTRACT: Type library for Map::Metro
 # AUTHORITY
-our $VERSION = '0.2402';
+our $VERSION = '0.2403';
 
 use namespace::autoclean;
 

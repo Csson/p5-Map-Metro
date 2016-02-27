@@ -6,7 +6,7 @@ package Map::Metro::Graph::Transfer;
 
 # ABSTRACT: Moving between two stations without a connection between them
 # AUTHORITY
-our $VERSION = '0.2402';
+our $VERSION = '0.2403';
 
 use Map::Metro::Elk;
 use Types::Standard qw/Int/;

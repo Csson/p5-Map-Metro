@@ -6,7 +6,7 @@ package Map::Metro::Hook;
 
 # ABSTRACT: Hook into Map::Metro
 # AUTHORITY
-our $VERSION = '0.2402';
+our $VERSION = '0.2403';
 
 use Map::Metro::Elk;
 use Types::Standard qw/CodeRef Enum/;

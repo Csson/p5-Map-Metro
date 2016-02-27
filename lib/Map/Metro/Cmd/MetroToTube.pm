@@ -6,7 +6,7 @@ package Map::Metro::Cmd::MetroToTube;
 
 # ABSTRACT: Convert a Map::Metro map into a Map::Tube map
 # AUTHORITY
-our $VERSION = '0.2402';
+our $VERSION = '0.2403';
 
 use Map::Metro::Elk;
 use MooseX::App::Command;
