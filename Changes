@@ -14,10 +14,12 @@ Revision history for Map-Metro
  [Other Changes]
 
  [Requirements]
+  - Minimum version required for MooseX::App due to app_description.
 
  [Stats & Dependency Changes]
 
  [Testing]
+  - Use shorter non-existing line id to avoid some systems using scientific notation.
 
 0.2401 2016-02-25T00:35:45Z UTC
  [Documentation]
