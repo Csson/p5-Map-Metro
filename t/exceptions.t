@@ -15,8 +15,8 @@ subtest non_existing => sub {
     my $station_does_not_exist = try { $graph->get_station_by_name('Doesnotexist', check => 1) } catch { $_->desc };
     is $station_does_not_exist, 'Station name [Doesnotexist] does not exist in station list (check segments or arguments)', 'Exception on non-existing station';
 
-    my $line_id_does_not_exist = try { $graph->get_line_by_id(4684644684651518) } catch { $_->desc };
-    is $line_id_does_not_exist, 'Line id [4684644684651518] does not exist in line list (maybe check segments?)', 'Exception on non-existing line id';
+    my $line_id_does_not_exist = try { $graph->get_line_by_id(1111) } catch { $_->desc };
+    is $line_id_does_not_exist, 'Line id [1111] does not exist in line list (maybe check segments?)', 'Exception on non-existing line id';
 };
 subtest metro => sub {
     my $non_existing_map = try { Map::Metro->new('NonExistingMap') } catch { $_ };
