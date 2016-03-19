@@ -155,115 +155,115 @@
    "provides" : {
       "Map::Metro" : {
          "file" : "lib/Map/Metro.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Cmd" : {
          "file" : "lib/Map/Metro/Cmd.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Cmd::AllRoutes" : {
          "file" : "lib/Map/Metro/Cmd/AllRoutes.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Cmd::Available" : {
          "file" : "lib/Map/Metro/Cmd/Available.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Cmd::Graphviz" : {
          "file" : "lib/Map/Metro/Cmd/Graphviz.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Cmd::Lines" : {
          "file" : "lib/Map/Metro/Cmd/Lines.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Cmd::MetroToTube" : {
          "file" : "lib/Map/Metro/Cmd/MetroToTube.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Cmd::Route" : {
          "file" : "lib/Map/Metro/Cmd/Route.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Cmd::Stations" : {
          "file" : "lib/Map/Metro/Cmd/Stations.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Elk" : {
          "file" : "lib/Map/Metro/Elk.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Emitter" : {
          "file" : "lib/Map/Metro/Emitter.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Exceptions" : {
          "file" : "lib/Map/Metro/Exceptions.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Graph" : {
          "file" : "lib/Map/Metro/Graph.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Graph::Connection" : {
          "file" : "lib/Map/Metro/Graph/Connection.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Graph::Line" : {
          "file" : "lib/Map/Metro/Graph/Line.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Graph::LineStation" : {
          "file" : "lib/Map/Metro/Graph/LineStation.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Graph::Route" : {
          "file" : "lib/Map/Metro/Graph/Route.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Graph::Routing" : {
          "file" : "lib/Map/Metro/Graph/Routing.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Graph::Segment" : {
          "file" : "lib/Map/Metro/Graph/Segment.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Graph::Station" : {
          "file" : "lib/Map/Metro/Graph/Station.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Graph::Step" : {
          "file" : "lib/Map/Metro/Graph/Step.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Graph::Transfer" : {
          "file" : "lib/Map/Metro/Graph/Transfer.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Hook" : {
          "file" : "lib/Map/Metro/Hook.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Plugin::Hook::PrettyPrinter" : {
          "file" : "lib/Map/Metro/Plugin/Hook/PrettyPrinter.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Plugin::Hook::StreamStations" : {
          "file" : "lib/Map/Metro/Plugin/Hook/StreamStations.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Plugin::Map" : {
          "file" : "lib/Map/Metro/Plugin/Map.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Shim" : {
          "file" : "lib/Map/Metro/Shim.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       },
       "Map::Metro::Types" : {
          "file" : "lib/Map/Metro/Types.pm",
-         "version" : "0.2402"
+         "version" : "0.2403"
       }
    },
    "release_status" : "stable",
@@ -278,7 +278,7 @@
          "web" : "https://github.com/Csson/p5-Map-Metro"
       }
    },
-   "version" : "0.2402",
+   "version" : "0.2403",
    "x_authority" : "cpan:CSSON",
    "x_contributors" : [
       "Alexandr Ciornii <alexchorny@gmail.com>",

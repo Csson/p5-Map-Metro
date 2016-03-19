@@ -4,6 +4,7 @@ Revision history for Map-Metro
  [API Changes]
 
  [Bug Fixes]
+  - Add missing use statement (#11).
 
  [Documentation]
 
