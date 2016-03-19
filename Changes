@@ -4,7 +4,6 @@ Revision history for Map-Metro
  [API Changes]
 
  [Bug Fixes]
-  - Add missing use statement (#11).
 
  [Documentation]
 
@@ -19,6 +18,13 @@ Revision history for Map-Metro
  [Stats & Dependency Changes]
 
  [Testing]
+
+0.2403 2016-03-19T20:00:19Z UTC
+ [Bug Fixes]
+ - Add missing use statement (#11).
+
+ [Stats & Dependency Changes]
+ - 28 files changed, 29 insertions(+), 28 deletions(-)
 
 0.2402 2016-02-27T12:42:39Z UTC
  [Requirements]
