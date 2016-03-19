@@ -6,7 +6,7 @@ package Map::Metro::Cmd::Lines;
 
 # ABSTRACT: Display lines in the map
 # AUTHORITY
-our $VERSION = '0.2403';
+our $VERSION = '0.2404';
 
 use Map::Metro::Elk;
 use MooseX::App::Command;

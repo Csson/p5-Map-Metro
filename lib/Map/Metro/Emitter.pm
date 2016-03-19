@@ -6,7 +6,7 @@ package Map::Metro::Emitter;
 
 # ABSTRACT: Event emitter for hooks
 # AUTHORITY
-our $VERSION = '0.2403';
+our $VERSION = '0.2404';
 
 use Map::Metro::Elk;
 use List::Util qw/none/;

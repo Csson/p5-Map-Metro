@@ -6,7 +6,7 @@ package Map::Metro::Graph::LineStation;
 
 # ABSTRACT: A station on a specific line
 # AUTHORITY
-our $VERSION = '0.2403';
+our $VERSION = '0.2404';
 
 use Map::Metro::Elk;
 use Types::Standard qw/Int/;

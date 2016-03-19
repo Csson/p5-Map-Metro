@@ -6,7 +6,7 @@ package Map::Metro::Plugin::Hook::StreamStations;
 
 # ABSTRACT: Prints stations as they are parsed
 # AUTHORITY
-our $VERSION = '0.2403';
+our $VERSION = '0.2404';
 
 use Map::Metro::Elk;
 use Types::Standard qw/ArrayRef/;

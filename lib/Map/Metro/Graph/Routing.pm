@@ -6,7 +6,7 @@ package Map::Metro::Graph::Routing;
 
 # ABSTRACT: A collection of routes between two stations
 # AUTHORITY
-our $VERSION = '0.2403';
+our $VERSION = '0.2404';
 
 use Map::Metro::Elk;
 use Types::Standard qw/ArrayRef/;
