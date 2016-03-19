@@ -11,6 +11,7 @@ our $VERSION = '0.2403';
 use Map::Metro::Elk;
 use Types::Standard qw/Int/;
 use Map::Metro::Types qw/Station Line/;
+use List::Compare;
 
 has line_station_id => (
     is => 'ro',
