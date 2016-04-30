@@ -23,6 +23,7 @@ prereqs:
      - MooseX::AttributeDocumented
      - namespace::autoclean
      - Path::Tiny
+     - PerlX::Maybe
      - Safe::Isa
      - String::Trim
      - Term::Size::Any
