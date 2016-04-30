@@ -6,15 +6,15 @@ Map::Metro - Public transport graphing
     <p>
     <img src="https://img.shields.io/badge/perl-5.10+-blue.svg" alt="Requires Perl 5.10+" />
     <a href="https://travis-ci.org/Csson/p5-Map-Metro"><img src="https://api.travis-ci.org/Csson/p5-Map-Metro.svg?branch=master" alt="Travis status" /></a>
-    <a href="http://cpants.cpanauthors.org/dist/Map-Metro-0.2403"><img src="https://badgedepot.code301.com/badge/kwalitee/Map-Metro/0.2403" alt="Distribution kwalitee" /></a>
-    <a href="http://matrix.cpantesters.org/?dist=Map-Metro%200.2403"><img src="https://badgedepot.code301.com/badge/cpantesters/Map-Metro/0.2403" alt="CPAN Testers result" /></a>
-    <img src="https://img.shields.io/badge/coverage-61.8%-red.svg" alt="coverage 61.8%" />
+    <a href="http://cpants.cpanauthors.org/dist/Map-Metro-0.2404"><img src="https://badgedepot.code301.com/badge/kwalitee/Map-Metro/0.2404" alt="Distribution kwalitee" /></a>
+    <a href="http://matrix.cpantesters.org/?dist=Map-Metro%200.2404"><img src="https://badgedepot.code301.com/badge/cpantesters/Map-Metro/0.2404" alt="CPAN Testers result" /></a>
+    <img src="https://img.shields.io/badge/coverage-72.9%-red.svg" alt="coverage 72.9%" />
     </p>
 </div>
 
 # VERSION
 
-Version 0.2403, released 2016-03-19.
+Version 0.2404, released 2016-04-30.
 
 # SYNOPSIS
 

@@ -1,4 +1,4 @@
-# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-27 12:19:06 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-04-30 16:14:56 UTC.
 
 on runtime => sub {
     requires 'Eponymous::Hash' => '0';
@@ -6,13 +6,14 @@ on runtime => sub {
     requires 'Graph' => '0.9704';
     requires 'IO::Interactive' => '0';
     requires 'List::Compare' => '0';
-    requires 'List::Util' => '1.42';
+    requires 'List::Util' => '1.45';
     requires 'Module::Pluggable' => '0';
     requires 'Moose' => '2.1405';
     requires 'MooseX::App' => '1.29';
     requires 'MooseX::AttributeDocumented' => '0.1003';
     requires 'MooseX::AttributeShortcuts' => '0.028';
     requires 'Path::Tiny' => '0.072';
+    requires 'PerlX::Maybe' => '1.001';
     requires 'Safe::Isa' => '1.000005';
     requires 'String::Trim' => '0';
     requires 'Term::Size::Any' => '0';
@@ -69,6 +70,7 @@ on develop => sub {
     requires 'Dist::Zilla::Plugin::MakeMaker' => '0';
     requires 'Dist::Zilla::Plugin::Manifest' => '0';
     requires 'Dist::Zilla::Plugin::ManifestSkip' => '0';
+    requires 'Dist::Zilla::Plugin::MetaConfig' => '0';
     requires 'Dist::Zilla::Plugin::MetaJSON' => '0';
     requires 'Dist::Zilla::Plugin::MetaNoIndex' => '0';
     requires 'Dist::Zilla::Plugin::MetaProvides::Package' => '2.003001';

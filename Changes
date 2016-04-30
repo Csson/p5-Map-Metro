@@ -10,6 +10,7 @@ Revision history for Map-Metro
  [Enhancements]
 
  [New Features]
+  - Added experimental to_hash() method to several of the graph classes.
 
  [Other Changes]
 
