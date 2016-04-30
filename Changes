@@ -10,7 +10,6 @@ Revision history for Map-Metro
  [Enhancements]
 
  [New Features]
-  - Added experimental to_hash() method to several of the graph classes.
 
  [Other Changes]
 
@@ -19,6 +18,16 @@ Revision history for Map-Metro
  [Stats & Dependency Changes]
 
  [Testing]
+
+0.2404 2016-04-30T17:20:01Z UTC
+ [New Features]
+ - Added experimental to_hash() method to several of the graph classes.
+
+ [Stats & Dependency Changes]
+ - 30 files changed, 158 insertions(+), 29 deletions(-)
+ - (run req) + PerlX::Maybe 1.001
+ - (run req) ~ List::Util 1.42 --> 1.45
+ - (dev req) + Dist::Zilla::Plugin::MetaConfig (any)
 
 0.2403 2016-03-19T20:00:19Z UTC
  [Bug Fixes]
