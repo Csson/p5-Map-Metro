@@ -63,6 +63,21 @@ sub ordered_routes {
     $self->sort_routes(sub { $_[0]->weight <=> $_[1]->weight });
 }
 
+sub to_hash {
+    my $self = shift;
+
+    return {
+        origin_station => $self->origin_station->to_hash,
+        destination_station => $self->destination_station->to_hash,
+        line_stations => [
+            map { $_->to_hash } $self->all_line_stations,
+        ],
+        routes => [
+            map { $_->to_hash } $self->all_routes,
+        ],
+    };
+}
+
 __PACKAGE__->meta->make_immutable;
 
 1;

@@ -47,6 +47,16 @@ sub on_same_line {
     return $self->line->id eq $other->line->id;
 }
 
+sub to_hash {
+    my $self = shift;
+
+    return {
+        line_station_id => $self->line_station_id,
+        station => $self->station->to_hash,
+        line => $self->line->to_hash,
+    };
+}
+
 __PACKAGE__->meta->make_immutable;
 
 1;

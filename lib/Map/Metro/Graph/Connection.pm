@@ -11,6 +11,7 @@ our $VERSION = '0.2404';
 use Map::Metro::Elk;
 use Types::Standard qw/Maybe Int/;
 use Map::Metro::Types qw/LineStation Connection/;
+use PerlX::Maybe qw/maybe/;
 
 has origin_line_station => (
     is => 'ro',
@@ -38,6 +39,18 @@ has weight => (
     required => 1,
     default => 1,
 );
+
+sub to_hash {
+    my $self = shift;
+
+    return {
+              origin_line_station => $self->origin_line_station->to_hash,
+              destination_line_station => $self->destination_line_station->to_hash,
+        maybe previous_connection => $self->has_previous_connection ? $self->previous_connection->to_hash : undef,
+        maybe next_connection => $self->has_next_connection ? $self->next_connection->to_hash : undef,
+              weight => $self->weight,
+    };
+}
 
 __PACKAGE__->meta->make_immutable;
 

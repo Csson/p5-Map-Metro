@@ -72,6 +72,20 @@ sub longest_line_name_length {
     return length((sort { length $b->origin_line_station->line->name <=> length $a->origin_line_station->line->name } $self->all_steps)[0]->origin_line_station->line->name);
 }
 
+sub to_hash {
+    my $self = shift;
+
+    return {
+        id => $self->id,
+        steps => [
+            map { $_->to_hash } $self->all_steps,
+        ],
+        line_stations => [
+            map { $_->to_hash } $self->all_line_stations,
+        ],
+    };
+}
+
 __PACKAGE__->meta->make_immutable;
 
 1;

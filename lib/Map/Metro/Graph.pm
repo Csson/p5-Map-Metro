@@ -730,6 +730,16 @@ sub all_pairs {
     return $routings;
 }
 
+sub to_hash {
+    my $self = shift;
+
+    return {
+        routings => [
+            map { $_->to_hash } $self->all_routings
+        ],
+    }
+}
+
 1;
 
 __END__

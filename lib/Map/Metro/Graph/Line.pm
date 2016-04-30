@@ -49,6 +49,18 @@ around BUILDARGS => sub {
     $self->$orig(%args);
 };
 
+sub to_hash {
+    my $self = shift;
+
+    return {
+        id => $self->id,
+        name => $self->name,
+        description => $self->description,
+        color => $self->color,
+        width => $self->width,
+    }
+}
+
 __PACKAGE__->meta->make_immutable;
 
 1;

@@ -38,6 +38,17 @@ has is_one_way => (
     default => 0,
 );
 
+sub to_hash {
+    my $self = shift;
+
+    return {
+        line_ids => [ $self->all_line_ids ],
+        origin_station => $self->origin_station->to_hash,
+        destination_station => $self->destination_station->to_hash,
+        is_one_way => $self->is_one_way,
+    };
+}
+
 __PACKAGE__->meta->make_immutable;
 
 1;

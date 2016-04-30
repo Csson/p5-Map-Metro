@@ -11,6 +11,7 @@ our $VERSION = '0.2404';
 use Map::Metro::Elk;
 use Types::Standard qw/Maybe Int/;
 use Map::Metro::Types qw/LineStation Step/;
+use PerlX::Maybe qw/maybe/;
 
 has origin_line_station => (
     is => 'ro',
@@ -83,6 +84,18 @@ sub was_station_transfer {
 
     return if !$self->has_previous_step;
     return $self->previous_step->is_station_transfer;
+}
+
+sub to_hash {
+    my $self = shift;
+
+    return {
+              origin_line_station => $self->origin_line_station->to_hash,
+              destination_line_station => $self->destination_line_station->to_hash,
+       # maybe previous_step => $self->has_previous_step ? $self->previous_step->to_hash : undef,
+       # maybe next_step => $self->has_next_step ? $self->next_step->to_hash : undef,
+              weight => $self->weight,
+    };
 }
 
 __PACKAGE__->meta->make_immutable;

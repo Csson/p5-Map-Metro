@@ -193,6 +193,25 @@ sub undiacriticise {
     return;
 }
 
+sub to_hash {
+    my $self = shift;
+
+    return {
+        id => $self->id,
+        name => $self->name,
+        original_name => $self->original_name,
+        search_names => [ $self->all_search_names ],
+        alternative_names => [ $self->all_alternative_names ],
+        lines => [
+            map { $_->to_hash } $self->all_lines
+        ],
+       # connecting_stations => [
+       #     map { $_->to_hash } $self->all_connecting_stations
+       # ],
+
+    }
+}
+
 __PACKAGE__->meta->make_immutable;
 
 1;
