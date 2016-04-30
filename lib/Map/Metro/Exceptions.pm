@@ -6,7 +6,7 @@ package Map::Metro::Exceptions;
 
 # ABSTRACT: Exceptions for Map::Metro
 # AUTHORITY
-our $VERSION = '0.2404';
+our $VERSION = '0.2405';
 
 use Throwable::SugarFactory;
 

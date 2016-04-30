@@ -6,7 +6,7 @@ package Map::Metro::Plugin::Map;
 
 # ABSTRACT: How to make your own map
 # AUTHORITY
-our $VERSION = '0.2404';
+our $VERSION = '0.2405';
 
 use Moose::Role;
 use namespace::autoclean;
