@@ -4,7 +4,7 @@ use warnings;
 
 # ABSTRACT: Internal Moose
 # AUTHORITY
-our $VERSION = '0.2405';
+our $VERSION = '0.2406';
 
 package Map::Metro::Elk;
 

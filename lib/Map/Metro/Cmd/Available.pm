@@ -6,7 +6,7 @@ package Map::Metro::Cmd::Available;
 
 # ABSTRACT: Display installed maps
 # AUTHORITY
-our $VERSION = '0.2405';
+our $VERSION = '0.2406';
 
 use Map::Metro::Elk;
 use MooseX::App::Command;

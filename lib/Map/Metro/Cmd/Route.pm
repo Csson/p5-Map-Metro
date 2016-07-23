@@ -6,7 +6,7 @@ package Map::Metro::Cmd::Route;
 
 # ABSTRACT: Search in a map
 # AUTHORITY
-our $VERSION = '0.2405';
+our $VERSION = '0.2406';
 
 use Map::Metro::Elk;
 use MooseX::App::Command;
