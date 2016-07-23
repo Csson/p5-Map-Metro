@@ -14,11 +14,19 @@ Revision history for Map-Metro
  [Other Changes]
 
  [Requirements]
-  - Bump Moose version to ensure Type::Tiny compatibility (fixes #12).
 
  [Stats & Dependency Changes]
 
  [Testing]
+
+0.2405 2016-07-23T11:33:37Z UTC
+ [Requirements]
+ - Bump Moose version to ensure Type::Tiny compatibility (fixes #12).
+
+ [Stats & Dependency Changes]
+ - 28 files changed, 28 insertions(+), 30 deletions(-)
+ - (run req) ~ Moose 2.1405 --> 2.1803
+ - (dev sug) ~ Dist::Iller::Config::Author::CSSON 0.0309 --> 0.0310
 
 0.2404 2016-04-30T17:20:01Z UTC
  [New Features]
