@@ -1,4 +1,4 @@
-# This file was auto-generated from iller.yaml by Dist::Iller on 2016-04-30 16:14:56 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-07-23 10:04:54 UTC.
 
 on runtime => sub {
     requires 'Eponymous::Hash' => '0';
@@ -8,7 +8,7 @@ on runtime => sub {
     requires 'List::Compare' => '0';
     requires 'List::Util' => '1.45';
     requires 'Module::Pluggable' => '0';
-    requires 'Moose' => '2.1405';
+    requires 'Moose' => '2.1803';
     requires 'MooseX::App' => '1.29';
     requires 'MooseX::AttributeDocumented' => '0.1003';
     requires 'MooseX::AttributeShortcuts' => '0.028';
@@ -119,5 +119,5 @@ on develop => sub {
 };
 on develop => sub {
     suggests 'Dist::Iller' => '0.1408';
-    suggests 'Dist::Iller::Config::Author::CSSON' => '0.0309';
+    suggests 'Dist::Iller::Config::Author::CSSON' => '0.0310';
 };
